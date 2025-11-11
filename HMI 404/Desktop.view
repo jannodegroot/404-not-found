@@ -2,6 +2,6 @@
   <div id="ViewDesktopBeckhoffLogo" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiImage" data-tchmi-src="Images/Beckhoff_Logo.svg" data-tchmi-left="20" data-tchmi-top="20" data-tchmi-width="194" data-tchmi-height="57">
 
   </div>
-<div id="TcHmiImage_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiImage" data-tchmi-height="166" data-tchmi-height-unit="px" data-tchmi-left="666" data-tchmi-left-unit="px" data-tchmi-src="Imports/Images/PLC_stop.png" data-tchmi-top="32" data-tchmi-top-unit="px" data-tchmi-width="151" data-tchmi-width-unit="px">
+<div id="TcHmiImage_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiImage" data-tchmi-height="166" data-tchmi-height-unit="px" data-tchmi-left="507" data-tchmi-left-unit="px" data-tchmi-src="Imports/Images/PLC_stop.png" data-tchmi-top="15" data-tchmi-top-unit="&quot;p" data-tchmi-width="&quot;15" data-tchmi-width-unit="&quot;p">
 </div>
 </div>
