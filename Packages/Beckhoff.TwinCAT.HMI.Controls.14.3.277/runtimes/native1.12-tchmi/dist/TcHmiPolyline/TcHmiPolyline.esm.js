@@ -1,0 +1,1 @@
+import{Control as TcHmiPolygon}from"../TcHmiPolygon/TcHmiPolygon.esm.js";class TcHmiPolyline extends TcHmiPolygon{static#tchmiFQN="TcHmi.Controls.Beckhoff."+this.name}TcHmi.Controls.registerEx("TcHmiPolyline","TcHmi.Controls.Beckhoff",TcHmiPolyline,{injectInGlobalObject:!0});export{TcHmiPolyline as Control};

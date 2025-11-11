@@ -1,0 +1,121 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "definitions": {
+        "TcHmi.Controls.Beckhoff.TcHmiTimespanPicker": {
+            "$schema": "http://json-schema.org/draft-04/schema",
+            "type": "object",
+            "frameworkInstanceOf": "TcHmi.Controls.System.TcHmiControl",
+            "frameworkControlType": "TcHmiTimespanPicker",
+            "frameworkControlNamespace": "TcHmi.Controls.Beckhoff"
+        },
+        "TcHmiTimespanPicker": {
+            "$ref": "tchmi:framework#/definitions/TcHmi.Controls.Beckhoff.TcHmiTimespanPicker"
+        },
+        "TcHmi.Controls.Beckhoff.TcHmiTimespanPicker.ValueSymbol": {
+            "allOf": [
+                {
+                    "$ref": "tchmi:framework#/definitions/Symbol"
+                },
+                {
+                    "frameworkSymbolSubType": {
+                        "$ref": "tchmi:general#/definitions/String"
+                    }
+                }
+            ]
+        },
+        "TcHmi.Controls.Beckhoff.TcHmiTimespanPicker.TimeUnits": {
+            "title": "TimeUnits",
+            "type": "object",
+            "propertiesMeta": [
+                {
+                    "name": "years",
+                    "category": "General",
+                    "displayName": "Years",
+                    "displayPriority": 10,
+                    "description": "Defines whether the year should be displayed.",
+                    "defaultValue": true,
+                    "defaultValueInternal": false
+                },
+                {
+                    "name": "months",
+                    "category": "General",
+                    "displayName": "Months",
+                    "displayPriority": 15,
+                    "description": "Defines whether the month should be displayed.",
+                    "defaultValue": true,
+                    "defaultValueInternal": false
+                },
+                {
+                    "name": "days",
+                    "category": "General",
+                    "displayName": "Days",
+                    "displayPriority": 20,
+                    "description": "Defines whether the day should be displayed.",
+                    "defaultValue": true,
+                    "defaultValueInternal": false
+                },
+                {
+                    "name": "hours",
+                    "category": "General",
+                    "displayName": "Hours",
+                    "displayPriority": 25,
+                    "description": "Defines whether the hour should be displayed.",
+                    "defaultValue": true,
+                    "defaultValueInternal": false
+                },
+                {
+                    "name": "minutes",
+                    "category": "General",
+                    "displayName": "Minutes",
+                    "displayPriority": 30,
+                    "description": "Defines whether the minute should be displayed.",
+                    "defaultValue": true,
+                    "defaultValueInternal": false
+                },
+                {
+                    "name": "seconds",
+                    "category": "General",
+                    "displayName": "Seconds",
+                    "displayPriority": 35,
+                    "description": "Defines whether the second should be displayed.",
+                    "defaultValue": true,
+                    "defaultValueInternal": false
+                },
+                {
+                    "name": "milliseconds",
+                    "category": "General",
+                    "displayName": "Milliseconds",
+                    "displayPriority": 40,
+                    "description": "Defines whether the millisecond should be displayed.",
+                    "defaultValue": true,
+                    "defaultValueInternal": false
+                }
+            ],
+            "properties": {
+                "years": {
+                    "type": "boolean"
+                },
+                "months": {
+                    "type": "boolean"
+                },
+                "days": {
+                    "type": "boolean"
+                },
+                "hours": {
+                    "type": "boolean"
+                },
+                "minutes": {
+                    "type": "boolean"
+                },
+                "seconds": {
+                    "type": "boolean"
+                },
+                "milliseconds": {
+                    "type": "boolean"
+                }
+            },
+            "additionalProperties": false,
+            "required": ["years", "months", "days", "hours", "minutes", "seconds", "milliseconds"]
+        }
+    }
+}

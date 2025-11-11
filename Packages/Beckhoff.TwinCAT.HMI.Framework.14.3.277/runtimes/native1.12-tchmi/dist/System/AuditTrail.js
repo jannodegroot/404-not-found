@@ -1,0 +1,1 @@
+import*as Domains from"../API/Server.Domains.js";export let isEnabled=!1;let __running=!1;export function run(done){__running?TcHmi.Callback.callSafeEx(done,null):(__running=!0,Domains.watch("TcHmiAuditTrail",data=>{isEnabled=!(data.error!==TcHmi.Errors.NONE||!data.value||"Loaded"!==data.value.state&&"Initialized"!==data.value.state),TcHmi.Callback.callSafeEx(done,null)}))}

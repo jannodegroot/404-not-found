@@ -1,0 +1,1 @@
+import{Localization}from"../API/Locale.js";export class Framework extends Localization{constructor(){super(),this.__namespace="TcHmi.System.Localization.Framework"}}export const frameworkLocalization=new Framework;
