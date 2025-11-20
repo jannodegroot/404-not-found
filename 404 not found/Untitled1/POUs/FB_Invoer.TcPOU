@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Invoer" Id="{4884ce81-7773-47d0-aaa9-defc52605aaa}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Invoer
+VAR_INPUT
+	i_xEmergencyButton 		: BOOL;
+	i_xSafetyMat 			: BOOL;
+	i_xStartButton 			: BOOL;
+	i_xStopButton 			: BOOL;
+	i_xPreviousLightSensor 	: BOOL;
+	i_xCurrentLightSensor 	: BOOL;
+	i_xNextLightSensor 		: BOOL;
+END_VAR
+VAR_OUTPUT
+	o_eState 		: eSingleState := eSinglestate.Idle;
+	o_xMotor 		: BOOL := FALSE;
+	o_xErrorMotor 	: BOOL := FALSE;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

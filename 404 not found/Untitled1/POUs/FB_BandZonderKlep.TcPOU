@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_BandZonderKlep" Id="{6f0d6422-6ccd-4d17-bba5-56fca414051a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_BandZonderKlep
+VAR_INPUT
+	i_eState 				: eSingleState;
+	i_xPalletInPosition 	: BOOL;
+END_VAR
+VAR_OUTPUT
+	o_xMotor 		: BOOL := FALSE;
+	o_xErrorMotor 	: BOOL := FALSE;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

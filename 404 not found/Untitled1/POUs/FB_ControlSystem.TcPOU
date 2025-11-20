@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_ControlSystem" Id="{a5bdc4cb-1932-4531-a21e-ba0ceca6296e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ControlSystem
+VAR_INPUT
+	i_eGeneralState 		: eGeneralState;
+	i_xEmergencyButton 		: BOOL;
+	i_xSafetyMat 			: BOOL;
+	i_xSafetyDoor 			: BOOL;
+	i_xStartButton 			: BOOL;
+	i_xStopButton 			: BOOL;
+	i_iPressureSensorGeneral: INT;
+END_VAR
+VAR_OUTPUT
+	o_xEmergencyButton 		: BOOL;
+	o_xSafetyMat 			: BOOL;
+	o_xSafetyDoor 			: BOOL;
+	o_xStartButton 			: BOOL;
+	o_xStopButton 			: BOOL;
+	o_eMachineStateLamp1 	: eMachineStateLamp; // Lamp Invoer
+	o_eMachineStateLamp2 	: eMachineStateLamp; // Lamp Depalletizer
+END_VAR
+VAR
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

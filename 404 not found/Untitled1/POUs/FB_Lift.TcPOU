@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Lift" Id="{1afbe77b-3853-4511-a1b1-aafdb4f0bb3f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Lift
+VAR_INPUT
+	i_eState 			: eSingleState;
+	i_xLightSensor1		: BOOL; // De eerste sensor die de pallet detecteerd
+	i_xLightSensor2		: BOOL; // De tweede sensor die de pallet detecteerd
+	i_xSlideInPosition	: BOOL;
+	i_xPistonInPosition	: BOOL;
+	i_xPin1HallSensorIn	: BOOL;
+	i_xPin1HallSensorOut: BOOL;
+	i_xPin2HallSensorIn	: BOOL;
+	i_xPin2HallSensorOut: BOOL;	
+	i_xPin3HallSensorIn	: BOOL;
+	i_xPin3HallSensorOut: BOOL;	
+	i_xPin4HallSensorIn	: BOOL;
+	i_xPin4HallSensorOut: BOOL;
+	i_xEndSwitch		: BOOL;
+	i_iDistanceSensor	: INT;
+END_VAR
+VAR_OUTPUT
+	o_xMotor 			: BOOL := FALSE;
+	o_xErrorMotor 		: BOOL := FALSE;
+	o_xMagnetValve		: BOOL;
+	o_xErrorMagnetValve : BOOL;
+	o_xPalletInPosition	: BOOL;
+	o_xLiftInPosition	: BOOL;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

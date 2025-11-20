@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_BufferMetKlep" Id="{f9dd43b7-7628-4dc2-9e96-b2516dfede7d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_BufferMetKlep
+VAR_INPUT
+	i_xEmergencyButton 		: BOOL;
+	i_xStartButton 			: BOOL;
+	i_xStopButton 			: BOOL;
+	i_xPreviousLightSensor 	: BOOL;
+	i_xCurrentLightSensor 	: BOOL;
+	i_xNextLightSensor 		: BOOL;
+END_VAR
+VAR_OUTPUT
+	o_eState 		: eSingleState := eSinglestate.Idle;
+	o_xMotor 		: BOOL := FALSE;
+	o_xErrorMotor 	: BOOL := FALSE;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

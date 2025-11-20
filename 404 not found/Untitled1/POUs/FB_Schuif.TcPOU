@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Schuif" Id="{5c3d8c3f-c259-415a-b8b9-2355dc3dc8b5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Schuif
+VAR_INPUT
+	i_eState 				: eSingleState;
+	i_xLiftInPosition		: BOOL;
+	i_xPistonInPosition		: BOOL;
+	i_xBlikjesBandRunning	: BOOL;
+	i_xEndSwitchIn			: BOOL;
+	i_xEndSwitchOut			: BOOL;
+END_VAR
+VAR_OUTPUT
+	o_xMotor 			: BOOL := FALSE;
+	o_xErrorMotor 		: BOOL := FALSE;
+	o_xSlideInPosition	: BOOL;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
