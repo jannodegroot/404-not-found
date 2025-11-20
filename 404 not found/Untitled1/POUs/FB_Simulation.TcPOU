@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Simulation" Id="{9da5429a-6b68-472c-b1d4-54a90dc55476}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Simulation
+VAR_INPUT
+	/////////////////////////////////
+	//			Motors			   //
+	/////////////////////////////////
+	i_xMotorInvoerBuffer1 				: BOOL;
+	i_xMotorBuffer2 					: BOOL;
+	i_xMotorBuffer3 					: BOOL;
+	i_xMotorBuffer4 					: BOOL;
+	i_xMotorBuffer5						: BOOL;
+	i_xMotorLiftDepalletizer 			: BOOL;
+	i_xMotorZuigerDepalletizer 			: BOOL;
+	i_xMotorSchuifDepalletizer 			: BOOL;
+	i_xMotorBandDepalletizer 			: BOOL;
+	i_xMotorBandDepalletizerPalletizer 	: BOOL;
+	i_xMotorLiftPalletizer 				: BOOL;
+	i_xMotorBandPalletizer 				: BOOL;
+	i_xMotorBlikjesBand 				: BOOL;
+	
+	/////////////////////////////////
+	//			MagnetValve		   //
+	/////////////////////////////////
+	i_xMagnetValveInvoerBuffer1 			: BOOL;
+	i_xMagnetValveBuffer5 					: BOOL;
+	i_xMagnetValveBandDepalletizer 			: BOOL;
+	i_xMagnetValveLiftDepalletizer			: BOOL;
+	i_xMagnetValveZuigerDepalletizer		: BOOL;
+	i_xMagnetValveBandDepalletizerPalletizer: BOOL;
+	i_xMagnetValveLiftPalletizer			: BOOL;
+	
+	/////////////////////////////////
+	//		MachineStateLamp	   //
+	/////////////////////////////////
+	i_eMachineStateLamp1 	: eMachineStateLamp; // Lamp Invoer
+	i_eMachineStateLamp2 	: eMachineStateLamp; // Lamp Depalletizer
+END_VAR
+VAR_OUTPUT
+	/////////////////////////////////
+	//			General			   //
+	/////////////////////////////////   
+	o_xEmergencyButton 	: BOOL;
+	o_xStartButton		: BOOL;
+	o_xStopButton		: BOOL;
+	o_xDoorOpenButton	: BOOL;
+	o_xSafetyDoor		: BOOL;
+	o_xSafetyMat		: BOOL;
+	
+	/////////////////////////////////
+	//			Endswitch		   //
+	/////////////////////////////////
+	o_xEndSwitchInSchuifDepalletizer	: BOOL;
+	o_xEndSwitchOutSchuifDepalletizer	: BOOL;
+	o_xEndSwitchInZuigerDepalletizer	: BOOL;
+	o_xEndSwitchOutZuigerDepalletizer	: BOOL;
+	o_xEndSwitchLiftDepalletizer		: BOOL;
+	o_xEndSwitchLiftPalletizer			: BOOL;
+	
+	/////////////////////////////////
+	//			HallSensors		   //
+	/////////////////////////////////
+	o_xPin1HallSensorInLiftDepalletizer	: BOOL;
+	o_xPin1HallSensorOutLiftDepalletizer: BOOL;
+	o_xPin2HallSensorInLiftDepalletizer	: BOOL;
+	o_xPin2HallSensorOutLiftDepalletizer: BOOL;	
+	o_xPin3HallSensorInLiftDepalletizer	: BOOL;
+	o_xPin3HallSensorOutLiftDepalletizer: BOOL;	
+	o_xPin4HallSensorInLiftDepalletizer	: BOOL;
+	o_xPin4HallSensorOutLiftDepalletizer: BOOL;
+	
+	o_xPin1HallSensorInLiftPalletizer	: BOOL;
+	o_xPin1HallSensorOutLiftPalletizer	: BOOL;
+	o_xPin2HallSensorInLiftPalletizer	: BOOL;
+	o_xPin2HallSensorOutLiftPalletizer	: BOOL;	
+	o_xPin3HallSensorInLiftPalletizer	: BOOL;
+	o_xPin3HallSensorOutLiftPalletizer	: BOOL;	
+	o_xPin4HallSensorInLiftPalletizer	: BOOL;
+	o_xPin4HallSensorOutLiftPalletizer	: BOOL;
+	
+	o_xHallSensorInZuigerDepalletizer	: BOOL;
+	o_xHallSensorOutZuigerDepalletizer	: BOOL;
+	
+	o_xHallSensorInInvoerBuffer1				: BOOL;
+	o_xHallSensorOutInvoerBuffer1				: BOOL;
+	o_xHallSensorInBuffer5						: BOOL;
+	o_xHallSensorOutBuffer5						: BOOL;
+	o_xHallSensorInBandDepalletizer				: BOOL;
+	o_xHallSensorOutBandDepalletizer			: BOOL;
+	o_xHallSensorInBandDepalletizerPalletizer	: BOOL;
+	o_xHallSensorOutBandDepalletizerPalletizer	: BOOL;	
+	
+	/////////////////////////////////
+	//			LightSensor		   //
+	/////////////////////////////////
+	o_xLightSensorInvoerBuffer1 			: BOOL;
+	o_xLightSensorBuffer2 					: BOOL;
+	o_xLightSensorBuffer3 					: BOOL;
+	o_xLightSensorBuffer4 					: BOOL;
+	o_xLightSensorBuffer5					: BOOL;
+	o_xLightSensor1LiftDepalletizer 		: BOOL;
+	o_xLightSensor2LiftDepalletizer 		: BOOL;
+	o_xLightSensorBandDepalletizerPalletizer: BOOL;
+	o_xLightSensor1LiftPalletizer 			: BOOL;
+	o_xLightSensor2LiftPalletizer 			: BOOL;
+	o_xLightSensorBlikjesBand 				: BOOL;
+	
+	/////////////////////////////////
+	//		  DistanceSensor	   //
+	/////////////////////////////////
+	o_iDistanceSensorLiftDepalletizer	: INT;
+	o_iDistanceSensorLiftPalletizer		: INT;
+	
+	/////////////////////////////////
+	//		  PressureSensor	   //
+	/////////////////////////////////
+	o_iPressureSensorZuigerDepalletizer	: INT;
+	o_iPressureSensorGeneral			: INT;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Zuiger" Id="{c519e80b-b9ab-471b-ad59-905255fb6490}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Zuiger
+VAR_INPUT
+	i_eState 			: eSingleState;
+	i_xLiftInPosition	: BOOL;
+	i_xSlideInPosition	: BOOL;
+	i_xHallSensorIn		: BOOL;
+	i_xHallSensorOut	: BOOL;
+	i_xEndSwitchIn		: BOOL;
+	i_xEndSwitchOut		: BOOL;
+	i_iPressureSensor	: INT;
+END_VAR
+VAR_OUTPUT
+	o_xMotor 			: BOOL := FALSE;
+	o_xErrorMotor 		: BOOL := FALSE;
+	o_xMagnetValve		: BOOL := FALSE;
+	o_xErrorMagnetValve	: BOOL := FALSE;
+	o_xErrorPressure	: BOOL := FALSE;
+	o_xPistonInPosition	: BOOL := FALSE;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

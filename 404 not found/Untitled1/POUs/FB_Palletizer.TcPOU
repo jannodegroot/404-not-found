@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Palletizer" Id="{76c30b30-6562-46f9-ad02-c49e950cbb69}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Palletizer
+VAR_INPUT
+	i_xEmergencyButton 		: BOOL;
+	i_xSafetyDoor 			: BOOL;
+	i_xStartButton 			: BOOL;
+	i_xStopButton 			: BOOL;
+	i_xDoorOpenButton		: BOOL;
+END_VAR
+VAR_OUTPUT
+	o_eState : eSingleState;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
