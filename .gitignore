@@ -52,3 +52,7 @@ LineIDs.dbg.bak
 *.~u
 *.project.~u
 *.suo
+
+# TwinCAT HMI, filter downloaded JSON schema files
+json-schema.org
+
