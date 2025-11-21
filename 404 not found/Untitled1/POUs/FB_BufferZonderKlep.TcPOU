@@ -3,17 +3,21 @@
   <POU Name="FB_BufferZonderKlep" Id="{c35f7859-97d6-45d2-8b12-08370527766c}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_BufferZonderKlep
 VAR_INPUT
-	i_xEmergencyButton 		: BOOL;
-	i_xStartButton 			: BOOL;
-	i_xStopButton 			: BOOL;
-	i_xPreviousLightSensor 	: BOOL;
-	i_xCurrentLightSensor 	: BOOL;
-	i_xNextLightSensor 		: BOOL;
+	i_xAbort		 	: BOOL;
+	i_eStartStop 		: eStartStop;
+	i_xLightSensor 		: BOOL;
+	i_xNextEmpty		: BOOL;
+	i_xPreviousEmptying	: BOOL;
+	i_xAlarmReset		: BOOL;
+	i_eNextState		: eSingleState;
 END_VAR
 VAR_OUTPUT
-	o_eState 		: eSingleState := eSinglestate.Idle;
-	o_xMotor 		: BOOL := FALSE;
-	o_xErrorMotor 	: BOOL := FALSE;
+	o_eState 			: eSingleState := eSinglestate.Idle;
+	o_xMotor 			: BOOL := FALSE;
+	o_xErrorMotor 		: BOOL := FALSE;
+	o_xAlarmMotor		: BOOL;
+	o_xGivingToNext		: BOOL;
+	o_xEmpty			: BOOL;
 END_VAR
 VAR
 END_VAR]]></Declaration>

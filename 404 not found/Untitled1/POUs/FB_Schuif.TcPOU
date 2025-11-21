@@ -4,16 +4,16 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Schuif
 VAR_INPUT
 	i_eState 				: eSingleState;
-	i_xLiftInPosition		: BOOL;
-	i_xPistonInPosition		: BOOL;
-	i_xBlikjesBandRunning	: BOOL;
+	i_xMove					: BOOL;
 	i_xEndSwitchIn			: BOOL;
 	i_xEndSwitchOut			: BOOL;
+	i_xAlarmReset			: BOOL;
 END_VAR
 VAR_OUTPUT
 	o_xMotor 			: BOOL := FALSE;
-	o_xErrorMotor 		: BOOL := FALSE;
-	o_xSlideInPosition	: BOOL;
+	o_xErrorSlide 		: BOOL := FALSE;
+	o_xAlarmSlide		: BOOL;
+	o_eSlidePosition	: eSlideposition;
 END_VAR
 VAR
 END_VAR

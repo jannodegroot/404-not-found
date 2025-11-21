@@ -4,10 +4,12 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Lift
 VAR_INPUT
 	i_eState 			: eSingleState;
+	i_xMoveNextLayerUp	: BOOL;
+	i_xAllowedToMoveDown: BOOL;
+	i_xAlarmReset		: BOOL;
+	i_iServoEncoder		: INT;
 	i_xLightSensor1		: BOOL; // De eerste sensor die de pallet detecteerd
 	i_xLightSensor2		: BOOL; // De tweede sensor die de pallet detecteerd
-	i_xSlideInPosition	: BOOL;
-	i_xPistonInPosition	: BOOL;
 	i_xPin1HallSensorIn	: BOOL;
 	i_xPin1HallSensorOut: BOOL;
 	i_xPin2HallSensorIn	: BOOL;
@@ -20,12 +22,16 @@ VAR_INPUT
 	i_iDistanceSensor	: INT;
 END_VAR
 VAR_OUTPUT
-	o_xMotor 			: BOOL := FALSE;
-	o_xErrorMotor 		: BOOL := FALSE;
+	o_xMotor 			: BOOL;
+	o_xErrorLift 		: BOOL;
+	o_xAlarmLift 		: BOOL;
+	
 	o_xMagnetValve		: BOOL;
-	o_xErrorMagnetValve : BOOL;
+	o_xErrorImpaler 	: BOOL;
+	o_xAlarmImpaler		: BOOL;
+	
 	o_xPalletInPosition	: BOOL;
-	o_xLiftInPosition	: BOOL;
+	o_eLiftPosition	: eLiftposition;
 END_VAR
 VAR
 END_VAR

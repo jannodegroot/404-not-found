@@ -9,14 +9,27 @@ VAR_INPUT
 	i_xSafetyDoor 			: BOOL;
 	i_xStartButton 			: BOOL;
 	i_xStopButton 			: BOOL;
+	i_xWarningReset			: BOOL;
+	i_xAlarmReset			: BOOL;
 	i_iPressureSensorGeneral: INT;
+	
 END_VAR
 VAR_OUTPUT
-	o_xEmergencyButton 		: BOOL;
-	o_xSafetyMat 			: BOOL;
-	o_xSafetyDoor 			: BOOL;
-	o_xStartButton 			: BOOL;
-	o_xStopButton 			: BOOL;
+	o_eStartStopGeneral 	: eStartStop;
+	
+	o_xWarningSafetyMat 	: BOOL;
+	o_xWarningSafetyDoor 	: BOOL;
+	
+	o_xAlarmPressureGeneral	: BOOL;
+	o_xAlarmEmergencyButton	: BOOL;
+	
+	o_xErrorPressureGeneral	: BOOL;
+	o_xErrorEmergencyButton	: BOOL;
+	
+	o_xAbortGeneral			: BOOL;
+	o_xAbortInvoerBuffer1	: BOOL;
+	o_xAbortPalletizer		: BOOL;
+	
 	o_eMachineStateLamp1 	: eMachineStateLamp; // Lamp Invoer
 	o_eMachineStateLamp2 	: eMachineStateLamp; // Lamp Depalletizer
 END_VAR
@@ -25,7 +38,8 @@ END_VAR
 
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[//wat willen we
+//zoizo stop star en general emergncy]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
