@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="eZuigerCilinderposition" Id="{129a78b8-3d6d-4d24-ac57-de6d7512cb56}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+{attribute 'to_string'}
+TYPE eZuigerCilinderposition :
+(
+	Up := 0,
+	Down:=1,
+	Unkown:=2
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

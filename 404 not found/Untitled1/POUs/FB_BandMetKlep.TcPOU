@@ -3,14 +3,19 @@
   <POU Name="FB_BandMetKlep" Id="{401d31e8-7e1e-4205-9cc7-506c3f70b527}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_BandMetKlep
 VAR_INPUT
-	i_eState 				: eSingleState;
-	i_xPalletInPosition 	: BOOL;
+	i_eState		: eSingleState;
+	i_xGoHold 		: BOOL; //keep pallet on band
+	i_xGoEmpty		: BOOL; //move pallet to other segment
+	i_xAlarmReset	: BOOL;
 END_VAR
 VAR_OUTPUT
 	o_xMotor 		: BOOL := FALSE;
 	o_xErrorMotor 	: BOOL := FALSE;
+	o_xAlarmMotor	: BOOL;
+	o_xGivingToNext	: BOOL;
 END_VAR
 VAR
+	fbKlep : FB_Klep;
 END_VAR
 ]]></Declaration>
     <Implementation>

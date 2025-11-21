@@ -21,10 +21,25 @@
     <Compile Include="DUTs\eGeneralState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\eLiftposition.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\eMachineStateLamp.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\eSlideposition.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\eSingleState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\eStartStop.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\eZuigerCilinderposition.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\eZuigerHorizontaal.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PlcTask.TcTTO">

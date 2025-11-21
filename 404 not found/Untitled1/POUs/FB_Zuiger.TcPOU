@@ -4,21 +4,25 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Zuiger
 VAR_INPUT
 	i_eState 			: eSingleState;
-	i_xLiftInPosition	: BOOL;
-	i_xSlideInPosition	: BOOL;
+	i_xMoveCiliderDown	: BOOL;
 	i_xHallSensorIn		: BOOL;
 	i_xHallSensorOut	: BOOL;
 	i_xEndSwitchIn		: BOOL;
 	i_xEndSwitchOut		: BOOL;
-	i_iPressureSensor	: INT;
+	i_iPressureSensor	: INT; 
+	i_xAlarmReset		: BOOL;
 END_VAR
 VAR_OUTPUT
-	o_xMotor 			: BOOL := FALSE;
-	o_xErrorMotor 		: BOOL := FALSE;
-	o_xMagnetValve		: BOOL := FALSE;
-	o_xErrorMagnetValve	: BOOL := FALSE;
-	o_xErrorPressure	: BOOL := FALSE;
-	o_xPistonInPosition	: BOOL := FALSE;
+	o_xMotor 					: BOOL := FALSE;
+	o_xErrorHorizontalMovement 	: BOOL := FALSE;
+	o_xAlarmHorizontalMovement	: BOOL;
+	o_xMagnetValve				: BOOL := FALSE;
+	o_xErrorCilinder			: BOOL := FALSE;
+	o_xAlarmCilinder			: BOOL;
+	o_xErrorPressure			: BOOL := FALSE;
+	o_xAlarmPressure			: BOOL;
+	o_eCiliderPosition			: eZuigerCilinderposition;
+	o_eHorizotalPosition		: eZuigerHorizontaal;
 END_VAR
 VAR
 END_VAR

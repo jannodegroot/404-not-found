@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="eZuigerHorizontaal" Id="{0a577651-1912-4681-946d-a02355723656}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+{attribute 'to_string'}
+TYPE eZuigerHorizontaal :
+(
+	In := 0,
+	Out:=1,
+	Unkown:=2
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
