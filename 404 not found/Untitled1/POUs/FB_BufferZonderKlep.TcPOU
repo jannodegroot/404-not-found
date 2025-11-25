@@ -62,7 +62,7 @@ END_IF
 
 //-----------------------------------------------------------------------------------------------------------------------------------------
 //Check error and set error, alarm and state = aboarting
-tonErrorMotor(IN := NOT i_xLightSensor, PT := T#20S);
+tonErrorMotor(IN := NOT i_xLightSensor AND o_xMotor, PT := T#20S);
 IF  o_xMotor AND tonErrorMotor.Q THEN
     o_eState := eSingleState.Aborting;
 	
