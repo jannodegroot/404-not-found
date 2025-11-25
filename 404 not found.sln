@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # TcXaeShell Solution File, Format Version 11.00
-VisualStudioVersion = 15.0.35826.109
+VisualStudioVersion = 17.7.34302.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{B1E792BE-AA5F-4E3C-8C82-674BF9C0715B}") = "404 not found", "404 not found\404 not found.tsproj", "{95908793-7A02-4747-AF1E-D1B90D347CE2}"
 EndProject
@@ -27,8 +27,8 @@ Global
 		Release|TwinCAT RT (x86) = Release|TwinCAT RT (x86)
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{95908793-7A02-4747-AF1E-D1B90D347CE2}.Debug|TwinCAT HMI.ActiveCfg = Debug|TwinCAT RT (x64)
-		{95908793-7A02-4747-AF1E-D1B90D347CE2}.Debug|TwinCAT HMI.Build.0 = Debug|TwinCAT RT (x64)
+		{95908793-7A02-4747-AF1E-D1B90D347CE2}.Debug|TwinCAT HMI.ActiveCfg = Debug|TwinCAT OS (x64)
+		{95908793-7A02-4747-AF1E-D1B90D347CE2}.Debug|TwinCAT HMI.Build.0 = Debug|TwinCAT OS (x64)
 		{95908793-7A02-4747-AF1E-D1B90D347CE2}.Debug|TwinCAT OS (ARMV7-A).ActiveCfg = Debug|TwinCAT OS (ARMV7-A)
 		{95908793-7A02-4747-AF1E-D1B90D347CE2}.Debug|TwinCAT OS (ARMV7-A).Build.0 = Debug|TwinCAT OS (ARMV7-A)
 		{95908793-7A02-4747-AF1E-D1B90D347CE2}.Debug|TwinCAT OS (ARMV7-M).ActiveCfg = Debug|TwinCAT OS (ARMV7-M)
@@ -43,8 +43,8 @@ Global
 		{95908793-7A02-4747-AF1E-D1B90D347CE2}.Debug|TwinCAT RT (x64).Build.0 = Debug|TwinCAT RT (x64)
 		{95908793-7A02-4747-AF1E-D1B90D347CE2}.Debug|TwinCAT RT (x86).ActiveCfg = Debug|TwinCAT RT (x86)
 		{95908793-7A02-4747-AF1E-D1B90D347CE2}.Debug|TwinCAT RT (x86).Build.0 = Debug|TwinCAT RT (x86)
-		{95908793-7A02-4747-AF1E-D1B90D347CE2}.Release|TwinCAT HMI.ActiveCfg = Release|TwinCAT RT (x64)
-		{95908793-7A02-4747-AF1E-D1B90D347CE2}.Release|TwinCAT HMI.Build.0 = Release|TwinCAT RT (x64)
+		{95908793-7A02-4747-AF1E-D1B90D347CE2}.Release|TwinCAT HMI.ActiveCfg = Release|TwinCAT OS (x64)
+		{95908793-7A02-4747-AF1E-D1B90D347CE2}.Release|TwinCAT HMI.Build.0 = Release|TwinCAT OS (x64)
 		{95908793-7A02-4747-AF1E-D1B90D347CE2}.Release|TwinCAT OS (ARMV7-A).ActiveCfg = Release|TwinCAT OS (ARMV7-A)
 		{95908793-7A02-4747-AF1E-D1B90D347CE2}.Release|TwinCAT OS (ARMV7-A).Build.0 = Release|TwinCAT OS (ARMV7-A)
 		{95908793-7A02-4747-AF1E-D1B90D347CE2}.Release|TwinCAT OS (ARMV7-M).ActiveCfg = Release|TwinCAT OS (ARMV7-M)
