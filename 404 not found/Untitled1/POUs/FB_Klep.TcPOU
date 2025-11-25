@@ -4,14 +4,14 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Klep
 VAR_INPUT
 	i_eState 			: eSingleState;
-	i_xWantedPosition 	: BOOL;
+	i_eWantedPosition 	: eValvePosition;
 	i_xHallSensorIn		: BOOL;
 	i_xHallSensorOut 	: BOOL;
 	i_xWarningReset		: BOOL;
 	i_xAlarmReset		: BOOL;
 END_VAR
 VAR_OUTPUT
-	o_xCurrentPosition 			: BOOL;
+	o_eCurrentPosition 			: eValvePosition;
 	o_xMagnetValve				: BOOL;
 	o_xWarningPositionDown 		: BOOL; //Warning when position is down becease it not stopped the machineflow
 	o_xErrorPositionUpOrUnknow	: BOOL; //Error when valve is up orunknow beceause it stopped te flow of the machine
