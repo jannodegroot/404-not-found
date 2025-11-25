@@ -25,15 +25,15 @@ END_VAR]]></Declaration>
 CASE i_eState OF
 	eSingleState.Idle:
 		// beneden positie
-		GoingDown();
+		GoDown();
 	eSingleState.Execute:
 		// Ga naar de gewenste stand
 		CASE i_eWantedPosition OF
 			eValvePosition.Down:
-				GoingDown();
+				GoDown();
 
 			eValvePosition.Up:
-				GoingUp();
+				GoUp();
 
 			eValvePosition.Unkown:
 				PositionUnknown();
@@ -41,9 +41,9 @@ CASE i_eState OF
 		END_CASE
 	eSingleState.Stopping:
 		// naar beneden
-		GoingDown();		
+		GoDown();
 	eSingleState.Stopped:
-		GoingDown();
+		GoDown();
 		// niks aansturen alles uit		
 	eSingleState.Suspending:
 		// Wachten
@@ -51,20 +51,22 @@ CASE i_eState OF
 		// Wachten
 	eSingleState.Aborting:
 		// alles uit zetten
-		GoingDown();
+		GoDown();
 	eSingleState.Aborted:
-		GoingDown();
+		GoDown();
 		// 
 END_CASE
 	
-
+IF o_eCurrentPosition = 2 THEN
+	PositionUnknown();
+END_IF
 	
 Resets();
 
 ]]></ST>
     </Implementation>
-    <Method Name="CheckPosition" Id="{cd7f08a9-d400-4d4a-9ab5-fc3077604adc}">
-      <Declaration><![CDATA[METHOD CheckPosition
+    <Method Name="Check" Id="{cd7f08a9-d400-4d4a-9ab5-fc3077604adc}">
+      <Declaration><![CDATA[METHOD Check
 VAR
 	Everything : STRING;
 	kapot : STRING; 
@@ -74,36 +76,39 @@ END_VAR]]></Declaration>
 	Everything := kapot;
 END_IF
 
-]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="GoingDown" Id="{9aff8792-5df6-4760-b1da-ad782bf6930f}">
-      <Declaration><![CDATA[METHOD GoingDown]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[o_xMagnetValve := FALSE;
-
-IF i_xHallSensorIn AND o_xMagnetValve := FALSE THEN
-	o_eCurrentPosition := 0; //down
-ELSE 
+IF i_xHallSensorOut AND i_xHallSensorIn THEN
 	o_eCurrentPosition := 2; //unknown
-	o_xErrorPositionUpOrUnknow := TRUE;
-	o_xAlarmPositionUpOrUnknow := TRUE;
+	PositionUnknown();
 END_IF
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="GoingUp" Id="{31034355-e3ba-4c55-b09d-18e1e6f0f4ff}">
-      <Declaration><![CDATA[METHOD GoingUp]]></Declaration>
+    <Method Name="GoDown" Id="{9aff8792-5df6-4760-b1da-ad782bf6930f}">
+      <Declaration><![CDATA[METHOD GoDown]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[o_xMagnetValve := FALSE;
+
+IF i_xHallSensorIn AND o_xMagnetValve = FALSE THEN
+	o_eCurrentPosition := 0; //down
+	o_xWarningPositionDown := TRUE;
+	o_xErrorPositionUpOrUnknow := FALSE;
+ELSE 
+	o_eCurrentPosition := 2; //unknown
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GoUp" Id="{31034355-e3ba-4c55-b09d-18e1e6f0f4ff}">
+      <Declaration><![CDATA[METHOD GoUp]]></Declaration>
       <Implementation>
         <ST><![CDATA[o_xMagnetValve := TRUE;
 
-IF i_xHallSensorOut AND o_xMagnetValve := TRUE THEN
+IF i_xHallSensorOut AND o_xMagnetValve = TRUE THEN
 	o_eCurrentPosition := 1; //up
 	o_xErrorPositionUpOrUnknow := FALSE;
 ELSE 
 	o_eCurrentPosition := 2; //unknown
-	o_xErrorPositionUpOrUnknow := TRUE;
-	o_xAlarmPositionUpOrUnknow := TRUE;
+	PositionUnknown();
 END_IF
 ]]></ST>
       </Implementation>
@@ -115,23 +120,24 @@ VAR
 	IN : BOOL;
 	PT : TON;
 	TimerValue : TIME := T#5S;
+	TimerStartButton : BOOL;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF i_xHallSensorIn THEN
-	o_eCurrentPosition := 0; //down
-	o_xWarningPositionDown := TRUE;
-ELSIF i_xHallSensorOut THEN
-	o_eCurrentPosition := 1; //up
-	Timer(IN:=TRUE, PT := TimerValue);
-	IF Timer.Q THEN
-		o_xErrorPositionUpOrUnknow := TRUE;
-		o_xAlarmPositionUpOrUnknow := TRUE;
-	END_IF
-ELSE
+        <ST><![CDATA[TimerStartButton := TRUE;
+
+Timer(IN:=TimerStartButton, PT := TimerValue);
+IF Timer.Q THEN
 	o_xErrorPositionUpOrUnknow := TRUE;
 	o_xAlarmPositionUpOrUnknow := TRUE;
 	o_eCurrentPosition := 2; //unknown
 END_IF
+
+///////////  AANPASSEN WERKT NIET 
+(*
+misschien property gebruiken
+heel vervelend'
+kan ook kijken naar alberts code van vorig jaar
+*)
 ]]></ST>
       </Implementation>
     </Method>

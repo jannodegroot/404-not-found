@@ -5,8 +5,7 @@
 VAR
 	fbdepiltier : FB_Depalletizer;
 	KlepTest : FB_Klep;
-	states : eSingleState := 1;
-	positions : eValvePosition := 1;
+
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -15,8 +14,8 @@ END_VAR
 END_IF
 
 KlepTest();
-KlepTest.i_eState := states;
-KlepTest.i_eWantedPosition := positions;
+KlepTest.i_eState;
+KlepTest.i_eWantedPosition;
 KlepTest.i_xAlarmReset;
 KlepTest.i_xHallSensorIn;
 KlepTest.i_xHallSensorOut;
