@@ -1,5 +1,7 @@
 <div id="Desktop" data-tchmi-type="TcHmi.Controls.System.TcHmiView" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width-mode="Content" data-tchmi-min-width="100" data-tchmi-min-width-unit="%" data-tchmi-height-mode="Content" data-tchmi-min-height="100" data-tchmi-min-height-unit="%">
-  <div id="ViewDesktopBeckhoffLogo" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiImage" data-tchmi-src="Images/Beckhoff_Logo.svg" data-tchmi-left="20" data-tchmi-top="20" data-tchmi-width="194" data-tchmi-height="57">
+  <div id="ViewDesktopBeckhoffLogo" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiImage" data-tchmi-src="Images/Beckhoff_Logo.svg" data-tchmi-left="46" data-tchmi-top="132" data-tchmi-width="194" data-tchmi-height="57">
 
   </div>
+<div id="TcHmiImage_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiImage" data-tchmi-height="166" data-tchmi-height-unit="px" data-tchmi-left="507" data-tchmi-left-unit="px" data-tchmi-src="Imports/Images/PLC_stop.png" data-tchmi-top="15" data-tchmi-top-unit="&quot;p" data-tchmi-width="&quot;15" data-tchmi-width-unit="&quot;p">
+</div>
 </div>

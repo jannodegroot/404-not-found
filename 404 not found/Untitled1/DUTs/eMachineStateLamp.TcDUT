@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="eMachineStateLamp" Id="{cc4546ec-97b6-44c7-a604-e9af845930aa}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+{attribute 'to_string'}
+TYPE eMachineStateLamp :
+(
+	Green 		:= 0,
+	Orange 		:= 1,
+	Red			:= 2,
+	Red_Blink 	:= 3
+	
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

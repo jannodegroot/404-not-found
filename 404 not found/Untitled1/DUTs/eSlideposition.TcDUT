@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="eSlideposition" Id="{09da7d7e-cdca-4849-b3cf-aebb22604c21}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+{attribute 'to_string'}
+TYPE eSlideposition :
+(
+	In := 0,
+	Out:=1,
+	Unkown:=2
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
