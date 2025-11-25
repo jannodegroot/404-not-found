@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Depalletizer" Id="{20c004ff-8016-4b71-ac39-37f47934d231}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Depalletizer
+VAR_INPUT
+	i_xAbort		 	: BOOL;
+	i_eStartStop 		: eStartStop;
+	i_PreviousEmptying	: BOOL;
+	i_NextEmpty			: BOOL;
+	i_eNextState		: eSingleState;
+END_VAR
+VAR_OUTPUT
+	o_eState 			: eSingleState;
+	o_xEmpty			: BOOL;
+	o_xWarningNoProduct	: BOOL; //Warning after ...  time no products detected.
+END_VAR
+VAR
+	fbBand 		: FB_BandMetKlep;
+	fbLift		: FB_Lift;
+	fbSchuif	: FB_Schuif;
+	fbZuiger 	: FB_Zuiger;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

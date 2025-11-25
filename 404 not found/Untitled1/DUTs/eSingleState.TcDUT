@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="eSingleState" Id="{47b7e76f-53f1-46b3-95d3-00e803023ef4}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+{attribute 'to_string'}
+TYPE eSingleState :
+(
+	Idle 		:= 0,
+	Execute 	:= 1,
+	Stopping 	:= 2,
+	Stopped 	:= 3,
+	Suspending 	:= 4,
+	Suspended 	:= 5,
+	Aborting 	:= 6,
+	Aborted 	:= 7
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
