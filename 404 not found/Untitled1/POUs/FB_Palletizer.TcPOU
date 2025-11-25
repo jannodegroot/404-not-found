@@ -21,7 +21,14 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[//pallets
+
+//aansturen band
+//aansturen lift
+//aansturen zichzelf
+//errors
+//allarmen
+//warnings]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
