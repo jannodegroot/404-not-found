@@ -1,15 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <DUT Name="eGeneralState" Id="{ed1ae5ce-6664-4b38-b3bc-3cb46a1a1274}">
+  <DUT Name="eValvePosition" Id="{de4025fc-2a36-498c-9c5b-609ad1be65e4}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 {attribute 'strict'}
 {attribute 'to_string'}
-TYPE eGeneralState :
+TYPE eValvePosition :
 (
-	Idle 		:= 0,
-	Execute		:= 1,
-	Stopped 	:= 2,
-	Aborted 	:= 3
+	Up := 0,
+	Down:=1,
+	Unkown:=2
 );
 END_TYPE
 ]]></Declaration>

@@ -3,13 +3,70 @@
   <POU Name="MAIN" Id="{4cbed5b0-99f3-4471-834f-1b0e4c5ee42c}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-	fbdepiltier : FB_Depalletizer;
+	fbInvoerBuffer1 : FB_Invoer;
+	fbBuffer2		: FB_BufferMetKlep;
+	fbBuffer5		: FB_BufferZonderKlep;
+	
+	Abort			: BOOL;
+	StartStop		: eStartStop;
+	PalletPlaced	: BOOL;
+	LightSensor		: BOOL;
+	PreviousEmptying: BOOL;
+	NextEmpty		: BOOL;
+	AlarmReset		: BOOL;
+	NextState		: eSingleState;	
+	CurrentState	: eSingleState;
+	Motor			: BOOL;
+	ErrorMotor		: BOOL;
+	AlarmMotor		: BOOL;
+	GivingToNext	: BOOL;
+	Empty			: BOOL;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF fbdepiltier.fbband.o_xGivingToNext THEN
-	//
-END_IF]]></ST>
+      <ST><![CDATA[ (* fbInvoerBuffer1(	i_xAbort		:= Abort, 
+					i_eStartStop	:= StartStop, 
+					i_xPalletPlaced	:= PalletPlaced, 
+					i_xLightSensor	:= LightSensor, 
+					i_xNextEmpty	:= NextEmpty, 
+					i_xAlarmReset	:= AlarmReset, 
+					i_eNextState	:= NextState, 
+					o_eState		=> CurrentState, 
+					o_xMotor		=> Motor, 
+					o_xErrorMotor	=> ErrorMotor, 
+					o_xAlarmMotor	=> AlarmMotor, 
+					o_xGivingToNext	=> GivingToNext);
+*)	
+			
+(*fbBuffer2( i_xAbort			:= Abort, 
+			i_eStartStop		:= StartStop,  
+			i_xLightSensor		:= LightSensor,
+			i_xPreviousEmptying := PreviousEmptying, 
+			i_xNextEmpty		:= NextEmpty, 
+			i_xAlarmReset		:= AlarmReset, 
+			i_eNextState		:= NextState, 
+			o_eState			=> CurrentState, 
+			o_xMotor			=> Motor, 
+			o_xErrorMotor		=> ErrorMotor, 
+			o_xAlarmMotor		=> AlarmMotor, 
+			o_xGivingToNext		=> GivingToNext,
+			o_xEmpty 			=> Empty);
+*)
+		
+fbBuffer5(	i_xAbort			:= Abort, 
+			i_eStartStop		:= StartStop,  
+			i_xLightSensor		:= LightSensor, 
+			i_xPreviousEmptying := PreviousEmptying,
+			i_xNextEmpty		:= NextEmpty, 
+			i_xAlarmReset		:= AlarmReset, 
+			i_eNextState		:= NextState, 
+			o_eState			=> CurrentState, 
+			o_xMotor			=> Motor, 
+			o_xErrorMotor		=> ErrorMotor, 
+			o_xAlarmMotor		=> AlarmMotor, 
+			o_xGivingToNext		=> GivingToNext,
+			o_xEmpty 			=> Empty);]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
