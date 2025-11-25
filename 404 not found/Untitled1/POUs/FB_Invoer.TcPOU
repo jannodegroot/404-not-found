@@ -17,6 +17,7 @@ VAR_OUTPUT
 	o_xErrorMotor 		: BOOL := FALSE;
 	o_xAlarmMotor		: BOOL;
 	o_xGivingToNext		: BOOL;
+	o_xEmpty			: BOOL;
 END_VAR
 VAR
 	rTrigPallet						: R_TRIG;
@@ -32,7 +33,8 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//Change the state
+      <ST><![CDATA[//-------------------------------------------------------------------------------------------------------------------------
+//Change the state
 //execute
 IF i_eStartStop = eStartStop.Start AND NOT i_xAbort AND NOT o_xErrorMotor THEN
 	o_eState := eSingleState.Execute;
@@ -84,8 +86,10 @@ END_IF;
 rTrigPallet(CLK := i_xPalletPlaced);
 IF rTrigPallet.Q THEN
     xPalletPresent := TRUE;
+	o_xEmpty 		:= FALSE;
 ELSIF xTimerPalletDetectedCompleted AND NOT i_xLightSensor THEN
 	xPalletPresent := FALSE;
+	o_xEmpty 	   := TRUE;
 	xTimerPalletDetectedCompleted := FALSE; 
 END_IF
 
@@ -115,32 +119,33 @@ END_IF
 IF o_eState = eSingleState.Execute AND i_xLightSensor AND NOT i_xNextEmpty THEN
 	fbKlep(	i_eState 					:= o_eState,
 			i_eWantedPosition 			:= eValvePosition.Up,
-			i_xHallSensorIn 			:= ,
-			i_xHallSensorOut 			:= ,
-			i_xWarningReset 			:= ,
-			i_xAlarmReset 				:= ,
-			o_eCurrentPosition 			:= ,	
-			o_xMagnetValve				:= ,
-			o_xWarningPositionDown 		:= ,
-			o_xErrorPositionUpOrUnknow	:= ,
-			o_xAlarmPositionUpOrUnknow	:= );
+			i_xHallSensorIn 			:= (*from simulation*),
+			i_xHallSensorOut 			:= (*from simulation*),
+			i_xWarningReset 			:= (*from simulation*),
+			i_xAlarmReset 				:= (*from simulation*),
+			o_eCurrentPosition 			:= (*from simulation*),	
+			o_xMagnetValve				:= (*from simulation*),
+			o_xWarningPositionDown 		:= (*from simulation*),
+			o_xErrorPositionUpOrUnknow	:= (*from simulation*),
+			o_xAlarmPositionUpOrUnknow	:= (*from simulation*));
 	o_xGivingToNext := FALSE;
 	
 ELSIF o_eState = eSingleState.Execute AND i_xLightSensor AND i_xNextEmpty THEN
 	fbKlep(	i_eState 					:= o_eState,
 			i_eWantedPosition 			:= eValvePosition.Down,
-			i_xHallSensorIn 			:= ,
-			i_xHallSensorOut 			:= ,
-			i_xWarningReset 			:= ,
-			i_xAlarmReset 				:= ,
-			o_eCurrentPosition 			:= ,	
-			o_xMagnetValve				:= ,
-			o_xWarningPositionDown 		:= ,
-			o_xErrorPositionUpOrUnknow	:= ,
-			o_xAlarmPositionUpOrUnknow	:= );
+			i_xHallSensorIn 			:= (*from simulation*),
+			i_xHallSensorOut 			:= (*from simulation*),
+			i_xWarningReset 			:= (*from simulation*),
+			i_xAlarmReset 				:= (*from simulation*),
+			o_eCurrentPosition 			:= (*from simulation*),	
+			o_xMagnetValve				:= (*from simulation*),
+			o_xWarningPositionDown 		:= (*from simulation*),
+			o_xErrorPositionUpOrUnknow	:= (*from simulation*),
+			o_xAlarmPositionUpOrUnknow	:= (*from simulation*));
 	o_xGivingToNext := TRUE;
 END_IF
 
+//-------------------------------------------------------------------------------------------------------------------
 //reset alarm and error
 IF NOT (o_eState = eSingleState.Aborting) AND i_xLightSensor THEN
 	o_xErrorMotor := FALSE;

@@ -19,10 +19,100 @@ VAR_OUTPUT
 	o_xGivingToNext		: BOOL;
 	o_xEmpty			: BOOL;
 END_VAR
-VAR
-END_VAR]]></Declaration>
+VAR	
+	tonErrorMotor 			: TON;
+END_VAR
+]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[//-------------------------------------------------------------------------------------------------------------------------
+//Change the state
+//execute
+IF i_eStartStop = eStartStop.Start AND NOT i_xAbort AND NOT o_xErrorMotor THEN
+	o_eState := eSingleState.Execute;
+END_IF
+
+//stop request
+IF i_eStartStop = eStartStop.Stop THEN
+	o_eState := eSingleState.Stopping;
+END_IF
+
+//stopping
+IF o_eState = eSingleState.Stopping AND o_xMotor = FALSE THEN
+	o_eState := eSingleState.Stopped;
+END_IF
+
+//suspening
+IF i_eNextState = eSingleState.Suspended THEN 
+	o_eState := eSingleState.Suspending;
+END_IF
+
+//suspended
+IF o_eState = eSingleState.Suspending AND o_xMotor = FALSE THEN
+	o_eState := eSingleState.Suspended;
+END_IF
+
+IF i_xAbort THEN
+	o_eState := eSingleState.Aborting;
+END_IF
+
+//aborted
+IF o_eState = eSingleState.Aborting AND o_xMotor = FALSE THEN
+	o_eState := eSingleState.aborted;
+END_IF
+
+//-----------------------------------------------------------------------------------------------------------------------------------------
+//Check error and set error, alarm and state = aboarting
+tonErrorMotor(IN := NOT i_xLightSensor, PT := T#20S);
+IF  o_xMotor AND tonErrorMotor.Q THEN
+    o_eState := eSingleState.Aborting;
+	
+	IF tonErrorMotor.Q THEN
+		o_xErrorMotor := TRUE;
+		o_xAlarmMotor := TRUE;
+	END_IF
+END_IF;
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+//motor on
+IF 	o_eState = eSingleState.Execute AND i_xPreviousEmptying AND NOT i_xLightSensor OR 
+	o_eState = eSingleState.Execute AND i_xLightSensor AND i_xNextEmpty THEN
+
+	o_xMotor := TRUE;
+END_IF
+
+//motor off 
+IF o_eState = eSingleState.Execute AND i_xLightSensor AND NOT i_xNextEmpty OR 
+	o_eState = eSingleState.Stopping OR
+	o_eState = eSingleState.Suspending OR
+	o_eState = eSingleState.Aborting THEN
+
+	o_xMotor := FALSE;		
+END_IF
+
+//write o_xGivingToNext
+IF o_eState = eSingleState.Execute AND i_xLightSensor AND NOT i_xNextEmpty THEN
+	o_xGivingToNext := FALSE;	
+ELSIF o_eState = eSingleState.Execute AND i_xLightSensor AND i_xNextEmpty THEN
+	o_xGivingToNext := TRUE;
+END_IF
+
+//check if buffer is empty
+IF NOT i_xLightSensor THEN
+	o_xEmpty := TRUE;
+ELSE
+	o_xEmpty := FALSE;
+END_IF
+
+//-------------------------------------------------------------------------------------------------------------------
+//reset alarm and error
+IF NOT (o_eState = eSingleState.Aborting) AND i_xLightSensor THEN
+	o_xErrorMotor := FALSE;
+END_IF
+
+//reset alarm
+IF i_xAlarmReset AND NOT (o_eState = eSingleState.Aborting) THEN
+	o_xAlarmMotor := FALSE;
+END_IF]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
