@@ -14,9 +14,11 @@ VAR_INPUT
 END_VAR
 VAR_OUTPUT
 	o_xMotor 					: BOOL := FALSE;
+	o_xMotorDirectionOut		: BOOL;
 	o_xErrorHorizontalMovement 	: BOOL := FALSE;
 	o_xAlarmHorizontalMovement	: BOOL;
-	o_xMagnetValve				: BOOL := FALSE;
+	o_xMagnetValveCilinder		: BOOL := FALSE;
+	o_xMagnetValveVacum	: 			BOOL := FALSE;
 	o_xErrorCilinder			: BOOL := FALSE;
 	o_xAlarmCilinder			: BOOL;
 	o_xErrorPressure			: BOOL := FALSE;
@@ -25,10 +27,215 @@ VAR_OUTPUT
 	o_eHorizotalPosition		: eZuigerHorizontaal;
 END_VAR
 VAR
+	eWistedCiliderPosition		: eZuigerCilinderposition;
+	eWistedHorizotalPosition	: eZuigerHorizontaal;
+	istepcycel : INT;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[//Case state + control
+CASE i_eState OF
+	eSingleState.Aborting:
+		StopALL(); //stopall
+	eSingleState.Aborted:
+		StopALL(); //stopall
+	eSingleState.Execute:
+		IF i_xMoveCiliderDown=1 AND istepcycel=0 THEN
+			istepcycel:=1;
+		END_IF
+		CompleetCycel(); //do a compleet cycel
+	eSingleState.Idle:
+		CiliderUP(); //to startingpostion
+		IF o_eCiliderPosition = eZuigerCilinderposition.Up THEN
+			HorizontalIN();
+		END_IF
+	eSingleState.Stopping:
+		CilinderDOwn();
+	eSingleState.Stopped:
+		//
+	eSingleState.Suspending:
+		//
+	eSingleState.Suspended:
+		//
+END_CASE
+//Errors
+//Alarm
+//Warning
+
+//Alarm reset
+//Waring reset]]></ST>
     </Implementation>
+    <Method Name="CiliderUP" Id="{2152594d-2447-4cf4-aa5e-fc79df202b7a}">
+      <Declaration><![CDATA[METHOD PRIVATE CiliderUP
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//moves the cilider up
+eWistedCiliderPosition :=eZuigerCilinderposition.Up;
+o_xMagnetValveCilinder:=0;
+IF	i_xHallSensorIn AND i_xHallSensorOut THEN
+	o_eCiliderPosition := eZuigerCilinderposition.Unkown;
+ELSIF i_xHallSensorIn	THEN
+	o_eCiliderPosition := eZuigerCilinderposition.Up;
+ELSIF i_xHallSensorOut THEN
+	o_eCiliderPosition := eZuigerCilinderposition.Down;
+ELSE
+	o_eCiliderPosition := eZuigerCilinderposition.Unkown;
+END_IF
+	
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CilinderDOwn" Id="{89ebc8b5-8ad9-4bf6-bf97-7b54cfc097e2}">
+      <Declaration><![CDATA[METHOD PRIVATE CilinderDOwn
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//moves the cilider Down
+eWistedCiliderPosition :=eZuigerCilinderposition.Down;
+o_xMagnetValveCilinder:=1;
+IF	i_xHallSensorIn AND i_xHallSensorOut THEN
+	o_eCiliderPosition := eZuigerCilinderposition.Unkown;
+ELSIF i_xHallSensorIn	THEN
+	o_eCiliderPosition := eZuigerCilinderposition.Up;
+ELSIF i_xHallSensorOut THEN
+	o_eCiliderPosition := eZuigerCilinderposition.Down;
+ELSE
+	o_eCiliderPosition := eZuigerCilinderposition.Unkown;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CompleetCycel" Id="{220ffaa2-661c-4b74-ae88-9f0bbe634114}">
+      <Declaration><![CDATA[METHOD PRIVATE CompleetCycel
+VAR
+
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[	o_eHorizotalPosition := eZuigerHorizontaal.In;
+		o_eCiliderPosition := eZuigerCilinderposition.Unkown;
+		
+
+CASE istepcycel OF
+	1: //too startingpostition
+		o_xMagnetValveVacum:=FALSE;
+		CiliderUP();
+		IF o_eCiliderPosition = eZuigerCilinderposition.Up THEN
+			HorizontalIN();
+		END_IF
+		IF o_eCiliderPosition = eZuigerCilinderposition.Up AND o_eHorizotalPosition =eZuigerHorizontaal.IN THEN
+			istepcycel:=2;
+		END_IF
+	2: 		//zuiger naar beneden totdat beneden
+		o_xMagnetValveVacum:=TRUE;
+		CilinderDOwn();
+		IF o_eCiliderPosition = eZuigerCilinderposition.DOWN THEN
+			istepcycel:=3;
+		END_IF
+	3: //zuiger omhoog
+		o_xMagnetValveVacum:=TRUE;
+		CiliderUP();
+		IF o_eCiliderPosition = eZuigerCilinderposition.UP THEN
+			istepcycel:=4;
+		END_IF
+	4:
+		o_xMagnetValveVacum:=TRUE;
+		HoriztalOUT();
+		IF o_eHorizotalPosition = eZuigerHorizontaal.OUT THEN
+				istepcycel:=5;
+		END_IF
+	5:	
+		o_xMagnetValveVacum:=FALSE;
+		HorizontalIN();
+		IF o_eHorizotalPosition = eZuigerHorizontaal.IN THEN
+				istepcycel:=0;
+		END_IF
+
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="HorizontalIN" Id="{37631e61-4f18-4725-a55a-98346cee9f06}">
+      <Declaration><![CDATA[METHOD PRIVATE HorizontalIN
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+o_xMotor:=1;
+o_xMotorDirectionOut:=0;
+eWistedHorizotalPosition := eZuigerHorizontaal.In;
+
+
+IF	i_xEndSwitchIn AND i_xEndSwitchOut THEN
+	o_eHorizotalPosition := eZuigerHorizontaal.Unkown;
+ELSIF i_xEndSwitchIn	THEN
+	o_eHorizotalPosition := eZuigerHorizontaal.In;
+	o_xMotor:=0;
+ELSIF i_xEndSwitchOut THEN
+	o_eHorizotalPosition := eZuigerHorizontaal.Out;
+ELSE
+	o_eHorizotalPosition := eZuigerHorizontaal.Unkown;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="HoriztalOUT" Id="{f2ee4e78-7768-43e6-82bf-d5e0f38931a0}">
+      <Declaration><![CDATA[METHOD PRIVATE HoriztalOUT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//hoizontal out
+
+o_xMotor:=1;
+o_xMotorDirectionOut:=1;
+eWistedHorizotalPosition := eZuigerHorizontaal.Out;
+
+
+IF	i_xEndSwitchIn AND i_xEndSwitchOut THEN
+	o_eHorizotalPosition := eZuigerHorizontaal.Unkown;
+ELSIF i_xEndSwitchIn	THEN
+	o_eHorizotalPosition := eZuigerHorizontaal.In;
+ELSIF i_xEndSwitchOut THEN
+	o_eHorizotalPosition := eZuigerHorizontaal.Out;
+	o_xMotor:=0;
+ELSE
+	o_eHorizotalPosition := eZuigerHorizontaal.Unkown;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StopALL" Id="{a7b526ea-bf90-4b58-9c21-d53d1f796b35}">
+      <Declaration><![CDATA[METHOD PRIVATE StopALL : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[o_xMagnetValveCilinder:=0;
+o_xMotor:=0;
+
+IF	i_xHallSensorIn AND i_xHallSensorOut THEN
+	o_eCiliderPosition := eZuigerCilinderposition.Unkown;
+ELSIF i_xHallSensorIn	THEN
+	o_eCiliderPosition := eZuigerCilinderposition.Up;
+ELSIF i_xHallSensorOut THEN
+	o_eCiliderPosition := eZuigerCilinderposition.Down;
+ELSE
+	o_eCiliderPosition := eZuigerCilinderposition.Unkown;
+END_IF
+
+IF	i_xEndSwitchIn AND i_xEndSwitchOut THEN
+	o_eHorizotalPosition := eZuigerHorizontaal.Unkown;
+ELSIF i_xEndSwitchIn	THEN
+	o_eHorizotalPosition := eZuigerHorizontaal.In;
+ELSIF i_xEndSwitchOut THEN
+	o_eHorizotalPosition := eZuigerHorizontaal.Out;
+ELSE
+	o_eHorizotalPosition := eZuigerHorizontaal.Unkown;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>

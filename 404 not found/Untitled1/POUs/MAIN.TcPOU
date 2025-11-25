@@ -4,12 +4,16 @@
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
 	fbdepiltier : FB_Depalletizer;
+	fbtest		:FB_Zuiger;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF fbdepiltier.fbband.o_xGivingToNext THEN
 	//
-END_IF]]></ST>
+END_IF
+
+fbtest();
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
