@@ -34,12 +34,91 @@ VAR_OUTPUT
 	o_eMachineStateLamp2 	: eMachineStateLamp; // Lamp Depalletizer
 END_VAR
 VAR
+	
+	rlowpressure			: REAL := 4;
+	rPressure_bar: REAL;
+	rMaxbarsensor: REAL :=6;
 END_VAR
 
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//wat willen we
-//zoizo stop star en general emergncy]]></ST>
+      <ST><![CDATA[CASE i_eGeneralState OF //read general state and writhes it to the machinestatelamps
+	eGeneralState.Aborted:
+		o_eMachineStateLamp1 := eMachineStateLamp.Red_Blink;
+		o_eMachineStateLamp2 := eMachineStateLamp.Red_Blink;
+	eGeneralState.Execute:
+		o_eMachineStateLamp1 := eMachineStateLamp.Green;
+		o_eMachineStateLamp2 := eMachineStateLamp.Green;
+	eGeneralState.Idle:
+		o_eMachineStateLamp1 := eMachineStateLamp.Orange;
+		o_eMachineStateLamp2 := eMachineStateLamp.Orange;
+	eGeneralState.Stopped:
+		o_eMachineStateLamp1 := eMachineStateLamp.Red;
+		o_eMachineStateLamp2 := eMachineStateLamp.Red;
+END_CASE
+
+//safty aborting of machine and parts
+IF i_xEmergencyButton OR o_xErrorPressureGeneral THEN 		 //if emergencybutten or no air pressure then complete machine go's into Aborted
+	o_xAbortGeneral := 1;
+ELSIF NOT i_xEmergencyButton AND NOT o_xErrorPressureGeneral THEN
+	o_xAbortGeneral := 0;
+END_IF
+o_xAbortInvoerBuffer1 := i_xSafetyMat; //only for InvoerBuffer 1 Aborted
+o_xAbortPalletizer := i_xSafetyDoor; //only of palletizer aborted
+
+//Start Stop
+IF i_xStopButton OR  i_eGeneralState=eGeneralState.Aborted THEN //if stopbutton or the machine is aborted the startstop wil become Stop
+	o_eStartStopGeneral :=eStartStop.Stop;
+ELSIF i_xStartButton THEN
+	o_eStartStopGeneral :=eStartStop.Start;
+END_IF
+
+
+//pressuresensor error
+rPressure_bar := (i_iPressureSensorGeneral / 4095.0) * rMaxbarsensor;// 4095 form analog and 6 from 6 bar max from the sensor
+IF rPressure_bar<rlowpressure THEN
+	o_xErrorPressureGeneral:=1;
+ELSE
+	o_xErrorPressureGeneral:=0;
+END_IF
+
+//Errors
+o_xErrorEmergencyButton := i_xEmergencyButton;
+
+//ALARM
+IF o_xErrorPressureGeneral THEN
+	o_xAlarmPressureGeneral:=1;
+END_IF
+
+IF o_xErrorEmergencyButton THEN
+	o_xAlarmEmergencyButton:=1;
+END_IF
+
+//Warning
+IF o_xAbortInvoerBuffer1 THEN
+	o_xWarningSafetyMat:=1;
+END_IF
+
+IF o_xAbortPalletizer THEN
+	o_xWarningSafetyDoor:=1;
+END_IF
+
+//ERROR reset
+IF i_xAlarmReset THEN
+	IF NOT o_xErrorPressureGeneral THEN
+		o_xAlarmPressureGeneral:=0;
+	END_IF
+	IF NOT o_xErrorEmergencyButton THEN
+		o_xAlarmEmergencyButton:=0;
+	END_IF
+END_IF
+
+//Warning reset
+IF 	i_xWarningReset THEN
+	o_xAlarmPressureGeneral	:=0;
+	o_xAlarmEmergencyButton	:=0;
+END_IF
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

@@ -7,8 +7,9 @@
 TYPE eGeneralState :
 (
 	Idle 		:= 0,
-	Stopped 	:= 1,
-	Aborted 	:= 2
+	Execute		:= 1,
+	Stopped 	:= 2,
+	Aborted 	:= 3
 );
 END_TYPE
 ]]></Declaration>
