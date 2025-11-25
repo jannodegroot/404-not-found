@@ -6,8 +6,8 @@
 {attribute 'to_string'}
 TYPE eValvePosition :
 (
-	In := 0,
-	Out:=1,
+	Down := 0,
+	Up :=1,
 	Unkown:=2
 );
 END_TYPE

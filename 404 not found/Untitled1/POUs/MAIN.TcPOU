@@ -4,12 +4,34 @@
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
 	fbdepiltier : FB_Depalletizer;
+	KlepTest : FB_Klep;
+	states : eSingleState := 1;
+	positions : eValvePosition := 1;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF fbdepiltier.fbband.o_xGivingToNext THEN
 	//
-END_IF]]></ST>
+END_IF
+
+KlepTest();
+KlepTest.i_eState := states;
+KlepTest.i_eWantedPosition := positions;
+KlepTest.i_xAlarmReset;
+KlepTest.i_xHallSensorIn;
+KlepTest.i_xHallSensorOut;
+KlepTest.i_xWarningReset;
+
+
+KlepTest.o_eCurrentPosition;
+KlepTest.o_xAlarmPositionUpOrUnknow;
+KlepTest.o_xErrorPositionUpOrUnknow;
+KlepTest.o_xMagnetValve;
+KlepTest.o_xWarningPositionDown;
+
+
+
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

@@ -4,17 +4,17 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Klep
 VAR_INPUT
 	i_eState 			: eSingleState;
-	i_xWantedPosition 	: BOOL;
+	i_eWantedPosition 	: eValvePosition;
 	i_xHallSensorIn		: BOOL;
 	i_xHallSensorOut 	: BOOL;
 	i_xWarningReset		: BOOL;
 	i_xAlarmReset		: BOOL;
 END_VAR
 VAR_OUTPUT
-	o_xCurrentPosition 			: BOOL;
+	o_eCurrentPosition 			: eValvePosition;
 	o_xMagnetValve				: BOOL;
 	o_xWarningPositionDown 		: BOOL; //Warning when position is down becease it not stopped the machineflow
-	o_xErrorPositionUpOrUnknow	: BOOL; //Error when valve is up orunknow beceause it stopped te flow of the machine
+	o_xErrorPositionUpOrUnknow	: BOOL; //Error when valve is up or unknow beceause it stopped te flow of the machine
 	o_xAlarmPositionUpOrUnknow	: BOOL;
 END_VAR
 VAR
@@ -22,7 +22,130 @@ END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Van Emma
 
+CASE i_eState OF
+	eSingleState.Idle:
+		// beneden positie
+		GoingDown();
+	eSingleState.Execute:
+		// Ga naar de gewenste stand
+		CASE i_eWantedPosition OF
+			eValvePosition.Down:
+				GoingDown();
+
+			eValvePosition.Up:
+				GoingUp();
+
+			eValvePosition.Unkown:
+				PositionUnknown();
+		
+		END_CASE
+	eSingleState.Stopping:
+		// naar beneden
+		GoingDown();		
+	eSingleState.Stopped:
+		GoingDown();
+		// niks aansturen alles uit		
+	eSingleState.Suspending:
+		// Wachten
+	eSingleState.Suspended:
+		// Wachten
+	eSingleState.Aborting:
+		// alles uit zetten
+		GoingDown();
+	eSingleState.Aborted:
+		GoingDown();
+		// 
+END_CASE
+	
+
+	
+Resets();
+
 ]]></ST>
     </Implementation>
+    <Method Name="CheckPosition" Id="{cd7f08a9-d400-4d4a-9ab5-fc3077604adc}">
+      <Declaration><![CDATA[METHOD CheckPosition
+VAR
+	Everything : STRING;
+	kapot : STRING; 
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF TRUE = FALSE THEN
+	Everything := kapot;
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GoingDown" Id="{9aff8792-5df6-4760-b1da-ad782bf6930f}">
+      <Declaration><![CDATA[METHOD GoingDown]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[o_xMagnetValve := FALSE;
+
+IF i_xHallSensorIn AND o_xMagnetValve := FALSE THEN
+	o_eCurrentPosition := 0; //down
+ELSE 
+	o_eCurrentPosition := 2; //unknown
+	o_xErrorPositionUpOrUnknow := TRUE;
+	o_xAlarmPositionUpOrUnknow := TRUE;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GoingUp" Id="{31034355-e3ba-4c55-b09d-18e1e6f0f4ff}">
+      <Declaration><![CDATA[METHOD GoingUp]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[o_xMagnetValve := TRUE;
+
+IF i_xHallSensorOut AND o_xMagnetValve := TRUE THEN
+	o_eCurrentPosition := 1; //up
+	o_xErrorPositionUpOrUnknow := FALSE;
+ELSE 
+	o_eCurrentPosition := 2; //unknown
+	o_xErrorPositionUpOrUnknow := TRUE;
+	o_xAlarmPositionUpOrUnknow := TRUE;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PositionUnknown" Id="{c01a7d59-0d58-4142-8c14-7eba332b4019}">
+      <Declaration><![CDATA[METHOD PositionUnknown
+VAR
+	Timer : TON;
+	IN : BOOL;
+	PT : TON;
+	TimerValue : TIME := T#5S;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF i_xHallSensorIn THEN
+	o_eCurrentPosition := 0; //down
+	o_xWarningPositionDown := TRUE;
+ELSIF i_xHallSensorOut THEN
+	o_eCurrentPosition := 1; //up
+	Timer(IN:=TRUE, PT := TimerValue);
+	IF Timer.Q THEN
+		o_xErrorPositionUpOrUnknow := TRUE;
+		o_xAlarmPositionUpOrUnknow := TRUE;
+	END_IF
+ELSE
+	o_xErrorPositionUpOrUnknow := TRUE;
+	o_xAlarmPositionUpOrUnknow := TRUE;
+	o_eCurrentPosition := 2; //unknown
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Resets" Id="{abc28e97-cc6e-4383-9eed-944a9215df0b}">
+      <Declaration><![CDATA[METHOD Resets]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF 	i_xWarningReset THEN
+	o_xWarningPositionDown := FALSE;
+END_IF
+
+IF i_xAlarmReset THEN
+	o_xAlarmPositionUpOrUnknow := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>
