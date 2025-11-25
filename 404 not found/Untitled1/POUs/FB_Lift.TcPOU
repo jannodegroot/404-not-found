@@ -18,11 +18,11 @@ VAR_INPUT
 	i_xPin3HallSensorOut: BOOL;	
 	i_xPin4HallSensorIn	: BOOL;
 	i_xPin4HallSensorOut: BOOL;
-	i_xEndSwitch		: BOOL;
+	i_xEndSwitch		: BOOL; // Check if the lift is down
 	i_iDistanceSensor	: INT;
 END_VAR
 VAR_OUTPUT
-	o_xMotor 			: BOOL;
+	o_xMotor 			: BOOL; // Motor Lift
 	o_xErrorLift 		: BOOL;
 	o_xAlarmLift 		: BOOL;
 	
@@ -34,10 +34,41 @@ VAR_OUTPUT
 	o_eLiftPosition	: eLiftposition;
 END_VAR
 VAR
-END_VAR
-]]></Declaration>
+END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[CASE i_eState OF
+	i_eState.Execute :
+		// werk
+		IF i_xLightSensor1 AND NOT i_xLightSensor2 THEN
+			// Klep omhoog
+		END_IF
+		
+		IF i_xLightSensor2 AND NOT i_xLightSensor1 THEN
+			o_xPalletInPosition := TRUE;
+		END_IF
+		
+		IF o_xPalletInPosition THEN
+			//Pinnen uitschuiven
+			o_xMagnetValve := TRUE;
+		END_IF
+	i_eState.Stopping :
+		// Stop gewoon
+		
+	i_eState.Suspending :
+		// Stop gewoon
+		
+	ELSE
+		// doe iets?
+END_CASE
+
+//	Idle 		:= 0,
+// 	Execute 	:= 1,
+// 	Stopping 	:= 2,
+// 	Stopped 	:= 3,
+// 	Suspending 	:= 4,
+// 	Suspended 	:= 5,
+// 	Aborting 	:= 6,
+// 	Aborted 	:= 7]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
