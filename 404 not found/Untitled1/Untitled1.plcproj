@@ -36,6 +36,9 @@
     <Compile Include="DUTs\eStartStop.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\eValvePosition.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\eZuigerCilinderposition.TcDUT">
       <SubType>Code</SubType>
     </Compile>

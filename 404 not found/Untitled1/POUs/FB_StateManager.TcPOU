@@ -20,7 +20,62 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[//idle
+IF i_eStateInvoerBuffer1 = i_eStateInvoerBuffer1.Idle AND
+	i_eStateBuffer2 = i_eStateBuffer2.Idle AND
+	i_eStateBuffer3 = i_eStateBuffer3.Idle AND
+	i_eStateBuffer4 = i_eStateBuffer4.Idle AND
+	i_eStateBuffer5 = i_eStateBuffer5.Idle AND
+	i_eStateDepalletizer = i_eStateDepalletizer.Idle AND
+	i_eStateBandDepalletizerPalletizer = i_eStateBandDepalletizerPalletizer.Idle AND
+	i_eStatePalletizer = i_eStatePalletizer.Idle AND
+	i_eStateBlikjesBand = i_eStateBlikjesBand.Idle
+THEN
+	o_eGeneralState := o_eGeneralState.Idle;
+END_IF
+
+//execute
+IF i_eStateInvoerBuffer1 = i_eStateInvoerBuffer1.Execute OR
+	i_eStateBuffer2 = i_eStateBuffer2.Execute OR
+	i_eStateBuffer3 = i_eStateBuffer3.Execute OR
+	i_eStateBuffer4 = i_eStateBuffer4.Execute OR
+	i_eStateBuffer5 = i_eStateBuffer5.Execute OR
+	i_eStateDepalletizer = i_eStateDepalletizer.Execute OR
+	i_eStateBandDepalletizerPalletizer = i_eStateBandDepalletizerPalletizer.Execute OR
+	i_eStatePalletizer = i_eStatePalletizer.Execute OR
+	i_eStateBlikjesBand = i_eStateBlikjesBand.Execute
+THEN
+	o_eGeneralState := o_eGeneralState.Execute;
+END_IF
+
+//Stopped
+IF i_eStateInvoerBuffer1 = i_eStateInvoerBuffer1.Stopped AND
+	i_eStateBuffer2 = i_eStateBuffer2.Stopped AND
+	i_eStateBuffer3 = i_eStateBuffer3.Stopped AND
+	i_eStateBuffer4 = i_eStateBuffer4.Stopped AND
+	i_eStateBuffer5 = i_eStateBuffer5.Stopped AND
+	i_eStateDepalletizer = i_eStateDepalletizer.Stopped AND
+	i_eStateBandDepalletizerPalletizer = i_eStateBandDepalletizerPalletizer.Stopped AND
+	i_eStatePalletizer = i_eStatePalletizer.Stopped AND
+	i_eStateBlikjesBand = i_eStateBlikjesBand.Stopped
+THEN
+	o_eGeneralState := o_eGeneralState.Stopped;
+END_IF
+
+//Aborted
+IF i_eStateInvoerBuffer1 = i_eStateInvoerBuffer1.Aborted AND
+	i_eStateBuffer2 = i_eStateBuffer2.Aborted AND
+	i_eStateBuffer3 = i_eStateBuffer3.Aborted AND
+	i_eStateBuffer4 = i_eStateBuffer4.Aborted AND
+	i_eStateBuffer5 = i_eStateBuffer5.Aborted AND
+	i_eStateDepalletizer = i_eStateDepalletizer.Aborted AND
+	i_eStateBandDepalletizerPalletizer = i_eStateBandDepalletizerPalletizer.Aborted AND
+	i_eStatePalletizer = i_eStatePalletizer.Aborted AND
+	i_eStateBlikjesBand = i_eStateBlikjesBand.Aborted
+THEN
+	o_eGeneralState := o_eGeneralState.Aborted;
+END_IF
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
