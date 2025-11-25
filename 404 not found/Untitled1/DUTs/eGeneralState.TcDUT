@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="eGeneralState" Id="{ed1ae5ce-6664-4b38-b3bc-3cb46a1a1274}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+{attribute 'to_string'}
+TYPE eGeneralState :
+(
+	Idle 		:= 0,
+	Stopped 	:= 1,
+	Aborted 	:= 2
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

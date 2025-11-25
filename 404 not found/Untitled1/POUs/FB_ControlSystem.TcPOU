@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_ControlSystem" Id="{a5bdc4cb-1932-4531-a21e-ba0ceca6296e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ControlSystem
+VAR_INPUT
+	i_eGeneralState 		: eGeneralState;
+	i_xEmergencyButton 		: BOOL;
+	i_xSafetyMat 			: BOOL;
+	i_xSafetyDoor 			: BOOL;
+	i_xStartButton 			: BOOL;
+	i_xStopButton 			: BOOL;
+	i_xWarningReset			: BOOL;
+	i_xAlarmReset			: BOOL;
+	i_iPressureSensorGeneral: INT;
+	
+END_VAR
+VAR_OUTPUT
+	o_eStartStopGeneral 	: eStartStop;
+	
+	o_xWarningSafetyMat 	: BOOL;
+	o_xWarningSafetyDoor 	: BOOL;
+	
+	o_xAlarmPressureGeneral	: BOOL;
+	o_xAlarmEmergencyButton	: BOOL;
+	
+	o_xErrorPressureGeneral	: BOOL;
+	o_xErrorEmergencyButton	: BOOL;
+	
+	o_xAbortGeneral			: BOOL;
+	o_xAbortInvoerBuffer1	: BOOL;
+	o_xAbortPalletizer		: BOOL;
+	
+	o_eMachineStateLamp1 	: eMachineStateLamp; // Lamp Invoer
+	o_eMachineStateLamp2 	: eMachineStateLamp; // Lamp Depalletizer
+END_VAR
+VAR
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//wat willen we
+//zoizo stop star en general emergncy]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
