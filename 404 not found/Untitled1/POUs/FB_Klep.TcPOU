@@ -3,12 +3,14 @@
   <POU Name="FB_Klep" Id="{8f632325-bc23-4204-82f5-b4ed35cd42af}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Klep
 VAR_INPUT
-	i_eState 			: eSingleState;
-	i_eWantedPosition 	: eValvePosition;
-	i_xHallSensorIn		: BOOL;
-	i_xHallSensorOut 	: BOOL;
-	i_xWarningReset		: BOOL;
-	i_xAlarmReset		: BOOL;
+	i_eState 				: eSingleState;
+	//i_eModus				: eModus;
+	i_eAutoWantedPosition 	: eValvePosition;
+	i_eManualWantedPosition	: eValvePosition;
+	i_xHallSensorIn			: BOOL;
+	i_xHallSensorOut 		: BOOL;
+	i_xWarningReset			: BOOL;
+	i_xAlarmReset			: BOOL;
 END_VAR
 VAR_OUTPUT
 	o_eCurrentPosition 			: eValvePosition;
@@ -18,9 +20,28 @@ VAR_OUTPUT
 	o_xAlarmPositionUpOrUnknow	: BOOL;
 END_VAR
 VAR
+	modeAuto: BOOL;
+	modeManual: BOOL;
+	Timer : TON;
+	IN : BOOL;
+	PT : TON;
+	TimerValue : TIME := T#5S;
+	TimerStartButton : BOOL;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Van Emma
+(*CASE i_eModus OF
+	eModus.Off:
+	modeAuto := FALSE;
+	modeManual := FALSE;
+	eModus.Auto:
+	modeAuto := TRUE;
+	modeManual := FALSE;
+	eModus.Manual:
+	modeAuto := FALSE;
+	modeManual := TRUE;
+END_CASE 
+*)
 
 CASE i_eState OF
 	eSingleState.Idle:
@@ -28,7 +49,9 @@ CASE i_eState OF
 		GoDown();
 	eSingleState.Execute:
 		// Ga naar de gewenste stand
-		CASE i_eWantedPosition OF
+		// wanneer auto en manual
+		IF modeAuto THEN
+			CASE i_eAutoWantedPosition OF
 			eValvePosition.Down:
 				GoDown();
 
@@ -36,9 +59,23 @@ CASE i_eState OF
 				GoUp();
 
 			eValvePosition.Unkown:
-				PositionUnknown();
+				TimerStartButton := TRUE;
 		
-		END_CASE
+			END_CASE
+		ELSIF modeManual THEN
+			CASE i_eManualWantedPosition OF
+			eValvePosition.Down:
+				GoDown();
+
+			eValvePosition.Up:
+				GoUp();
+
+			eValvePosition.Unkown:
+				TimerStartButton := TRUE;
+		
+			END_CASE
+		END_IF
+		
 	eSingleState.Stopping:
 		// naar beneden
 		GoDown();
@@ -56,30 +93,54 @@ CASE i_eState OF
 		GoDown();
 		// 
 END_CASE
-	
-IF o_eCurrentPosition = 2 THEN
-	PositionUnknown();
-END_IF
-	
-Resets();
 
-]]></ST>
+IF	i_xHallSensorIn AND i_xHallSensorOut THEN
+	o_eCurrentPosition := eValvePosition.Unkown;
+ELSIF i_xHallSensorIn	THEN
+	o_eCurrentPosition := eValvePosition.Down;
+ELSIF i_xHallSensorOut THEN
+	o_eCurrentPosition := eValvePosition.Up;
+ELSE
+	o_eCurrentPosition := eValvePosition.Unkown;
+END_IF
+
+
+IF o_eCurrentPosition = i_eAutoWantedPosition THEN
+	o_xErrorPositionUpOrUnknow := FALSE;
+ELSIF o_eCurrentPosition = i_eManualWantedPosition THEN
+	o_xErrorPositionUpOrUnknow := FALSE;
+ELSE 
+	TimerStartButton := TRUE;
+END_IF
+
+
+Timer(IN:=TimerStartButton, PT := TimerValue);
+
+IF Timer.Q THEN
+	Errors();
+END_IF
+
+Resets();]]></ST>
     </Implementation>
-    <Method Name="Check" Id="{cd7f08a9-d400-4d4a-9ab5-fc3077604adc}">
-      <Declaration><![CDATA[METHOD Check
+    <Method Name="Errors" Id="{c01a7d59-0d58-4142-8c14-7eba332b4019}">
+      <Declaration><![CDATA[METHOD Errors
 VAR
-	Everything : STRING;
-	kapot : STRING; 
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF TRUE = FALSE THEN
-	Everything := kapot;
-END_IF
+        <ST><![CDATA[
+CASE o_eCurrentPosition OF
+	eValvePosition.Up :
+			o_xErrorPositionUpOrUnknow := TRUE;
+			o_xAlarmPositionUpOrUnknow := TRUE;	
+	eValvePosition.Down :
+			o_xWarningPositionDown := TRUE;
+	eValvePosition.Unkown :
+			o_xErrorPositionUpOrUnknow := TRUE;
+			o_xAlarmPositionUpOrUnknow := TRUE;	
+END_CASE
 
-IF i_xHallSensorOut AND i_xHallSensorIn THEN
-	o_eCurrentPosition := 2; //unknown
-	PositionUnknown();
-END_IF
+
+
 ]]></ST>
       </Implementation>
     </Method>
@@ -88,13 +149,6 @@ END_IF
       <Implementation>
         <ST><![CDATA[o_xMagnetValve := FALSE;
 
-IF i_xHallSensorIn AND o_xMagnetValve = FALSE THEN
-	o_eCurrentPosition := 0; //down
-	o_xWarningPositionDown := TRUE;
-	o_xErrorPositionUpOrUnknow := FALSE;
-ELSE 
-	o_eCurrentPosition := 2; //unknown
-END_IF
 ]]></ST>
       </Implementation>
     </Method>
@@ -102,42 +156,6 @@ END_IF
       <Declaration><![CDATA[METHOD GoUp]]></Declaration>
       <Implementation>
         <ST><![CDATA[o_xMagnetValve := TRUE;
-
-IF i_xHallSensorOut AND o_xMagnetValve = TRUE THEN
-	o_eCurrentPosition := 1; //up
-	o_xErrorPositionUpOrUnknow := FALSE;
-ELSE 
-	o_eCurrentPosition := 2; //unknown
-	PositionUnknown();
-END_IF
-]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="PositionUnknown" Id="{c01a7d59-0d58-4142-8c14-7eba332b4019}">
-      <Declaration><![CDATA[METHOD PositionUnknown
-VAR
-	Timer : TON;
-	IN : BOOL;
-	PT : TON;
-	TimerValue : TIME := T#5S;
-	TimerStartButton : BOOL;
-END_VAR]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[TimerStartButton := TRUE;
-
-Timer(IN:=TimerStartButton, PT := TimerValue);
-IF Timer.Q THEN
-	o_xErrorPositionUpOrUnknow := TRUE;
-	o_xAlarmPositionUpOrUnknow := TRUE;
-	o_eCurrentPosition := 2; //unknown
-END_IF
-
-///////////  AANPASSEN WERKT NIET 
-(*
-misschien property gebruiken
-heel vervelend'
-kan ook kijken naar alberts code van vorig jaar
-*)
 ]]></ST>
       </Implementation>
     </Method>
@@ -146,9 +164,11 @@ kan ook kijken naar alberts code van vorig jaar
       <Implementation>
         <ST><![CDATA[IF 	i_xWarningReset THEN
 	o_xWarningPositionDown := FALSE;
+	TimerStartButton := FALSE;
 END_IF
 
 IF i_xAlarmReset THEN
+	TimerStartButton := FALSE;
 	o_xAlarmPositionUpOrUnknow := FALSE;
 END_IF]]></ST>
       </Implementation>

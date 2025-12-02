@@ -18,7 +18,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// VAn EMma]]></ST>
+      <ST><![CDATA[// Van Emma]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
