@@ -147,6 +147,12 @@
     <Content Include=".eslintrc.json">
       <Visible>false</Visible>
     </Content>
+    <Content Include="Content\BandDepalletizerPalletizer.content">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\BandDepalletizerPalletizer.content">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Content\Buffer2.content">
       <SubType>Content</SubType>
     </Content>
@@ -159,10 +165,35 @@
     <Content Include="Content\Buffer5.content">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Content\Depalletizer.content">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\DepalletizerBand.content">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\DepalletizerLift.content">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\DepalletizerSchuif.content">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\DepalletizerZuiger.content">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Content\Home.content">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Content\InvoerBuffer1.content">
+    <Content Include="Content\Palletizer.content">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\PalletizerBand.content">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\PalletizerLift.content">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\PalletizerLift.content">
+>>>>>>>>> Temporary merge branch 2
       <SubType>Content</SubType>
     </Content>
     <Content Include="Server\TcHmiLua\TcHmiLua.Config.default.json">
