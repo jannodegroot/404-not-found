@@ -30,42 +30,82 @@ VAR_OUTPUT
 	o_xErrorImpaler 	: BOOL;
 	o_xAlarmImpaler		: BOOL;
 	
+	o_xNewPalletPossible: BOOL;
 	o_xPalletInPosition	: BOOL;
-	o_eLiftPosition	: eLiftposition;
+	o_eLiftPosition		: eLiftposition;
 END_VAR
 VAR
-	xERROR_case : BOOL;
-END_VAR]]></Declaration>
+    eLiftState 		: eLiftStates;
+END_VAR
+
+// TYPE E_LiftState :
+// (
+//     InitHome := 0,
+//     MoveDownToHome := 1,
+//     WaitForPallet := 2,
+//     Impale := 3,
+//     MoveUpToLayer := 4,
+//     PlacePallet := 5,
+//     MoveDownAfterPlace := 6,
+//     Complete := 7,
+//     Error := 99
+// );
+// END_TYPE]]></Declaration>
     <Implementation>
-      <ST><![CDATA[CASE i_eState OF
-	i_eState.Execute :
-		// Follow steps to lift a pallet
-		
+      <ST><![CDATA[// Toevoegen Case Modus //
+
+CASE i_eState OF
+	eSingleState.Execute :
 		// Check if the lift is down
-		IF i_xEndSwitch THEN
-			// Lift is down, proceed
-		ELSE
-			// Move lift down to home and try again, if it does not work, ERROR.
-			RETURN;
-		END_IF
-	i_eState.Stopping :
+		
+		CASE eLiftState OF
+			eLiftStates.InitHome :
+				IF i_xEndSwitch AND i_xPin1HallSensorIn AND i_xPin2HallSensorIn AND i_xPin3HallSensorIn AND i_xPin4HallSensorIn THEN
+					// Lift is down and pins are in, proceed 
+					o_eLiftPosition := eLiftPosition.Down;
+					eLiftState := eLiftStates.WaitForPallet;
+				ELSE
+					eLiftState := eLiftStates.MoveDownToHome;
+				END_IF
+				
+			eLiftStates.MoveDownToHome :
+				// Move to Home
+				
+				o_xMagnetValve := FALSE; // Retract pins
+				
+				IF i_xEndSwitch AND i_xPin1HallSensorIn AND i_xPin2HallSensorIn AND i_xPin3HallSensorIn AND i_xPin4HallSensorIn THEN
+					o_eLiftPosition := eLiftPosition.Down;
+					eLiftState := eLiftStates.WaitForPallet;
+				END_IF
+				
+			eLiftStates.WaitForPallet :
+				o_xNewPalletPossible := TRUE; // Command to start conveyor
+				
+				IF i_xLightSensor1 AND NOT i_xLightSensor2 THEN
+					//Klep omhoog
+				END_IF
+				// If sensor one detects, push out piston
+				// If sensor 2 detects, stop conveyor
+				
+			eLiftStates.Impale :
+				// Push out pins
+				
+			eLiftState.MoveUpToLayer :
+				// Check if it is possible to move up
+				// Move up to first layer
+				
+			
+		END_CASE
+		
+	eSingleState.Stopping :
 		// Stop gewoon
 		
-	i_eState.Suspending :
+	eSingleState.Suspending :
 		// Stop gewoon
 		
 	ELSE
 		// doe iets?
-END_CASE
-
-//	Idle 		:= 0,
-// 	Execute 	:= 1,
-// 	Stopping 	:= 2,
-// 	Stopped 	:= 3,
-// 	Suspending 	:= 4,
-// 	Suspended 	:= 5,
-// 	Aborting 	:= 6,
-// 	Aborted 	:= 7]]></ST>
+END_CASE]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

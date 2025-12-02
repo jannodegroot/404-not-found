@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="eLiftStates" Id="{779e1e4c-fc4c-4cda-ad9b-b59e71fe47db}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+{attribute 'to_string'}
+TYPE eLiftStates :
+(
+	InitHome := 0,
+    MoveDownToHome := 1,
+    WaitForPallet := 2,
+    Impale := 3,
+    MoveUpToLayer := 4,
+    PlacePallet := 5,
+    MoveDownAfterPlace := 6,
+    Complete := 7,
+    Error := 99
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

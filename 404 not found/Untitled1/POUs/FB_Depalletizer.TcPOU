@@ -22,7 +22,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[// Yvo]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
