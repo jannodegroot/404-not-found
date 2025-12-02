@@ -4,7 +4,7 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Klep
 VAR_INPUT
 	i_eState 				: eSingleState;
-	//i_eModus				: eModus;
+	i_eModus				: eModus;
 	i_eAutoWantedPosition 	: eValvePosition;
 	i_eManualWantedPosition	: eValvePosition;
 	i_xHallSensorIn			: BOOL;
@@ -30,7 +30,7 @@ VAR
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Van Emma
-(*CASE i_eModus OF
+CASE i_eModus OF
 	eModus.Off:
 	modeAuto := FALSE;
 	modeManual := FALSE;
@@ -41,7 +41,7 @@ END_VAR]]></Declaration>
 	modeAuto := FALSE;
 	modeManual := TRUE;
 END_CASE 
-*)
+
 
 CASE i_eState OF
 	eSingleState.Idle:
