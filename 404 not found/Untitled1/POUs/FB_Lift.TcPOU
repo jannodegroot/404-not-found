@@ -90,7 +90,7 @@ CASE i_eState OF
 			eLiftStates.Impale :
 				// Push out pins
 				
-			eLiftState.MoveUpToLayer :
+			eLiftStates.MoveUpToLayer :
 				// Check if it is possible to move up
 				// Move up to first layer
 				
