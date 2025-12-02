@@ -23,6 +23,7 @@ VAR
 	AlarmGeneral	: BOOL;
 	GivingToNext	: BOOL;
 	Empty			: BOOL;
+	StateString		: BOOL;
 	
 END_VAR
 ]]></Declaration>
@@ -40,7 +41,8 @@ END_VAR
 					o_xMotor			=> Motor, 
 					o_xErrorGeneral		=> ErrorGeneral, 
 					o_xAlarmGeneral		=> AlarmGeneral, 
-					o_xGivingToNext		=> GivingToNext);			
+					o_xGivingToNext		=> GivingToNext,
+					o_sStateString		=> );			
 (* 
 fbBuffer2( i_xAbort			:= Abort, 
 			i_eStartStop		:= StartStop,  
@@ -74,7 +76,8 @@ fbBuffer5(	i_xAbort			:= Abort,
 			o_xAlarmGeneral		=> AlarmGeneral, 
 			o_xGivingToNext		=> GivingToNext,
 			o_xEmpty 			=> Empty);
-*)]]></ST>
+*)
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
