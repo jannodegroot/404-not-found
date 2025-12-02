@@ -27,6 +27,9 @@
     <Compile Include="DUTs\eMachineStateLamp.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\eModus.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\eSlideposition.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -46,6 +49,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PlcTask.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\F_StateEnumToString.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_BandMetKlep.TcPOU">

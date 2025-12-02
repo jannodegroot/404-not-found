@@ -3,12 +3,14 @@
   <POU Name="FB_Klep" Id="{8f632325-bc23-4204-82f5-b4ed35cd42af}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Klep
 VAR_INPUT
-	i_eState 			: eSingleState;
-	i_eWantedPosition 	: eValvePosition;
-	i_xHallSensorIn		: BOOL;
-	i_xHallSensorOut 	: BOOL;
-	i_xWarningReset		: BOOL;
-	i_xAlarmReset		: BOOL;
+	i_eState 				: eSingleState;
+	i_eModus				: eModus;
+	i_eAutoWantedPosition 	: eValvePosition;
+	i_eManualWantedPosition : eValvePosition;
+	i_xHallSensorIn			: BOOL;
+	i_xHallSensorOut 		: BOOL;
+	i_xWarningReset			: BOOL;
+	i_xAlarmReset			: BOOL;
 END_VAR
 VAR_OUTPUT
 	o_eCurrentPosition 			: eValvePosition;
