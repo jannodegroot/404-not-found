@@ -18,10 +18,15 @@ END_VAR
 VAR
 	fbLift	: FB_Lift;
 	fbBand	: FB_BandZonderKlep;
+	TimerLift: TON;
+	xTimerLiftRunning: BOOL;
+	timTimerValue: TIME;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//pallets
+      <ST><![CDATA[//timmer
+TimerLift(IN:=xTimerLiftRunning, PT := timTimerValue);
+
 
 //aansturen band
 //aansturen lift
