@@ -16,7 +16,6 @@ VAR
 	AlarmReset		: BOOL;
 	NextState		: eSingleState;	
 	CurrentState	: eSingleState;
-	ManualCmdMotor	: BOOL;
 	Motor			: BOOL;
 	ErrorGeneral	: BOOL;
 	AlarmGeneral	: BOOL;
@@ -35,7 +34,7 @@ END_VAR
 					i_xAlarmReset		:= AlarmReset, 
 					i_eNextState		:= NextState,
 					i_eModus			:= ,
-					i_xManualCmdMotor 	:= ManualCmdMotor,	 
+					i_xManualCmdMotor 	:= ,	 
 					o_eState			=> CurrentState, 
 					o_xMotor			=> Motor, 
 					o_xErrorGeneral		=> ErrorGeneral, 
