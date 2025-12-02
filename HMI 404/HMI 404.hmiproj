@@ -135,6 +135,7 @@
     <Folder Include="Imports\Videos" />
     <Folder Include="KeyboardLayouts\" />
     <Folder Include="Localization" />
+    <Folder Include="Content" />
     <Folder Include="Themes" />
     <Folder Include="Themes\Base-Dark\Images\" />
     <Folder Include="Themes\Base\" />
@@ -145,6 +146,24 @@
     <Folder Include="Properties" />
     <Content Include=".eslintrc.json">
       <Visible>false</Visible>
+    </Content>
+    <Content Include="Content\Buffer2.content">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\Buffer3.content">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\Buffer4.content">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\Buffer5.content">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\Home.content">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\InvoerBuffer1.content">
+      <SubType>Content</SubType>
     </Content>
     <Content Include="Server\TcHmiLua\TcHmiLua.Config.default.json">
       <SubType>Content</SubType>
