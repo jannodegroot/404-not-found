@@ -165,7 +165,7 @@ END_IF
 IF NOT 	o_xErrorHorizontalMovement AND i_xAlarmResetAlarmHorizontalMovement THEN
 	o_xAlarmHorizontalMovement:=0;
 END_IF
-IF NOT o_xErrorPressure AND  THEN
+IF NOT o_xErrorPressure AND  i_xAlarmResetPressure THEN
 	o_xAlarmPressure:=0;
 END_IF
 

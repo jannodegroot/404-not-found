@@ -28,7 +28,11 @@ END_VAR
 //aansturen zichzelf
 //errors
 //allarmen
-//warnings]]></ST>
+//warnings
+
+IF i_xDoorOpenButton THEN
+	//lift naar beneden
+END_IF]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
