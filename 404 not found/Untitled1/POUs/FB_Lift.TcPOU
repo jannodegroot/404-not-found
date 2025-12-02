@@ -34,22 +34,19 @@ VAR_OUTPUT
 	o_eLiftPosition	: eLiftposition;
 END_VAR
 VAR
+	xERROR_case : BOOL;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[CASE i_eState OF
 	i_eState.Execute :
-		// werk
-		IF i_xLightSensor1 AND NOT i_xLightSensor2 THEN
-			// Klep omhoog
-		END_IF
+		// Follow steps to lift a pallet
 		
-		IF i_xLightSensor2 AND NOT i_xLightSensor1 THEN
-			o_xPalletInPosition := TRUE;
-		END_IF
-		
-		IF o_xPalletInPosition THEN
-			//Pinnen uitschuiven
-			o_xMagnetValve := TRUE;
+		// Check if the lift is down
+		IF i_xEndSwitch THEN
+			// Lift is down, proceed
+		ELSE
+			// Move lift down to home and try again, if it does not work, ERROR.
+			RETURN;
 		END_IF
 	i_eState.Stopping :
 		// Stop gewoon
