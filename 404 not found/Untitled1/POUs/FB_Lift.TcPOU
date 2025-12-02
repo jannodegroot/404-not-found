@@ -4,7 +4,7 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Lift
 VAR_INPUT
 	i_eState 			: eSingleState;
-	i_xMoveNextLayerUp	: BOOL;
+	i_xAllowedToMoveUp	: BOOL;
 	i_xAllowedToMoveDown: BOOL;
 	i_xAlarmReset		: BOOL;
 	i_iServoEncoder		: INT;
@@ -20,7 +20,9 @@ VAR_INPUT
 	i_xPin4HallSensorOut: BOOL;
 	i_xEndSwitch		: BOOL; // Check if the lift is down
 	i_iDistanceSensor	: INT;
-	i_iLayerHeight		: INT;
+	i_iLayerHeight		: INT;	// Height of each layer
+	i_iBaseHeight       : INT;  // Layer 1 servo height
+	i_iNumberOfLayers   : INT;  // Total number of layers
 END_VAR
 VAR_OUTPUT
 	o_xMotor 			: BOOL; // Motor Lift
@@ -37,6 +39,8 @@ VAR_OUTPUT
 END_VAR
 VAR
     eLiftState 		: eLiftStates;
+	aLayerHeights	: ARRAY[1..5] OF INT;
+	i				: INT := 0;
 END_VAR
 
 // TYPE E_LiftState :
@@ -61,6 +65,10 @@ CASE i_eState OF
 		
 		CASE eLiftState OF
 			eLiftStates.InitHome :
+				FOR i := 1 TO i_iNumberOfLayers DO
+    				aLayerHeights[i] := i_iBaseHeight + (i - 1) * i_iLayerHeight;
+				END_FOR
+			
 				IF i_xEndSwitch AND i_xPin1HallSensorIn AND i_xPin2HallSensorIn AND i_xPin3HallSensorIn AND i_xPin4HallSensorIn THEN
 					// Lift is down and pins are in, proceed 
 					o_eLiftPosition := eLiftPosition.Home;
@@ -101,6 +109,7 @@ CASE i_eState OF
 				o_xMagnetValve := TRUE;
 				IF i_xPin1HallSensorOut AND i_xPin2HallSensorOut AND i_xPin3HallSensorOut AND i_xPin4HallSensorOut THEN
 					// Go lift pallet to Pos1
+					eLiftState := eLiftStates.MoveUpToLayer;
 				END_IF
 				
 			eLiftStates.MoveUpToLayer :
