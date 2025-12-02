@@ -1,15 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <DUT Name="eGeneralState" Id="{ed1ae5ce-6664-4b38-b3bc-3cb46a1a1274}">
+  <DUT Name="eModus" Id="{8a19fcfc-d24f-4f0f-8f76-7458174dc2b5}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 {attribute 'strict'}
 {attribute 'to_string'}
-TYPE eGeneralState :
+TYPE eModus :
 (
-	Idle 		:= 0,
-	Execute		:= 1,
-	Stopped 	:= 2,
-	Aborted 	:= 3
+	Off := 0,
+	Auto := 1,
+	Manual := 2
 );
 END_TYPE
 ]]></Declaration>
