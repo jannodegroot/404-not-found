@@ -33,11 +33,7 @@ TimerLift(IN:=xTimerLiftRunning, PT := timTimerValue);
 //aansturen zichzelf
 //errors
 //allarmen
-//warnings
-
-IF i_xDoorOpenButton THEN
-	//lift naar beneden
-END_IF]]></ST>
+//warnings]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
