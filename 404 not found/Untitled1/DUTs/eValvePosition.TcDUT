@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <DUT Name="eModus" Id="{8a19fcfc-d24f-4f0f-8f76-7458174dc2b5}">
+  <DUT Name="eValvePosition" Id="{de4025fc-2a36-498c-9c5b-609ad1be65e4}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 {attribute 'strict'}
 {attribute 'to_string'}
-TYPE eModus :
+TYPE eValvePosition :
 (
-	Off := 0,
-	Auto := 1,
-	Manual := 2
+	Up := 0,
+	Down:=1,
+	Unkown:=2
 );
 END_TYPE
 ]]></Declaration>
