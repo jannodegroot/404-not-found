@@ -897,6 +897,40 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbInvoerBuffer1.i_xAbort": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbInvoerBuffer1::i_xAbort",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 1
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbInvoerBuffer1.i_xAlarmReset": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbInvoerBuffer1::i_xAlarmReset",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 6
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbInvoerBuffer1.o_eState": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -912,7 +946,7 @@
                     }
                 ]
             },
-            "USEMAPPING": true
+            "USEMAPPING": false
         },
         "ADS.PLC1.MAIN.fbInvoerBuffer1.o_sStateString": {
             "ACCESS": 3,
@@ -3940,6 +3974,8 @@
                 "ADS.CheckLicense": 3,
                 "ADS.Diagnostics": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.i_eModus": 3,
+                "ADS.PLC1.MAIN.fbInvoerBuffer1.i_xAbort": 3,
+                "ADS.PLC1.MAIN.fbInvoerBuffer1.i_xAlarmReset": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.o_eState": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.o_sStateString": 3,
                 "ChangeUserSettings": 3,
