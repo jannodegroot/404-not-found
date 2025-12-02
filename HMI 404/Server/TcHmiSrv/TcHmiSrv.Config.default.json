@@ -27,7 +27,101 @@
     "DEFAULTLOCALE": "client",
     "DEFAULTTIMEFORMATLOCALE": "client",
     "DEFAULTTIMEZONE": "client",
-    "DEFINITIONS": {},
+    "DEFINITIONS": {
+        "ADS": {
+            "ADS-PLC1.STRING-30": {
+                "allOf": [
+                    {
+                        "maxLength": 30
+                    },
+                    {
+                        "$ref": "tchmi:general#/definitions/String"
+                    }
+                ]
+            },
+            "ADS-PLC1.eModus": {
+                "attributes": {
+                    "generate_implicit_init_function": "",
+                    "qualified_only": "",
+                    "strict": "",
+                    "to_string": ""
+                },
+                "enum": [
+                    0,
+                    1,
+                    2
+                ],
+                "options": [
+                    {
+                        "label": "Off",
+                        "value": 0
+                    },
+                    {
+                        "label": "Auto",
+                        "value": 1
+                    },
+                    {
+                        "label": "Manual",
+                        "value": 2
+                    }
+                ],
+                "type": "integer"
+            },
+            "ADS-PLC1.eSingleState": {
+                "attributes": {
+                    "generate_implicit_init_function": "",
+                    "qualified_only": "",
+                    "strict": "",
+                    "to_string": ""
+                },
+                "enum": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7
+                ],
+                "options": [
+                    {
+                        "label": "Idle",
+                        "value": 0
+                    },
+                    {
+                        "label": "Execute",
+                        "value": 1
+                    },
+                    {
+                        "label": "Stopping",
+                        "value": 2
+                    },
+                    {
+                        "label": "Stopped",
+                        "value": 3
+                    },
+                    {
+                        "label": "Suspending",
+                        "value": 4
+                    },
+                    {
+                        "label": "Suspended",
+                        "value": 5
+                    },
+                    {
+                        "label": "Aborting",
+                        "value": 6
+                    },
+                    {
+                        "label": "Aborted",
+                        "value": 7
+                    }
+                ],
+                "type": "integer"
+            }
+        }
+    },
     "DEFLATECOMPRESSIONLEVEL": 5,
     "DIAGNOSTICS_DOMAINS": [],
     "DISABLED_CONFIGURATION_HINTS": [],
@@ -783,6 +877,57 @@
             "OPTIONS": {},
             "SCHEMA": {
                 "function": true
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbInvoerBuffer1.i_eModus": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbInvoerBuffer1::i_eModus",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:server#/definitions/ADS-PLC1.eModus"
+                    },
+                    {
+                        "propertyOrder": 8
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbInvoerBuffer1.o_eState": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbInvoerBuffer1::o_eState",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:server#/definitions/ADS-PLC1.eSingleState"
+                    },
+                    {
+                        "propertyOrder": 10
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbInvoerBuffer1.o_sStateString": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbInvoerBuffer1::o_sStateString",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:server#/definitions/ADS-PLC1.STRING-30"
+                    },
+                    {
+                        "propertyOrder": 16
+                    }
+                ]
             },
             "USEMAPPING": true
         },
@@ -3794,6 +3939,9 @@
                 "ADS.AdsSyncReadStateReq": 3,
                 "ADS.CheckLicense": 3,
                 "ADS.Diagnostics": 3,
+                "ADS.PLC1.MAIN.fbInvoerBuffer1.i_eModus": 3,
+                "ADS.PLC1.MAIN.fbInvoerBuffer1.o_eState": 3,
+                "ADS.PLC1.MAIN.fbInvoerBuffer1.o_sStateString": 3,
                 "ChangeUserSettings": 3,
                 "ConfirmAlarm": 3,
                 "CreateEvent": 3,
