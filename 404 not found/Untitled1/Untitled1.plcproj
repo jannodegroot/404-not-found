@@ -69,9 +69,6 @@
     <Compile Include="POUs\FB_BufferZonderKlep.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FB_ControlSystem.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\FB_Depalletizer.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -84,9 +81,6 @@
     <Compile Include="POUs\FB_Lift.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FB_Palletizer.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\FB_Schuif.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -96,16 +90,23 @@
     <Compile Include="POUs\FB_StateManager.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FB_Zuiger.TcPOU">
+    <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\MAIN.TcPOU">
+    <Compile Include="POUs\POUs\FB_ControlSystem.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\POUs\FB_Palletizer.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\POUs\FB_Zuiger.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
+    <Folder Include="POUs\POUs" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
