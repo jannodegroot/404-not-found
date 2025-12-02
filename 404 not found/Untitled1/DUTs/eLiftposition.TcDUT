@@ -6,10 +6,14 @@
 {attribute 'to_string'}
 TYPE eLiftposition :
 (
-	Up := 0,
-	Down :=1,
-	GoingUp :=2,
-	GoingDown :=3
+	Home 		:= 0,
+	Position_1	:= 1,
+	Position_2	:= 2,
+	Position_3	:= 3,
+	Position_4	:= 4,
+	Position_5	:= 5,
+	GoingUp 	:= 6,
+	GoingDown 	:= 7
 	
 );
 END_TYPE
