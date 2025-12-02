@@ -4,13 +4,22 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Zuiger
 VAR_INPUT
 	i_eState 			: eSingleState;
+	i_eModes			: eModus;
 	i_xMoveCiliderDown	: BOOL;
 	i_xHallSensorIn		: BOOL;
 	i_xHallSensorOut	: BOOL;
 	i_xEndSwitchIn		: BOOL;
 	i_xEndSwitchOut		: BOOL;
 	i_rPressureSensor	: REAL; 
-	i_xAlarmReset		: BOOL;
+	i_xAlarmResetCilinder	: BOOL;
+	i_xAlarmResetAlarmHorizontalMovement	: BOOL;
+	i_xAlarmResetPressure : BOOL;
+	i_xButtonManStopall : BOOL;
+	i_xButtonManCiliderUP : BOOL;
+	i_xButtonManCiliderDown : BOOL;
+	i_xButtonManHoriztalOUT : BOOL;
+	i_xButtonManHorizontalIN : BOOL;
+	i_xButtonManVacumOn	: BOOL;
 END_VAR
 VAR_OUTPUT
 	o_xMotor 					: BOOL := FALSE;
@@ -45,51 +54,74 @@ END_VAR
       <ST><![CDATA[//Timers
 TimerCilinder(IN:=xTimerCilinderRunning, PT := timTimerValue);
 TimerHorizontal(IN:=xTimerHorizontalRunning, PT := timTimerValue);
-
-//Case state + control
-CASE i_eState OF
-	eSingleState.Aborting:
+CASE i_eModes OF
+	eModus.Off:
 		StopALL(); //stopall
-	eSingleState.Aborted:
-		StopALL(); //stopall
-	eSingleState.Execute:
-		IF i_xMoveCiliderDown=1 AND istepcycel=0 THEN
-			istepcycel:=1;
+	eModus.Auto:
+		//Case state + control
+		CASE i_eState OF
+		eSingleState.Aborting:
+			StopALL(); //stopall
+		eSingleState.Aborted:
+			StopALL(); //stopall
+		eSingleState.Execute:
+			IF i_xMoveCiliderDown=1 AND istepcycel=0 THEN
+				istepcycel:=1;
+			END_IF
+			IF 	o_xAlarmPressure=0 THEN
+				CompleetCycel(); //do a compleet cycel
+			END_IF
+		eSingleState.Idle:
+			istepcycel:=0;
+			CiliderUP(); //to startingpostion
+			IF o_eCiliderPosition = eZuigerCilinderposition.Up THEN
+				HorizontalIN();
+			END_IF
+		eSingleState.Stopping:
+			istepcycel:=0;
+			CiliderUP(); //to startingpostion
+			IF o_eCiliderPosition = eZuigerCilinderposition.Up THEN
+				HorizontalIN();
+			END_IF
+		eSingleState.Stopped:
+			istepcycel:=0;
+			CiliderUP(); //to startingpostion
+			IF o_eCiliderPosition = eZuigerCilinderposition.Up THEN
+				HorizontalIN();
+			END_IF
+		eSingleState.Suspending:
+			istepcycel:=0;
+			CiliderUP(); //to startingpostion
+			IF o_eCiliderPosition = eZuigerCilinderposition.Up THEN
+				HorizontalIN();
+			END_IF
+		eSingleState.Suspended:
+			istepcycel:=0;
+			CiliderUP(); //to startingpostion
+			IF o_eCiliderPosition = eZuigerCilinderposition.Up THEN
+				HorizontalIN();
+			END_IF
+		END_CASE
+	eModus.Manual: //manual controll
+		IF i_xButtonManStopall THEN
+			StopALL(); //stopall
+		ELSIF i_xButtonManStopall THEN
+			CiliderUP(); //to startingpostion
+		ELSIF i_xButtonManCiliderDown THEN
+			CilinderDOwn();
 		END_IF
-		IF 	o_xAlarmPressure=0 THEN
-			CompleetCycel(); //do a compleet cycel
-		END_IF
-	eSingleState.Idle:
-		istepcycel:=0;
-		CiliderUP(); //to startingpostion
-		IF o_eCiliderPosition = eZuigerCilinderposition.Up THEN
+		IF NOT i_xButtonManStopall AND i_xButtonManHorizontalIN THEN
 			HorizontalIN();
+		ELSIF NOT i_xButtonManStopall AND i_xButtonManHoriztalOUT THEN
+			HoriztalOUT();
 		END_IF
-	eSingleState.Stopping:
-		istepcycel:=0;
-		CiliderUP(); //to startingpostion
-		IF o_eCiliderPosition = eZuigerCilinderposition.Up THEN
-			HorizontalIN();
-		END_IF
-	eSingleState.Stopped:
-		istepcycel:=0;
-		CiliderUP(); //to startingpostion
-		IF o_eCiliderPosition = eZuigerCilinderposition.Up THEN
-			HorizontalIN();
-		END_IF
-	eSingleState.Suspending:
-		istepcycel:=0;
-		CiliderUP(); //to startingpostion
-		IF o_eCiliderPosition = eZuigerCilinderposition.Up THEN
-			HorizontalIN();
-		END_IF
-	eSingleState.Suspended:
-		istepcycel:=0;
-		CiliderUP(); //to startingpostion
-		IF o_eCiliderPosition = eZuigerCilinderposition.Up THEN
-			HorizontalIN();
+		IF NOT i_xButtonManStopall AND NOT i_xButtonManVacumOn THEN
+			o_xMagnetValveVacum:=FALSE;
+		ELSIF NOT i_xButtonManStopall AND i_xButtonManVacumOn THEN
+			o_xMagnetValveVacum:=TRUE;
 		END_IF
 END_CASE
+
 //Errors
 IF  NOT (eWistedCiliderPosition = o_eCiliderPosition) THEN //error timer cilinder
 	xTimerCilinderRunning:=1;
@@ -127,18 +159,15 @@ ELSE
 END_IF
 
 //Alarm reset
-IF i_xAlarmReset THEN
-	IF NOT o_xErrorCilinder THEN
-		o_xAlarmCilinder:=0;
-	END_IF 
-	IF NOT 	o_xErrorHorizontalMovement THEN
-		o_xAlarmHorizontalMovement:=0;
-	END_IF
-	IF NOT o_xErrorPressure THEN
-		o_xAlarmPressure:=0;
-	END_IF
+IF i_xAlarmResetCilinder AND NOT  o_xErrorCilinder THEN
+	o_xAlarmCilinder:=0;
+END_IF 
+IF NOT 	o_xErrorHorizontalMovement AND i_xAlarmResetAlarmHorizontalMovement THEN
+	o_xAlarmHorizontalMovement:=0;
 END_IF
-
+IF NOT o_xErrorPressure AND  THEN
+	o_xAlarmPressure:=0;
+END_IF
 
 //actualpostioncilinder
 IF	i_xHallSensorIn AND i_xHallSensorOut THEN
@@ -151,13 +180,23 @@ ELSE
 	o_eCiliderPosition := eZuigerCilinderposition.Unkown;
 END_IF
 
-//actualpostionhorizontal
+//actualpostionhorizontal with motor controll
 IF	i_xEndSwitchIn AND i_xEndSwitchOut THEN
 	o_eHorizotalPosition := eZuigerHorizontaal.Unkown;
 ELSIF i_xEndSwitchIn	THEN
 	o_eHorizotalPosition := eZuigerHorizontaal.In;
+	IF eWistedHorizotalPosition = eZuigerHorizontaal.In THEN
+		o_xMotor:=0;
+	ELSIF eWistedHorizotalPosition = eZuigerHorizontaal.OUT THEN
+		o_xMotor:=1;
+	END_IF
 ELSIF i_xEndSwitchOut THEN
 	o_eHorizotalPosition := eZuigerHorizontaal.Out;
+	IF eWistedHorizotalPosition = eZuigerHorizontaal.In THEN
+		o_xMotor:=1;
+	ELSIF eWistedHorizotalPosition = eZuigerHorizontaal.OUT THEN
+		o_xMotor:=0;
+	END_IF
 ELSE
 	o_eHorizotalPosition := eZuigerHorizontaal.Unkown;
 END_IF]]></ST>
@@ -248,11 +287,6 @@ o_xMotorDirectionOut:=0;
 eWistedHorizotalPosition := eZuigerHorizontaal.In;
 
 
-IF o_eHorizotalPosition=eZuigerHorizontaal.IN THEN
-	o_xMotor:=0;
-ELSE	
-	o_xMotor:=1;
-END_IF
 ]]></ST>
       </Implementation>
     </Method>
@@ -268,11 +302,6 @@ END_VAR
 o_xMotorDirectionOut:=1;
 eWistedHorizotalPosition := eZuigerHorizontaal.Out;
 
-IF o_eHorizotalPosition=eZuigerHorizontaal.OUT THEN
-	o_xMotor:=0;
-ELSE	
-	o_xMotor:=1;
-END_IF
 ]]></ST>
       </Implementation>
     </Method>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="eModus" Id="{18281273-fc61-486c-924a-754f2eaab21e}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+{attribute 'to_string'}
+TYPE eModus :
+(
+	Off := 0,
+	Auto := 1,
+	Manual := 2
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
