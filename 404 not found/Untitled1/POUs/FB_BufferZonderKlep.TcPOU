@@ -28,11 +28,6 @@ END_VAR
     <Implementation>
       <ST><![CDATA[//-------------------------------------------------------------------------------------------------------------------------
 //Change the state
-//idle
-IF NOT (i_eModus = eModus.Off) AND NOT (i_eStartStop = eStartStop.Start) AND NOT (i_eStartStop = eStartStop.Stop) AND NOT i_xAbort AND NOT o_xErrorGeneral THEN
-	o_eState := eSingleState.Idle;
-END_IF
-
 //execute
 IF NOT (i_eModus = eModus.Off) AND (i_eStartStop = eStartStop.Start) AND NOT i_xAbort AND NOT o_xErrorGeneral THEN
 	o_eState := eSingleState.Execute;
