@@ -16,8 +16,6 @@ VAR
 	AlarmReset		: BOOL;
 	NextState		: eSingleState;	
 	CurrentState	: eSingleState;
-	Modus 			: eModus;
-	ManualCmdMotor	: BOOL;
 	Motor			: BOOL;
 	ErrorGeneral	: BOOL;
 	AlarmGeneral	: BOOL;
@@ -35,8 +33,8 @@ END_VAR
 					i_xNextEmpty		:= NextEmpty, 
 					i_xAlarmReset		:= AlarmReset, 
 					i_eNextState		:= NextState,
-					i_eModus			:= Modus,
-					i_xManualCmdMotor 	:= ManualCmdMotor,	 
+					i_eModus			:= ,
+					i_xManualCmdMotor 	:= ,	 
 					o_eState			=> CurrentState, 
 					o_xMotor			=> Motor, 
 					o_xErrorGeneral		=> ErrorGeneral, 
@@ -51,7 +49,7 @@ fbBuffer2( i_xAbort			:= Abort,
 			i_xNextEmpty		:= NextEmpty, 
 			i_xAlarmReset		:= AlarmReset, 
 			i_eNextState		:= NextState, 
-			i_eModus			:= Modus,
+			i_eModus			:= ,
 			i_xManualCmdMotor 	:= ManualCmdMotor,
 			o_eState			=> CurrentState, 
 			o_xMotor			=> Motor, 
@@ -68,7 +66,7 @@ fbBuffer5(	i_xAbort			:= Abort,
 			i_xNextEmpty		:= NextEmpty, 
 			i_xAlarmReset		:= AlarmReset, 
 			i_eNextState		:= NextState,
-			i_eModus			:= Modus,
+			i_eModus			:= ,
 			i_xManualCmdMotor 	:= ManualCmdMotor, 
 			o_eState			=> CurrentState, 
 			o_xMotor			=> Motor, 
