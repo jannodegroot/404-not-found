@@ -12,6 +12,7 @@ VAR_INPUT
 	i_eNextState		: eSingleState;
 	i_eModus			: eModus;
 	i_xManualCmdMotor	: BOOL;
+	test: BOOL;
 END_VAR
 VAR_OUTPUT
 	o_eState 			: eSingleState := eSinglestate.Idle;

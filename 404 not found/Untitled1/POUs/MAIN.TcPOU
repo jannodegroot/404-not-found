@@ -3,78 +3,163 @@
   <POU Name="MAIN" Id="{4cbed5b0-99f3-4471-834f-1b0e4c5ee42c}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
+	//instance of the functionblocks
+	fbControlSystem	: FB_ControlSystem;
 	fbInvoerBuffer1 : FB_Invoer;
 	fbBuffer2		: FB_BufferMetKlep;
+	fbBuffer3		: FB_BufferMetKlep;
+	fbBuffer4		: FB_BufferMetKlep;
 	fbBuffer5		: FB_BufferZonderKlep;
 	
-	Abort			: BOOL;
-	StartStop		: eStartStop;
-	PalletPlaced	: BOOL;
-	LightSensor		: BOOL;
-	PreviousEmptying: BOOL;
-	NextEmpty		: BOOL;
-	AlarmReset		: BOOL;
-	NextState		: eSingleState;	
-	CurrentState	: eSingleState;
-	Motor			: BOOL;
-	ErrorGeneral	: BOOL;
-	AlarmGeneral	: BOOL;
-	GivingToNext	: BOOL;
-	Empty			: BOOL;
-	StateString		: BOOL;
+	//safety
+	xAbortGeneral				: BOOL;
+	xAbortInvoerBuffer1			: BOOL;
+	
+	//start stop
+	eStartStopGeneral			: eStartStop;
+	
+	//lichtsensors
+	xLightSensorInvoerBuffer1	: BOOL;
+	xLightSensorBuffer2			: BOOL;
+	xLightSensorBuffer3			: BOOL;
+	xLightSensorBuffer4			: BOOL;
+	xLightSensorBuffer5			: BOOL;
+	
+	//empty buffers
+	xBuffer2Empty				: BOOL;
+	xBuffer3Empty				: BOOL;
+	xBuffer4Empty				: BOOL;
+	xBuffer5Empty				: BOOL;
+	xDepalletizerEmpty			: BOOL;
+	
+	//buffer is emptying
+	xInvoerBuffer1Emptying		: BOOL;
+	xBuffer2Emptying			: BOOL;
+	xBuffer3Emptying			: BOOL;
+	xBuffer4Emptying			: BOOL;
+	xBuffer5Emptying			: BOOL;
+
+	
+	//nextstate
+	eStateBuffer2				: eSingleState;
+	eStateBuffer3				: eSingleState;
+	eStateBuffer4				: eSingleState;
+	eStateBuffer5				: eSingleState;
+	eStateDepalletizer			: eSingleState;
 	
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[fbInvoerBuffer1(	i_xAbort			:= Abort, 
-					i_eStartStop		:= StartStop, 
-					i_xPalletPlaced		:= PalletPlaced, 
-					i_xLightSensor		:= LightSensor, 
-					i_xNextEmpty		:= NextEmpty, 
-					i_xAlarmReset		:= AlarmReset, 
-					i_eNextState		:= NextState,
-					i_eModus			:= ,
-					i_xManualCmdMotor 	:= ,	 
-					o_eState			=> CurrentState, 
-					o_xMotor			=> Motor, 
-					o_xErrorGeneral		=> ErrorGeneral, 
-					o_xAlarmGeneral		=> AlarmGeneral, 
-					o_xGivingToNext		=> GivingToNext,
-					o_sStateString		=> );			
-(* 
-fbBuffer2( i_xAbort			:= Abort, 
-			i_eStartStop		:= StartStop,  
-			i_xLightSensor		:= LightSensor,
-			i_xPreviousEmptying := PreviousEmptying, 
-			i_xNextEmpty		:= NextEmpty, 
-			i_xAlarmReset		:= AlarmReset, 
-			i_eNextState		:= NextState, 
-			i_eModus			:= ,
-			i_xManualCmdMotor 	:= ManualCmdMotor,
-			o_eState			=> CurrentState, 
-			o_xMotor			=> Motor, 
-			o_xErrorGeneral		=> ErrorGeneral, 
-			o_xAlarmGeneral		=> AlarmGeneral, 
-			o_xGivingToNext		=> GivingToNext,
-			o_xEmpty 			=> Empty);
-*)
-(*		
-fbBuffer5(	i_xAbort			:= Abort, 
-			i_eStartStop		:= StartStop,  
-			i_xLightSensor		:= LightSensor, 
-			i_xPreviousEmptying := PreviousEmptying,
-			i_xNextEmpty		:= NextEmpty, 
-			i_xAlarmReset		:= AlarmReset, 
-			i_eNextState		:= NextState,
-			i_eModus			:= ,
-			i_xManualCmdMotor 	:= ManualCmdMotor, 
-			o_eState			=> CurrentState, 
-			o_xMotor			=> Motor, 
-			o_xErrorGeneral		=> ErrorGeneral, 
-			o_xAlarmGeneral		=> AlarmGeneral, 
-			o_xGivingToNext		=> GivingToNext,
-			o_xEmpty 			=> Empty);
-*)
+      <ST><![CDATA[//----ControlSystem------------------------------------------------------------------------------------------------------------					
+fbControlSystem(i_eGeneralState					:= , 
+				i_xEmergencyButton				:= , 
+				i_xSafetyMat					:= , 
+				i_xSafetyDoor					:= , 
+				i_xStartButton					:= , 
+				i_xStopButton					:= , 
+				i_xWarningResetSafetyMat		:= , 
+				i_xWarningResetSafetyDoor		:= , 
+				i_xAlarmResetPressureGeneral	:= , 
+				i_xAlarmResetEmergencyButton	:= , 
+				i_iPressureSensorGeneral		:= , 
+				o_eStartStopGeneral				=> eStartStopGeneral, 
+				o_xWarningSafetyMat				=> , 
+				o_xWarningSafetyDoor			=> , 
+				o_xAlarmPressureGeneral			=> , 
+				o_xAlarmEmergencyButton			=> , 
+				o_xErrorPressureGeneral			=> , 
+				o_xErrorEmergencyButton			=> , 
+				o_xAbortGeneral					=> xAbortGeneral, 
+				o_xAbortInvoerBuffer1			=> xAbortInvoerBuffer1, 
+				o_xAbortPalletizer				=> , 
+				o_eMachineStateLamp1			=> , 
+				o_eMachineStateLamp2			=> );
+					
+//----invoer/buffer 1------------------------------------------------------------------------------------------------------------					
+fbInvoerBuffer1(i_xAbort			:= xAbortGeneral OR xAbortInvoerBuffer1, 
+				i_eStartStop		:= eStartStopGeneral, 
+				i_xPalletPlaced		:= , 
+				i_xLightSensor		:= xLightSensorInvoerBuffer1, 
+				i_xNextEmpty		:= xBuffer2Empty, 
+				i_xAlarmReset		:= , 
+				i_eNextState		:= eStateBuffer2,
+				i_eModus			:= ,
+				i_xManualCmdMotor 	:= ,	 
+				o_eState			=> , 
+				o_xMotor			=> , 
+				o_xErrorGeneral		=> , 
+				o_xAlarmGeneral		=> , 
+				o_xGivingToNext		=> xInvoerBuffer1Emptying,
+				o_xEmpty			=> ,
+				o_sStateString		=> );	
+				
+//----buffer 2------------------------------------------------------------------------------------------------------------							
+ fbBuffer2( i_xAbort				:= xAbortGeneral, 
+			i_eStartStop			:= eStartStopGeneral,  
+			i_xLightSensor			:= xLightSensorBuffer2,
+			i_xPreviousEmptying	 	:= xInvoerBuffer1Emptying, 
+			i_xNextEmpty			:= xBuffer3Empty, 
+			i_xAlarmReset			:= , 
+			i_eNextState			:= eStateBuffer3, 
+			i_eModus				:= ,
+			i_xManualCmdMotor 		:= ,
+			o_eState				=> , 
+			o_xMotor				=> , 
+			o_xErrorGeneral			=> , 
+			o_xAlarmGeneral			=> , 
+			o_xGivingToNext			=> xBuffer2Emptying,
+			o_xEmpty 				=> xBuffer2Empty);
+
+//----buffer 3------------------------------------------------------------------------------------------------------------							 
+fbBuffer3(  i_xAbort				:= xAbortGeneral, 
+			i_eStartStop			:= eStartStopGeneral,  
+			i_xLightSensor			:= xLightSensorBuffer3,
+			i_xPreviousEmptying 	:= xBuffer2Emptying, 
+			i_xNextEmpty			:= xBuffer4Empty, 
+			i_xAlarmReset			:= , 
+			i_eNextState			:= eStateBuffer4, 
+			i_eModus				:= ,
+			i_xManualCmdMotor 		:= ,
+			o_eState				=> , 
+			o_xMotor				=> , 
+			o_xErrorGeneral			=> , 
+			o_xAlarmGeneral			=> , 
+			o_xGivingToNext			=> xBuffer3Emptying,
+			o_xEmpty 				=> xBuffer3Empty);
+
+//----buffer 4------------------------------------------------------------------------------------------------------------							
+ fbBuffer4(  i_xAbort				:= xAbortGeneral, 
+			i_eStartStop			:= eStartStopGeneral,  
+			i_xLightSensor			:= xLightSensorBuffer4,
+			i_xPreviousEmptying 	:= xBuffer3Emptying, 
+			i_xNextEmpty			:= xBuffer5Empty, 
+			i_xAlarmReset			:= , 
+			i_eNextState			:= eStateBuffer5, 
+			i_eModus				:= ,
+			i_xManualCmdMotor 		:= ,
+			o_eState				=> , 
+			o_xMotor				=> , 
+			o_xErrorGeneral			=> , 
+			o_xAlarmGeneral			=> , 
+			o_xGivingToNext			=> xBuffer4Emptying,
+			o_xEmpty 				=> xBuffer4Empty);
+
+//----buffer 5------------------------------------------------------------------------------------------------------------					
+fbBuffer5(	i_xAbort				:= xAbortGeneral, 
+			i_eStartStop			:= eStartStopGeneral,  
+			i_xLightSensor			:= xLightSensorBuffer5, 
+			i_xPreviousEmptying 	:= xBuffer4Emptying,
+			i_xNextEmpty			:= xDepalletizerEmpty, 
+			i_xAlarmReset			:= , 
+			i_eNextState			:= eStateDepalletizer,
+			i_eModus				:= ,
+			i_xManualCmdMotor 		:= , 
+			o_eState				=> , 
+			o_xMotor				=> , 
+			o_xErrorGeneral			=> , 
+			o_xAlarmGeneral			=> , 
+			o_xGivingToNext			=> xBuffer5Emptying,
+			o_xEmpty 				=> xBuffer5Empty);
 ]]></ST>
     </Implementation>
   </POU>
