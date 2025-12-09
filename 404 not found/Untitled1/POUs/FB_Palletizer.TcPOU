@@ -29,6 +29,7 @@ TimerLift(IN:=xTimerLiftRunning, PT := timTimerValue);
 
 
 //aansturen band
+
 //aansturen lift
 //aansturen zichzelf
 //errors
