@@ -18,10 +18,26 @@ END_VAR
 VAR
 	fbLift	: FB_Lift;
 	fbBand	: FB_BandZonderKlep;
+	TimerLift: TON;
+	xTimerLiftRunning: BOOL;
+	timTimerValue: TIME;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[//timmer
+TimerLift(IN:=xTimerLiftRunning, PT := timTimerValue);
+
+
+//aansturen band
+//aansturen lift
+//aansturen zichzelf
+//errors
+//allarmen
+//warnings
+
+IF i_xDoorOpenButton THEN
+	//lift naar beneden
+END_IF]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
