@@ -32,14 +32,14 @@ END_VAR]]></Declaration>
       <ST><![CDATA[// Van Emma
 CASE i_eModus OF
 	eModus.Off:
-	modeAuto := FALSE;
-	modeManual := FALSE;
+		modeAuto := FALSE;
+		modeManual := FALSE;
 	eModus.Auto:
-	modeAuto := TRUE;
-	modeManual := FALSE;
+		modeAuto := TRUE;
+		modeManual := FALSE;
 	eModus.Manual:
-	modeAuto := FALSE;
-	modeManual := TRUE;
+		modeAuto := FALSE;
+		modeManual := TRUE;
 END_CASE 
 
 
