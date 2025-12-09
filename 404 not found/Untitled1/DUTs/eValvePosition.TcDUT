@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <DUT Name="eValvePosition" Id="{de4025fc-2a36-498c-9c5b-609ad1be65e4}">
+  <DUT Name="eValvePosition" Id="{902d1253-0710-4383-a3c4-ee4d13a92ab7}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 {attribute 'strict'}
 {attribute 'to_string'}
 TYPE eValvePosition :
 (
-	Up := 0,
-	Down:=1,
+	Down := 0,
+	Up :=1,
 	Unkown:=2
 );
 END_TYPE

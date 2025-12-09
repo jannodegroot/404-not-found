@@ -51,6 +51,9 @@
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\FB_Band.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\FB_ControlSystem.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -61,12 +64,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\F_StateEnumToString.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\FB_BandMetKlep.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\FB_BandZonderKlep.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_BlikjesBand.TcPOU">
