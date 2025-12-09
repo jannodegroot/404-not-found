@@ -17,28 +17,77 @@ END_VAR
 VAR_OUTPUT
 	o_xMotor 			: BOOL := FALSE;
 	o_xErrorSlide 		: BOOL := FALSE;
-	o_xAlarmSlide		: BOOL;
+	o_xAlarmSlide		: BOOL := FALSE;
 	o_xMoveToPos		: BOOL := FALSE; // FALSE = In, TRUE = Out
 	o_eSlidePosition	: eSlideposition;
 END_VAR
 VAR
-	eSchuifState : eSchuifStates;
+	eSchuifState : eSchuifStates := eSchuifStates.Idle;
+	TimerUnknownPos : TON;
+	timTimerValue	: TIME := T#20S;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Yvo
+TimerUnknownPos(IN := (o_eSlidePosition = eSlideposition.Unknown), PT := timTimerValue);
+
+/////////////////////////////////////////////////
+// Werkt!
+IF i_xEndSwitchIn AND i_xEndSwitchOut THEN
+	o_eSlidePosition := eSlideposition.Unknown;
+ELSIF i_xEndSwitchIn THEN
+	o_eSlidePosition := eSlideposition.In;
+ELSIF i_xEndSwitchOut THEN
+	o_eSlidePosition := eSlideposition.Out;
+ELSE
+	o_eSlidePosition := eSlideposition.Unknown;
+END_IF
+/////////////////////////////////////////////////
+
 CASE i_eState OF
 	eSingleState.Execute :
 		CASE eSchuifState OF
+			eSchuifStates.Idle :
+				// Neem lekker rust nu het nog kan
+				IF i_xMoveHome THEN
+					eSchuifState := eSchuifStates.MovingHome;
+				END_IF
+				
+				IF i_xMove THEN
+					eSchuifState := eSchuifStates.MoveOut;
+				END_IF
+				
 			eSchuifStates.MovingHome :
 				//Ga lekker naar huis joh
+				o_xMoveToPos := FALSE;
+				o_xMotor := TRUE;
+				IF i_xEndSwitchIn THEN
+					o_xMotor := FALSE;
+					eSchuifState := eSchuifStates.Idle;
+				END_IF
 				
 			eSchuifStates.MoveOut :
 				// SCHUIVUHHHH (Tot de band vol is)
 				// Net zoals ik in jouw DM slide ;)
+				IF i_xMovePossible THEN
+					// Slide in je DM... oh nee, op de band bedoel ik
+					o_xMoveToPos := TRUE;
+					o_xMotor := TRUE;
+					IF i_xEndSwitchOut THEN
+						eSchuifState := eSchuifStates.MovingHome;
+					END_IF
+				ELSE
+					// Wacht ff tot de band vrij is
+					eSchuifState := eSchuifStates.WaitingForConveyor;
+				END_IF
 				
 			eSchuifStates.WaitingForConveyor :
 				// Wacht effe hoor, de band is traag
+				o_xMotor := FALSE;
+				IF i_xMovePossible THEN
+					eSchuifState := eSchuifStates.MoveOut;
+				END_IF
+				
 		END_CASE
 		
 	eSingleState.Suspended :
@@ -46,7 +95,12 @@ CASE i_eState OF
 	
 	eSingleState.Stopped :
 		// Stop
-END_CASE]]></ST>
+END_CASE
+
+// ERRORHANDLING
+IF TimerUnknownPos.Q THEN
+	o_xErrorSlide := TRUE;
+END_IF]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

@@ -8,7 +8,8 @@ TYPE eSchuifStates :
 (
 	MoveOut := 0,
 	WaitingForConveyor := 1,
-	MovingHome := 2
+	MovingHome := 2,
+	Idle := 3
 );
 END_TYPE
 ]]></Declaration>

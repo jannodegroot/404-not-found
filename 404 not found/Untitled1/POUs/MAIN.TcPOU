@@ -6,6 +6,7 @@ VAR
 	fbInvoerBuffer1 : FB_Invoer;
 	fbBuffer2		: FB_BufferMetKlep;
 	fbBuffer5		: FB_BufferZonderKlep;
+	fbSchuif		: FB_Schuif;
 	
 	Abort			: BOOL;
 	StartStop		: eStartStop;
@@ -77,7 +78,7 @@ fbBuffer5(	i_xAbort			:= Abort,
 			o_xGivingToNext		=> GivingToNext,
 			o_xEmpty 			=> Empty);
 *)
-]]></ST>
+fbSchuif();]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
