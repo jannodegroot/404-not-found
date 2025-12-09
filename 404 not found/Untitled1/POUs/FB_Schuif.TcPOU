@@ -22,25 +22,24 @@ VAR_OUTPUT
 	o_eSlidePosition	: eSlideposition;
 END_VAR
 VAR
+	eSchuifState : eSchuifStates;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Yvo
 CASE i_eState OF
 	eSingleState.Execute :
-		IF i_xMoveHome THEN
-			o_xMoveToPos := FALSE;
-		END_IF
-			
-		IF i_xMove = TRUE THEN
-			IF i_xMovePossible = TRUE THEN
-				// Move
-			ELSE
-				// Stop moving and wait for conveyor to clear
-				// When conveyor is clear, move further till the endswitch is reached.
-				// When the endswitch is reached, Go back
-			END_IF
-		END_IF
+		CASE eSchuifState OF
+			eSchuifStates.MovingHome :
+				//Ga lekker naar huis joh
+				
+			eSchuifStates.MoveOut :
+				// SCHUIVUHHHH (Tot de band vol is)
+				// Net zoals ik in jouw DM slide ;)
+				
+			eSchuifStates.WaitingForConveyor :
+				// Wacht effe hoor, de band is traag
+		END_CASE
 		
 	eSingleState.Suspended :
 		// Suspend

@@ -6,7 +6,9 @@
 {attribute 'to_string'}
 TYPE eSchuifStates :
 (
-	enum_member := 0
+	MoveOut := 0,
+	WaitingForConveyor := 1,
+	MovingHome := 2
 );
 END_TYPE
 ]]></Declaration>
