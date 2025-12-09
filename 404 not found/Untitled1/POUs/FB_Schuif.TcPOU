@@ -16,9 +16,10 @@ VAR_INPUT
 END_VAR
 VAR_OUTPUT
 	o_xMotor 			: BOOL := FALSE;
-	o_xErrorSlide 		: BOOL := FALSE;
+	o_xMotorDirection	: BOOL;			 // 0 = Going In, 1 = Going Out
+	o_xErrorSlide 		: BOOL := FALSE; 
 	o_xAlarmSlide		: BOOL := FALSE;
-	o_xMoveToPos		: BOOL := FALSE; // FALSE = In, TRUE = Out
+	o_xMoveDone			: BOOL;
 	o_eSlidePosition	: eSlideposition;
 END_VAR
 VAR
@@ -59,10 +60,11 @@ CASE i_eState OF
 				
 			eSchuifStates.MovingHome :
 				//Ga lekker naar huis joh
-				o_xMoveToPos := FALSE;
 				o_xMotor := TRUE;
+				o_xMotorDirection := 0;
 				IF i_xEndSwitchIn THEN
 					o_xMotor := FALSE;
+					o_xMoveDone := FALSE;
 					eSchuifState := eSchuifStates.Idle;
 				END_IF
 				
@@ -71,9 +73,10 @@ CASE i_eState OF
 				// Net zoals ik in jouw DM slide ;)
 				IF i_xMovePossible THEN
 					// Slide in je DM... oh nee, op de band bedoel ik
-					o_xMoveToPos := TRUE;
 					o_xMotor := TRUE;
+					o_xMotorDirection := 1;
 					IF i_xEndSwitchOut THEN
+						o_xMoveDone := TRUE;
 						eSchuifState := eSchuifStates.MovingHome;
 					END_IF
 				ELSE
