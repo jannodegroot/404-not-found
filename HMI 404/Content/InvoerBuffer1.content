@@ -1422,7 +1422,7 @@
                   "objectType": "StaticValue",
                   "valueType": "tchmi:framework#/definitions/Color",
                   "value": {
-                    "color": "rgba(119, 117, 117, 1)"
+                    "color": "rgba(100, 118, 135, 1)"
                   }
                 },
                 "asyncWait": true
@@ -1450,7 +1450,7 @@
                   "objectType": "StaticValue",
                   "valueType": "tchmi:framework#/definitions/Color",
                   "value": {
-                    "color": "rgba(214, 214, 216, 1)"
+                    "color": "rgba(213, 213, 216, 1)"
                   }
                 },
                 "asyncWait": true
@@ -1481,6 +1481,8 @@
   "color": "rgba(0, 0, 0, 1)"
 }
 </script>
+
+
 </div>
 <div id="ErrorGeneral" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="562" data-tchmi-left-unit="px" data-tchmi-top="645" data-tchmi-top-unit="px" data-tchmi-width="166" data-tchmi-width-unit="px" data-tchmi-word-wrap="&amp;quot;Tru" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Top">
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
