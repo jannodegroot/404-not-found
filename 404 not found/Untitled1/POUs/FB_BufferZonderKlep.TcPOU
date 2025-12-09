@@ -22,7 +22,9 @@ VAR_OUTPUT
 	o_xEmpty			: BOOL;
 END_VAR
 VAR	
-	tonErrorMotor 			: TON;
+	xError				: BOOL;
+	tonError			: TON;
+	fbBlinking 			: FB_Blinking;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -67,14 +69,23 @@ END_IF
 
 //-----------------------------------------------------------------------------------------------------------------------------------------
 //Check error and set error, alarm and state = aboarting
-tonErrorMotor(IN := NOT i_xLightSensor AND o_xMotor, PT := T#20S);
-IF  o_xMotor AND tonErrorMotor.Q THEN
+tonError(IN := NOT i_xLightSensor AND o_xMotor, PT := T#20S);
+IF  o_xMotor AND tonError.Q THEN
     o_eState := eSingleState.Aborting;
 	
-	IF tonErrorMotor.Q THEN
+	IF tonError.Q THEN
 		o_xErrorGeneral := TRUE;
 		o_xAlarmGeneral := TRUE;
 	END_IF
+END_IF;
+
+//blinking error
+IF xError THEN
+	fbBlinking(io_xBlinking:= o_xErrorGeneral);
+ELSIF NOT xError AND o_xAlarmGeneral THEN
+	o_xErrorGeneral := TRUE;
+ELSE
+	o_xErrorGeneral := FALSE;
 END_IF;
 
 //----------------------------------------------------------------------------------------------------------------------------------------
@@ -98,6 +109,7 @@ IF (i_eModus = eModus.Auto) AND
 	o_xMotor := FALSE;		
 END_IF
 
+//----------------------------------------------------------------------------------------------------------------------------------------
 //write o_xGivingToNext
 IF o_eState = eSingleState.Execute AND i_xLightSensor AND NOT i_xNextEmpty THEN
 	o_xGivingToNext := FALSE;	
@@ -105,6 +117,7 @@ ELSIF o_eState = eSingleState.Execute AND i_xLightSensor AND i_xNextEmpty THEN
 	o_xGivingToNext := TRUE;
 END_IF
 
+//----------------------------------------------------------------------------------------------------------------------------------------
 //check if buffer is empty
 IF NOT i_xLightSensor THEN
 	o_xEmpty := TRUE;
@@ -115,7 +128,7 @@ END_IF
 //-------------------------------------------------------------------------------------------------------------------
 //reset alarm and error
 IF NOT (o_eState = eSingleState.Aborting) AND i_xLightSensor THEN
-	o_xErrorGeneral := FALSE;
+	xError := FALSE;
 END_IF
 
 //reset alarm

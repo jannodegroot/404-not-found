@@ -63,6 +63,9 @@
     <Compile Include="POUs\FB_Zuiger.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\FB_Blinking.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\F_StateEnumToString.TcPOU">
       <SubType>Code</SubType>
     </Compile>

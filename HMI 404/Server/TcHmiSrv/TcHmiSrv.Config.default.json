@@ -1061,6 +1061,40 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_xAlarmReset": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbInvoerBuffer1::fbKlep::i_xAlarmReset",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 8
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_xWarningReset": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbInvoerBuffer1::fbKlep::i_xWarningReset",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 7
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.o_eCurrentPosition": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1090,6 +1124,42 @@
                     },
                     {
                         "propertyOrder": 13
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.o_xErrorPositionUpOrUnknow": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbInvoerBuffer1::fbKlep::o_xErrorPositionUpOrUnknow",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Error when valve is up or unknow beceause it stopped te flow of the machine",
+                        "propertyOrder": 12
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.o_xWarningPositionDown": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbInvoerBuffer1::fbKlep::o_xWarningPositionDown",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Warning when position is down becease it not stopped the machineflow",
+                        "propertyOrder": 11
                     }
                 ]
             },
@@ -1278,6 +1348,23 @@
                     },
                     {
                         "propertyOrder": 12
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbInvoerBuffer1.o_xErrorGeneralLight": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbInvoerBuffer1::o_xErrorGeneralLight",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 14
                     }
                 ]
             },
@@ -4317,8 +4404,12 @@
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_eManualWantedPosition": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_eModus": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_eState": 3,
+                "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_xAlarmReset": 3,
+                "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_xWarningReset": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.o_eCurrentPosition": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.o_xAlarmPositionUpOrUnknow": 3,
+                "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.o_xErrorPositionUpOrUnknow": 3,
+                "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.o_xWarningPositionDown": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.i_eModus": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.i_xAbort": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.i_xAlarmReset": 3,
@@ -4330,6 +4421,7 @@
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.o_xAlarmGeneral": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.o_xEmpty": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.o_xErrorGeneral": 3,
+                "ADS.PLC1.MAIN.fbInvoerBuffer1.o_xErrorGeneralLight": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.o_xMotor": 3,
                 "ChangeUserSettings": 3,
                 "ConfirmAlarm": 3,

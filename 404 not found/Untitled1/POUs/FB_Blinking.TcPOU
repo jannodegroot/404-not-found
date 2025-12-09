@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Blinking" Id="{125c5226-143d-4d56-a3ad-946889c8f97e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Blinking
+VAR_IN_OUT
+	io_xBlinking		: BOOL;
+END_VAR
+VAR
+	tBlink     		: TON;       
+    xBlink     		: BOOL;    
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[tBlink(IN := TRUE, PT := T#500MS);  
+
+IF tBlink.Q THEN
+    xBlink := NOT xBlink;     
+    tBlink(IN := FALSE);        
+ELSE
+    tBlink(IN := TRUE);       
+END_IF
+
+io_xBlinking := xBlink;   ]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
