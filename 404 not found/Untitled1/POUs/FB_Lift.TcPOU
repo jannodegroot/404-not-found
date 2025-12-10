@@ -4,14 +4,17 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Lift
 VAR_INPUT
 	i_eState 			: eSingleState;
+	i_eMode				: eModus;
 	
 	i_xAllowedToMoveUp	: BOOL;
 	i_xAllowedToMoveDown: BOOL;
 	i_xAlarmReset		: BOOL;
 	
+	// Light Sensors
 	i_xLightSensor1		: BOOL; // De eerste sensor die de pallet detecteerd
 	i_xLightSensor2		: BOOL; // De tweede sensor die de pallet detecteerd
 	
+	// Hall Sensors
 	i_xPin1HallSensorIn	: BOOL;
 	i_xPin1HallSensorOut: BOOL;
 	i_xPin2HallSensorIn	: BOOL;
@@ -26,8 +29,8 @@ VAR_INPUT
 	i_iServoEncoder		: INT;
 	i_iDistanceSensor	: INT;
 	i_iLayerHeight		: INT;	// Height of each layer
-	i_iBaseHeight       : INT;  // Layer 1 servo height
 	i_iNumberOfLayers   : INT;  // Total number of layers
+	i_iNormalHeight		: INT;	// Standard height for grabbing or releasing pallet
 END_VAR
 VAR_OUTPUT
 	o_xMotor 			: BOOL; // Motor Lift
@@ -45,8 +48,6 @@ VAR_OUTPUT
 END_VAR
 VAR
     eLiftState 		: eLiftStates;
-	aLayerHeights	: ARRAY[1..10] OF INT;
-	i				: INT := 0;
 END_VAR
 
 // TYPE E_LiftState :
@@ -63,84 +64,39 @@ END_VAR
 // );
 // END_TYPE]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// Toevoegen Case Modus //
+      <ST><![CDATA[// Yvo
 
-CASE i_eState OF
-	eSingleState.Execute :
-		// Check if the lift is down
-		
-		CASE eLiftState OF
-			eLiftStates.InitHome :
-				// Save layer heights for every layer on the pallet.
-				FOR i := 1 TO i_iNumberOfLayers DO
-    				aLayerHeights[i] := i_iBaseHeight + (i - 1) * i_iLayerHeight;
-				END_FOR
+CASE i_eMode OF
+	eModus.Auto :
+	CASE i_eState OF
+		eSingleState.Execute :
+
+		eSingleState.Suspending :
 			
-				IF i_xEndSwitch AND i_xPin1HallSensorIn AND i_xPin2HallSensorIn AND i_xPin3HallSensorIn AND i_xPin4HallSensorIn THEN
-					// Lift is down and pins are in, proceed 
-					o_eLiftPosition := eLiftPosition.Home;
-					eLiftState := eLiftStates.WaitForPallet;
-				ELSE
-					eLiftState := eLiftStates.MoveDownToHome;
-				END_IF
-				
-			eLiftStates.MoveDownToHome :
-				// Move to Home
-				
-				o_xMagnetValve := FALSE; // Retract pins
-				
-				IF i_xEndSwitch AND i_xPin1HallSensorIn AND i_xPin2HallSensorIn AND i_xPin3HallSensorIn AND i_xPin4HallSensorIn THEN
-					o_eLiftPosition := eLiftPosition.Home;
-					eLiftState := eLiftStates.WaitForPallet;
-				END_IF
-				
-			eLiftStates.WaitForPallet :
-				o_xNewPalletPossible := TRUE; // Command to start conveyor
-				
-				IF i_xLightSensor1 AND NOT i_xLightSensor2 THEN
-					//Klep omhoog														TOEVOEGEN
-					
-				END_IF
-				
-				IF NOT i_xLightSensor1 AND i_xLightSensor2 THEN
-					o_xNewPalletPossible := FALSE; // Stop conveyor
-					o_xPalletInPosition := TRUE;
-				END_IF
-				
-				IF o_xPalletInPosition THEN
-					eLiftState := eLiftStates.Impale;
-				END_IF
-				
-			eLiftStates.Impale :
-				// Push out pins
-				o_xMagnetValve := TRUE;
-				IF i_xPin1HallSensorOut AND i_xPin2HallSensorOut AND i_xPin3HallSensorOut AND i_xPin4HallSensorOut THEN
-					// Go lift pallet to Pos1
-					eLiftState := eLiftStates.MoveUpToLayer;
-				END_IF
-				
-			eLiftStates.MoveUpToLayer :
-				// Check if it is possible to move up
-				
-				// Move up to first layer
-				IF i_iServoEncoder = aLayerHeights[i] THEN
-					// dnejuibf
-				END_IF
-				
-			eLiftStates.Finished :
-				// What to do if all layers are done
+		eSingleState.Suspended :
+		
+		eSingleState.Stopping :
 			
-		END_CASE
+		eSingleState.Stopped :
+			
+		eSingleState.Aborting :
+			
+		eSingleState.Aborted :
+			
+	END_CASE
+	
+	eModus.Manual :
+		// Doe effe zelf																			// TOEVOEGEN MET HMI
 		
-	eSingleState.Stopping :
-		// Stop gewoon
+	eModus.Off :
+		// Doe niks
 		
-	eSingleState.Suspending :
-		// Stop gewoon
-		
-	ELSE
-		// doe iets?
-END_CASE]]></ST>
+END_CASE
+
+/////////////////
+//ERRORHANDLING//
+/////////////////
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
