@@ -993,6 +993,23 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.fbKlep.o_xAlarmPositionUpOrUnknow": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbBandDepalletizerPalletizer::fbKlep::o_xAlarmPositionUpOrUnknow",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 13
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.fbKlep.o_xErrorPositionUpOrUnknow": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1109,6 +1126,23 @@
                     },
                     {
                         "propertyOrder": 16
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.o_xAlarmGeneral": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbBandDepalletizerPalletizer::o_xAlarmGeneral",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 13
                     }
                 ]
             },
@@ -1250,6 +1284,23 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbBuffer2.o_xAlarmGeneral": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbBuffer2::o_xAlarmGeneral",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 13
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbBuffer2.o_xEmpty": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1386,6 +1437,23 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbBuffer3.o_xAlarmGeneral": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbBuffer3::o_xAlarmGeneral",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 13
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbBuffer3.o_xEmpty": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1517,6 +1585,23 @@
                     },
                     {
                         "propertyOrder": 16
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbBuffer4.o_xAlarmGeneral": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbBuffer4::o_xAlarmGeneral",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 13
                     }
                 ]
             },
@@ -1675,6 +1760,23 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbBuffer5.fbKlep.o_xAlarmPositionUpOrUnknow": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbBuffer5::fbKlep::o_xAlarmPositionUpOrUnknow",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 13
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbBuffer5.fbKlep.o_xErrorPositionUpOrUnknow": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1791,6 +1893,23 @@
                     },
                     {
                         "propertyOrder": 16
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbBuffer5.o_xAlarmGeneral": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbBuffer5::o_xAlarmGeneral",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 13
                     }
                 ]
             },
@@ -5339,6 +5458,7 @@
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.fbKlep.i_xAlarmReset": 3,
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.fbKlep.i_xWarningReset": 3,
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.fbKlep.o_eCurrentPosition": 3,
+                "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.fbKlep.o_xAlarmPositionUpOrUnknow": 3,
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.fbKlep.o_xErrorPositionUpOrUnknow": 3,
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.fbKlep.o_xWarningPositionDown": 3,
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.i_eModus": 3,
@@ -5346,6 +5466,7 @@
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.i_xLightSensor": 3,
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.i_xManualCmdMotor": 3,
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.o_sStateString": 3,
+                "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.o_xAlarmGeneral": 3,
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.o_xEmpty": 3,
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.o_xErrorGeneral": 3,
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.o_xMotor": 3,
@@ -5354,6 +5475,7 @@
                 "ADS.PLC1.MAIN.fbBuffer2.i_xLightSensor": 3,
                 "ADS.PLC1.MAIN.fbBuffer2.i_xManualCmdMotor": 3,
                 "ADS.PLC1.MAIN.fbBuffer2.o_sStateString": 3,
+                "ADS.PLC1.MAIN.fbBuffer2.o_xAlarmGeneral": 3,
                 "ADS.PLC1.MAIN.fbBuffer2.o_xEmpty": 3,
                 "ADS.PLC1.MAIN.fbBuffer2.o_xErrorGeneral": 3,
                 "ADS.PLC1.MAIN.fbBuffer2.o_xMotor": 3,
@@ -5362,6 +5484,7 @@
                 "ADS.PLC1.MAIN.fbBuffer3.i_xLightSensor": 3,
                 "ADS.PLC1.MAIN.fbBuffer3.i_xManualCmdMotor": 3,
                 "ADS.PLC1.MAIN.fbBuffer3.o_sStateString": 3,
+                "ADS.PLC1.MAIN.fbBuffer3.o_xAlarmGeneral": 3,
                 "ADS.PLC1.MAIN.fbBuffer3.o_xEmpty": 3,
                 "ADS.PLC1.MAIN.fbBuffer3.o_xErrorGeneral": 3,
                 "ADS.PLC1.MAIN.fbBuffer3.o_xMotor": 3,
@@ -5370,6 +5493,7 @@
                 "ADS.PLC1.MAIN.fbBuffer4.i_xLightSensor": 3,
                 "ADS.PLC1.MAIN.fbBuffer4.i_xManualCmdMotor": 3,
                 "ADS.PLC1.MAIN.fbBuffer4.o_sStateString": 3,
+                "ADS.PLC1.MAIN.fbBuffer4.o_xAlarmGeneral": 3,
                 "ADS.PLC1.MAIN.fbBuffer4.o_xEmpty": 3,
                 "ADS.PLC1.MAIN.fbBuffer4.o_xErrorGeneral": 3,
                 "ADS.PLC1.MAIN.fbBuffer4.o_xMotor": 3,
@@ -5379,6 +5503,7 @@
                 "ADS.PLC1.MAIN.fbBuffer5.fbKlep.i_xAlarmReset": 3,
                 "ADS.PLC1.MAIN.fbBuffer5.fbKlep.i_xWarningReset": 3,
                 "ADS.PLC1.MAIN.fbBuffer5.fbKlep.o_eCurrentPosition": 3,
+                "ADS.PLC1.MAIN.fbBuffer5.fbKlep.o_xAlarmPositionUpOrUnknow": 3,
                 "ADS.PLC1.MAIN.fbBuffer5.fbKlep.o_xErrorPositionUpOrUnknow": 3,
                 "ADS.PLC1.MAIN.fbBuffer5.fbKlep.o_xWarningPositionDown": 3,
                 "ADS.PLC1.MAIN.fbBuffer5.i_eModus": 3,
@@ -5386,6 +5511,7 @@
                 "ADS.PLC1.MAIN.fbBuffer5.i_xLightSensor": 3,
                 "ADS.PLC1.MAIN.fbBuffer5.i_xManualCmdMotor": 3,
                 "ADS.PLC1.MAIN.fbBuffer5.o_sStateString": 3,
+                "ADS.PLC1.MAIN.fbBuffer5.o_xAlarmGeneral": 3,
                 "ADS.PLC1.MAIN.fbBuffer5.o_xEmpty": 3,
                 "ADS.PLC1.MAIN.fbBuffer5.o_xErrorGeneral": 3,
                 "ADS.PLC1.MAIN.fbBuffer5.o_xMotor": 3,

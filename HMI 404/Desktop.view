@@ -827,4 +827,763 @@
 }
 </script>
 </div>
+<div id="ErrorInvoerBuffer1_5" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="13" data-tchmi-height-unit="px" data-tchmi-left="21" data-tchmi-left-unit="px" data-tchmi-top="100" data-tchmi-top-unit="px" data-tchmi-width="22" data-tchmi-width-unit="px" data-tchmi-word-wrap="&amp;quot;Tru" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Top">
+<script data-tchmi-target-attribute="data-tchmi-border-color" type="application/json">
+{
+  "color": "rgba(119, 117, 117, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "%s%ADS.PLC1.MAIN.fbBuffer2.o_xAlarmGeneral%/s%",
+    "actions": [
+      {
+        "objectType": "Condition",
+        "active": true,
+        "parts": [
+          {
+            "if": [
+              {
+                "compare1": {
+                  "objectType": "Symbol",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBuffer2.o_xAlarmGeneral%/s%"
+                },
+                "compare2": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "value": true
+                },
+                "compareOperator": "==",
+                "logic": null
+              }
+            ],
+            "then": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::BackgroundColor%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Color",
+                  "value": {
+                    "color": "rgba(250, 6, 6, 1)"
+                  }
+                },
+                "asyncWait": true
+              },
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Visible"
+                },
+                "asyncWait": true
+              }
+            ]
+          },
+          {
+            "else": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Hidden"
+                },
+                "asyncWait": true
+              }
+            ]
+          }
+        ],
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+</div>
+<div id="ErrorInvoerBuffer1_6" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="13" data-tchmi-height-unit="px" data-tchmi-left="21" data-tchmi-left-unit="px" data-tchmi-top="139" data-tchmi-top-unit="px" data-tchmi-width="22" data-tchmi-width-unit="px" data-tchmi-word-wrap="&amp;quot;Tru" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Top">
+<script data-tchmi-target-attribute="data-tchmi-border-color" type="application/json">
+{
+  "color": "rgba(119, 117, 117, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "%s%ADS.PLC1.MAIN.fbBuffer3.o_xAlarmGeneral%/s%",
+    "actions": [
+      {
+        "objectType": "Condition",
+        "active": true,
+        "parts": [
+          {
+            "if": [
+              {
+                "compare1": {
+                  "objectType": "Symbol",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBuffer3.o_xAlarmGeneral%/s%"
+                },
+                "compare2": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "value": true
+                },
+                "compareOperator": "==",
+                "logic": null
+              }
+            ],
+            "then": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::BackgroundColor%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Color",
+                  "value": {
+                    "color": "rgba(250, 6, 6, 1)"
+                  }
+                },
+                "asyncWait": true
+              },
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Visible"
+                },
+                "asyncWait": true
+              }
+            ]
+          },
+          {
+            "else": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Hidden"
+                },
+                "asyncWait": true
+              }
+            ]
+          }
+        ],
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+</div>
+<div id="ErrorInvoerBuffer1_7" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="13" data-tchmi-height-unit="px" data-tchmi-left="21" data-tchmi-left-unit="px" data-tchmi-top="180" data-tchmi-top-unit="px" data-tchmi-width="22" data-tchmi-width-unit="px" data-tchmi-word-wrap="&amp;quot;Tru" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Top">
+<script data-tchmi-target-attribute="data-tchmi-border-color" type="application/json">
+{
+  "color": "rgba(119, 117, 117, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "%s%ADS.PLC1.MAIN.fbBuffer4.o_xAlarmGeneral%/s%",
+    "actions": [
+      {
+        "objectType": "Condition",
+        "active": true,
+        "parts": [
+          {
+            "if": [
+              {
+                "compare1": {
+                  "objectType": "Symbol",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBuffer4.o_xAlarmGeneral%/s%"
+                },
+                "compare2": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "value": true
+                },
+                "compareOperator": "==",
+                "logic": null
+              }
+            ],
+            "then": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::BackgroundColor%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Color",
+                  "value": {
+                    "color": "rgba(250, 6, 6, 1)"
+                  }
+                },
+                "asyncWait": true
+              },
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Visible"
+                },
+                "asyncWait": true
+              }
+            ]
+          },
+          {
+            "else": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Hidden"
+                },
+                "asyncWait": true
+              }
+            ]
+          }
+        ],
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+</div>
+<div id="ErrorInvoerBuffer1_8" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="13" data-tchmi-height-unit="px" data-tchmi-left="21" data-tchmi-left-unit="px" data-tchmi-top="219" data-tchmi-top-unit="px" data-tchmi-width="22" data-tchmi-width-unit="px" data-tchmi-word-wrap="&amp;quot;Tru" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Top">
+<script data-tchmi-target-attribute="data-tchmi-border-color" type="application/json">
+{
+  "color": "rgba(119, 117, 117, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "%s%ADS.PLC1.MAIN.fbBuffer5.o_xAlarmGeneral%/s%",
+    "actions": [
+      {
+        "objectType": "Condition",
+        "active": true,
+        "parts": [
+          {
+            "if": [
+              {
+                "compare1": {
+                  "objectType": "Symbol",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBuffer5.o_xAlarmGeneral%/s%"
+                },
+                "compare2": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "value": true
+                },
+                "compareOperator": "==",
+                "logic": null
+              }
+            ],
+            "then": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::BackgroundColor%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Color",
+                  "value": {
+                    "color": "rgba(250, 6, 6, 1)"
+                  }
+                },
+                "asyncWait": true
+              },
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Visible"
+                },
+                "asyncWait": true
+              }
+            ]
+          },
+          {
+            "else": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Hidden"
+                },
+                "asyncWait": true
+              }
+            ]
+          }
+        ],
+        "asyncWait": true
+      }
+    ]
+  },
+  {
+    "event": "%s%ADS.PLC1.MAIN.fbBuffer5.fbKlep.o_xAlarmPositionUpOrUnknow%/s%",
+    "actions": [
+      {
+        "objectType": "Condition",
+        "active": true,
+        "parts": [
+          {
+            "if": [
+              {
+                "compare1": {
+                  "objectType": "Symbol",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBuffer5.fbKlep.o_xAlarmPositionUpOrUnknow%/s%"
+                },
+                "compare2": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "value": true
+                },
+                "compareOperator": "==",
+                "logic": null
+              }
+            ],
+            "then": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::BackgroundColor%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Color",
+                  "value": {
+                    "color": "rgba(250, 6, 6, 1)"
+                  }
+                },
+                "asyncWait": true
+              },
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Visible"
+                },
+                "asyncWait": true
+              }
+            ]
+          },
+          {
+            "else": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Hidden"
+                },
+                "asyncWait": true
+              }
+            ]
+          }
+        ],
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+</div>
+<div id="ErrorInvoerBuffer1_9" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="13" data-tchmi-height-unit="px" data-tchmi-left="21" data-tchmi-left-unit="px" data-tchmi-top="459" data-tchmi-top-unit="px" data-tchmi-width="22" data-tchmi-width-unit="px" data-tchmi-word-wrap="&amp;quot;Tru" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Top">
+<script data-tchmi-target-attribute="data-tchmi-border-color" type="application/json">
+{
+  "color": "rgba(119, 117, 117, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "%s%ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.o_xAlarmGeneral%/s%",
+    "actions": [
+      {
+        "objectType": "Condition",
+        "active": true,
+        "parts": [
+          {
+            "if": [
+              {
+                "compare1": {
+                  "objectType": "Symbol",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.o_xAlarmGeneral%/s%"
+                },
+                "compare2": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "value": true
+                },
+                "compareOperator": "==",
+                "logic": null
+              }
+            ],
+            "then": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::BackgroundColor%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Color",
+                  "value": {
+                    "color": "rgba(250, 6, 6, 1)"
+                  }
+                },
+                "asyncWait": true
+              },
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Visible"
+                },
+                "asyncWait": true
+              }
+            ]
+          },
+          {
+            "else": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Hidden"
+                },
+                "asyncWait": true
+              }
+            ]
+          }
+        ],
+        "asyncWait": true
+      }
+    ]
+  },
+  {
+    "event": "%s%ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.fbKlep.o_xAlarmPositionUpOrUnknow%/s%",
+    "actions": [
+      {
+        "objectType": "Condition",
+        "active": true,
+        "parts": [
+          {
+            "if": [
+              {
+                "compare1": {
+                  "objectType": "Symbol",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.fbKlep.o_xAlarmPositionUpOrUnknow%/s%"
+                },
+                "compare2": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "value": true
+                },
+                "compareOperator": "==",
+                "logic": null
+              }
+            ],
+            "then": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::BackgroundColor%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Color",
+                  "value": {
+                    "color": "rgba(250, 6, 6, 1)"
+                  }
+                },
+                "asyncWait": true
+              },
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Visible"
+                },
+                "asyncWait": true
+              }
+            ]
+          },
+          {
+            "else": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Hidden"
+                },
+                "asyncWait": true
+              }
+            ]
+          }
+        ],
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+</div>
+<div id="TcHmiPolygon_6" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiPolygon" data-tchmi-height="19" data-tchmi-height-unit="px" data-tchmi-left="159" data-tchmi-left-unit="px" data-tchmi-points="0,100 100,0 200,100 100,200" data-tchmi-scale-mode="ScaleToFill" data-tchmi-top="215" data-tchmi-top-unit="px" data-tchmi-width="22" data-tchmi-width-unit="px">
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "%s%ADS.PLC1.MAIN.fbBuffer5.fbKlep.o_xWarningPositionDown%/s%",
+    "actions": [
+      {
+        "objectType": "Condition",
+        "active": true,
+        "parts": [
+          {
+            "if": [
+              {
+                "compare1": {
+                  "objectType": "Symbol",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBuffer5.fbKlep.o_xWarningPositionDown%/s%"
+                },
+                "compare2": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "value": true
+                },
+                "compareOperator": "==",
+                "logic": null
+              }
+            ],
+            "then": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Visible"
+                },
+                "asyncWait": true
+              },
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::FillColor%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Color",
+                  "value": {
+                    "color": "rgba(249, 239, 23, 1)"
+                  }
+                },
+                "asyncWait": true
+              }
+            ]
+          },
+          {
+            "else": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Hidden"
+                },
+                "asyncWait": true
+              }
+            ]
+          }
+        ],
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script data-tchmi-target-attribute="data-tchmi-stroke-color" type="application/json">
+{
+  "color": "rgba(0, 0, 0, 0)"
+}
+</script>
+</div>
+<div id="TcHmiPolygon_7" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiPolygon" data-tchmi-height="19" data-tchmi-height-unit="px" data-tchmi-left="159" data-tchmi-left-unit="px" data-tchmi-points="0,100 100,0 200,100 100,200" data-tchmi-scale-mode="ScaleToFill" data-tchmi-top="454" data-tchmi-top-unit="px" data-tchmi-width="22" data-tchmi-width-unit="px">
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "%s%ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.fbKlep.o_xWarningPositionDown%/s%",
+    "actions": [
+      {
+        "objectType": "Condition",
+        "active": true,
+        "parts": [
+          {
+            "if": [
+              {
+                "compare1": {
+                  "objectType": "Symbol",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.fbKlep.o_xWarningPositionDown%/s%"
+                },
+                "compare2": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "value": true
+                },
+                "compareOperator": "==",
+                "logic": null
+              }
+            ],
+            "then": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Visible"
+                },
+                "asyncWait": true
+              },
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::FillColor%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Color",
+                  "value": {
+                    "color": "rgba(249, 239, 23, 1)"
+                  }
+                },
+                "asyncWait": true
+              }
+            ]
+          },
+          {
+            "else": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Hidden"
+                },
+                "asyncWait": true
+              }
+            ]
+          }
+        ],
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script data-tchmi-target-attribute="data-tchmi-stroke-color" type="application/json">
+{
+  "color": "rgba(0, 0, 0, 0)"
+}
+</script>
+</div>
 </div>

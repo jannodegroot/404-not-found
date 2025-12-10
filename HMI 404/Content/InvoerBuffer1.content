@@ -644,6 +644,17 @@
                   "value": "Noodstop active"
                 },
                 "asyncWait": true
+              },
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Visible"
+                },
+                "asyncWait": true
               }
             ]
           },
@@ -652,13 +663,11 @@
               {
                 "objectType": "WriteToSymbol",
                 "active": true,
-                "symbolExpression": "%ctx%owner::BackgroundColor%/ctx%",
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
                 "value": {
                   "objectType": "StaticValue",
-                  "valueType": "tchmi:framework#/definitions/Color",
-                  "value": {
-                    "color": "rgba(223, 223, 223, 1)"
-                  }
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Hidden"
                 },
                 "asyncWait": true
               }
