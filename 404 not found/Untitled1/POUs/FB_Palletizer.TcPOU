@@ -31,9 +31,18 @@ TimerLift(IN:=xTimerLiftRunning, PT := timTimerValue);
 //aansturen band
 
 //aansturen lift
+
 //aansturen zichzelf
+
 //errors
+
 //allarmen
+IF o_iStorageCount = 8 THEN
+	o_xWarningFull:=TRUE;
+ELSIF i_xWarningReset THEN
+	o_xWarningFull:=FALSE;
+END_IF
+
 //warnings
 
 IF i_xDoorOpenButton THEN
