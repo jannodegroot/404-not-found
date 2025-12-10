@@ -20,6 +20,7 @@ VAR_OUTPUT
 	o_xAlarmGeneral		: BOOL;
 	o_xGivingToNext		: BOOL;
 	o_xEmpty			: BOOL;
+	o_sStateString 		: STRING(30);
 END_VAR
 VAR	
 	xError				: BOOL;
@@ -31,7 +32,7 @@ END_VAR
       <ST><![CDATA[//-------------------------------------------------------------------------------------------------------------------------
 //Change the state
 //execute
-IF NOT (i_eModus = eModus.Off) AND (i_eStartStop = eStartStop.Start) AND NOT i_xAbort AND NOT o_xErrorGeneral THEN
+IF NOT (i_eModus = eModus.Off) AND (i_eStartStop = eStartStop.Start) AND NOT i_xAbort AND NOT xError THEN
 	o_eState := eSingleState.Execute;
 END_IF
 
@@ -93,7 +94,7 @@ END_IF;
 IF (i_eModus = eModus.Auto) AND 
 	(o_eState = eSingleState.Execute AND i_xPreviousEmptying AND NOT i_xLightSensor OR 
 	o_eState = eSingleState.Execute AND i_xLightSensor AND i_xNextEmpty) OR
-	(i_eModus = eModus.Manual AND NOT i_xManualCmdMotor) THEN
+	(i_eModus = eModus.Manual AND i_xManualCmdMotor) THEN
 
 	o_xMotor := TRUE;
 END_IF
@@ -134,7 +135,10 @@ END_IF
 //reset alarm
 IF i_xAlarmReset AND NOT (o_eState = eSingleState.Aborting) THEN
 	o_xAlarmGeneral := FALSE;
-END_IF]]></ST>
+END_IF
+
+//state enum to string for HMI
+o_sStateString := F_StateEnumToString(o_eState);]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

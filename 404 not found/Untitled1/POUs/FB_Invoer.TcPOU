@@ -58,7 +58,7 @@ fbKlep(	i_eState 						:= o_eState,
 //-------------------------------------------------------------------------------------------------------------------------
 //Change the state
 //execute
-IF NOT (i_eModus = eModus.Off) AND (i_eStartStop = eStartStop.Start) AND NOT i_xAbort AND NOT o_xErrorGeneral THEN
+IF NOT (i_eModus = eModus.Off) AND (i_eStartStop = eStartStop.Start) AND NOT i_xAbort AND NOT xError THEN
 	o_eState := eSingleState.Execute;
 END_IF
 

@@ -4,12 +4,13 @@
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
 	//instance of the functionblocks
-	fbControlSystem	: FB_ControlSystem;
-	fbInvoerBuffer1 : FB_Invoer;
-	fbBuffer2		: FB_BufferMetKlep;
-	fbBuffer3		: FB_BufferMetKlep;
-	fbBuffer4		: FB_BufferMetKlep;
-	fbBuffer5		: FB_BufferZonderKlep;
+	fbControlSystem					: FB_ControlSystem;
+	fbInvoerBuffer1 				: FB_Invoer;
+	fbBuffer2						: FB_BufferZonderKlep;
+	fbBuffer3						: FB_BufferZonderKlep;
+	fbBuffer4						: FB_BufferZonderKlep;
+	fbBuffer5						: FB_BufferMetKlep;
+	fbBandDepalletizerPalletizer	: FB_BufferMetKlep;
 	
 	//safety
 	xAbortGeneral				: BOOL;
@@ -19,33 +20,40 @@ VAR
 	eStartStopGeneral			: eStartStop;
 	
 	//lichtsensors
-	xLightSensorInvoerBuffer1	: BOOL;
-	xLightSensorBuffer2			: BOOL;
-	xLightSensorBuffer3			: BOOL;
-	xLightSensorBuffer4			: BOOL;
-	xLightSensorBuffer5			: BOOL;
+	xLightSensorInvoerBuffer1			: BOOL;
+	xLightSensorBuffer2					: BOOL;
+	xLightSensorBuffer3					: BOOL;
+	xLightSensorBuffer4					: BOOL;
+	xLightSensorBuffer5					: BOOL;
+	xLightSensorDepalletizerPalletizer	: BOOL;
 	
-	//empty buffers
-	xBuffer2Empty				: BOOL;
-	xBuffer3Empty				: BOOL;
-	xBuffer4Empty				: BOOL;
-	xBuffer5Empty				: BOOL;
-	xDepalletizerEmpty			: BOOL;
+	//empty buffers/banden
+	xBuffer2Empty						: BOOL;
+	xBuffer3Empty						: BOOL;
+	xBuffer4Empty						: BOOL;
+	xBuffer5Empty						: BOOL;
+	xDepalletizerEmpty					: BOOL;
+	xBandDepalletizerPalletizerEmpty	: BOOL;
+	xPalletizerEmpty					: BOOL;
 	
-	//buffer is emptying
-	xInvoerBuffer1Emptying		: BOOL;
-	xBuffer2Emptying			: BOOL;
-	xBuffer3Emptying			: BOOL;
-	xBuffer4Emptying			: BOOL;
-	xBuffer5Emptying			: BOOL;
-
+	//buffer/band is emptying
+	xInvoerBuffer1Emptying				: BOOL;
+	xBuffer2Emptying					: BOOL;
+	xBuffer3Emptying					: BOOL;
+	xBuffer4Emptying					: BOOL;
+	xBuffer5Emptying					: BOOL;
+	xDepalletizerEmptying				: BOOL;
+	xBandDepalletizerPalletizerEmptying	: BOOL;
+	xPalletizerEmptying					: BOOL;
 	
 	//nextstate
-	eStateBuffer2				: eSingleState;
-	eStateBuffer3				: eSingleState;
-	eStateBuffer4				: eSingleState;
-	eStateBuffer5				: eSingleState;
-	eStateDepalletizer			: eSingleState;
+	eStateBuffer2						: eSingleState;
+	eStateBuffer3						: eSingleState;
+	eStateBuffer4						: eSingleState;
+	eStateBuffer5						: eSingleState;
+	eStateDepalletizer					: eSingleState;
+	eStateBandDepalletizerPalletizer	: eSingleState;
+	eStatePalletizer					: eSingleState;
 	
 END_VAR
 ]]></Declaration>
@@ -108,7 +116,8 @@ fbInvoerBuffer1(i_xAbort			:= xAbortGeneral OR xAbortInvoerBuffer1,
 			o_xErrorGeneral			=> , 
 			o_xAlarmGeneral			=> , 
 			o_xGivingToNext			=> xBuffer2Emptying,
-			o_xEmpty 				=> xBuffer2Empty);
+			o_xEmpty 				=> xBuffer2Empty,
+			o_sStateString			=>);
 
 //----buffer 3------------------------------------------------------------------------------------------------------------							 
 fbBuffer3(  i_xAbort				:= xAbortGeneral, 
@@ -125,8 +134,9 @@ fbBuffer3(  i_xAbort				:= xAbortGeneral,
 			o_xErrorGeneral			=> , 
 			o_xAlarmGeneral			=> , 
 			o_xGivingToNext			=> xBuffer3Emptying,
-			o_xEmpty 				=> xBuffer3Empty);
-
+			o_xEmpty 				=> xBuffer3Empty,
+			o_sStateString			=>);
+			
 //----buffer 4------------------------------------------------------------------------------------------------------------							
  fbBuffer4(  i_xAbort				:= xAbortGeneral, 
 			i_eStartStop			:= eStartStopGeneral,  
@@ -142,7 +152,8 @@ fbBuffer3(  i_xAbort				:= xAbortGeneral,
 			o_xErrorGeneral			=> ,
 			o_xAlarmGeneral			=> , 
 			o_xGivingToNext			=> xBuffer4Emptying,
-			o_xEmpty 				=> xBuffer4Empty);
+			o_xEmpty 				=> xBuffer4Empty,
+			o_sStateString			=>);
 
 //----buffer 5------------------------------------------------------------------------------------------------------------					
 fbBuffer5(	i_xAbort				:= xAbortGeneral, 
@@ -159,7 +170,26 @@ fbBuffer5(	i_xAbort				:= xAbortGeneral,
 			o_xErrorGeneral			=> ,
 			o_xAlarmGeneral			=> , 
 			o_xGivingToNext			=> xBuffer5Emptying,
-			o_xEmpty 				=> xBuffer5Empty);
+			o_xEmpty 				=> xBuffer5Empty,
+			o_sStateString			=>);
+			
+//----band depalletizer/palletizer------------------------------------------------------------------------------------------------------------					
+fbBandDepalletizerPalletizer(	i_xAbort				:= xAbortGeneral, 
+								i_eStartStop			:= eStartStopGeneral,  
+								i_xLightSensor			:= xLightSensorDepalletizerPalletizer, 
+								i_xPreviousEmptying 	:= xDepalletizerEmpty,
+								i_xNextEmpty			:= xPalletizerEmpty, 
+								i_xAlarmReset			:= , 
+								i_eNextState			:= eStatePalletizer,
+								i_eModus				:= ,
+								i_xManualCmdMotor 		:= , 
+								o_eState				=> , 
+								o_xMotor				=> , 
+								o_xErrorGeneral			=> ,
+								o_xAlarmGeneral			=> , 
+								o_xGivingToNext			=> xBandDepalletizerPalletizerEmptying,
+								o_xEmpty 				=> xBandDepalletizerPalletizerEmpty,
+								o_sStateString			=>);
 ]]></ST>
     </Implementation>
   </POU>
