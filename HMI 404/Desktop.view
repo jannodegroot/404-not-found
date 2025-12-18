@@ -1384,7 +1384,7 @@
 ]
 </script>
 </div>
-<div id="TcHmiPolygon_6" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiPolygon" data-tchmi-height="19" data-tchmi-height-unit="px" data-tchmi-left="159" data-tchmi-left-unit="px" data-tchmi-points="0,100 100,0 200,100 100,200" data-tchmi-scale-mode="ScaleToFill" data-tchmi-top="215" data-tchmi-top-unit="px" data-tchmi-width="22" data-tchmi-width-unit="px">
+<div id="TcHmiPolygon_6" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiPolygon" data-tchmi-height="19" data-tchmi-height-unit="px" data-tchmi-left="159" data-tchmi-left-unit="px" data-tchmi-points="0,100 100,0 200,100 100,200" data-tchmi-scale-mode="ScaleToFill" data-tchmi-top="213" data-tchmi-top-unit="px" data-tchmi-width="22" data-tchmi-width-unit="px">
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {

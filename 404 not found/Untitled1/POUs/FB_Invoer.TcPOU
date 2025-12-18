@@ -179,7 +179,7 @@ IF i_xAlarmReset AND NOT (o_eState = eSingleState.Aborting) THEN
 END_IF
 
 //state enum to string for HMI
-o_sStateString := F_StateEnumToString(o_eState);
+o_sStateString := F_StateEnumToStringSingleState(o_eState);
 ]]></ST>
     </Implementation>
   </POU>
