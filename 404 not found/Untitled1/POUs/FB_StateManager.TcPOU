@@ -21,59 +21,59 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//idle
-IF i_eStateInvoerBuffer1 = i_eStateInvoerBuffer1.Idle AND
-	i_eStateBuffer2 = i_eStateBuffer2.Idle AND
-	i_eStateBuffer3 = i_eStateBuffer3.Idle AND
-	i_eStateBuffer4 = i_eStateBuffer4.Idle AND
-	i_eStateBuffer5 = i_eStateBuffer5.Idle AND
-	i_eStateDepalletizer = i_eStateDepalletizer.Idle AND
-	i_eStateBandDepalletizerPalletizer = i_eStateBandDepalletizerPalletizer.Idle AND
-	i_eStatePalletizer = i_eStatePalletizer.Idle AND
-	i_eStateBlikjesBand = i_eStateBlikjesBand.Idle
+IF i_eStateInvoerBuffer1 = eSingleState.Idle AND
+	i_eStateBuffer2 = eSingleState.Idle AND
+	i_eStateBuffer3 = eSingleState.Idle AND
+	i_eStateBuffer4 = eSingleState.Idle AND
+	i_eStateBuffer5 = eSingleState.Idle AND
+	i_eStateDepalletizer = eSingleState.Idle AND
+	i_eStateBandDepalletizerPalletizer = eSingleState.Idle AND
+	i_eStatePalletizer = eSingleState.Idle AND
+	i_eStateBlikjesBand = eSingleState.Idle
 THEN
-	o_eGeneralState := o_eGeneralState.Idle;
+	o_eGeneralState := eGeneralState.Idle;
 END_IF
 
 //execute
-IF i_eStateInvoerBuffer1 = i_eStateInvoerBuffer1.Execute OR
-	i_eStateBuffer2 = i_eStateBuffer2.Execute OR
-	i_eStateBuffer3 = i_eStateBuffer3.Execute OR
-	i_eStateBuffer4 = i_eStateBuffer4.Execute OR
-	i_eStateBuffer5 = i_eStateBuffer5.Execute OR
-	i_eStateDepalletizer = i_eStateDepalletizer.Execute OR
-	i_eStateBandDepalletizerPalletizer = i_eStateBandDepalletizerPalletizer.Execute OR
-	i_eStatePalletizer = i_eStatePalletizer.Execute OR
-	i_eStateBlikjesBand = i_eStateBlikjesBand.Execute
+IF i_eStateInvoerBuffer1 = eSingleState.Execute OR
+	i_eStateBuffer2 = eSingleState.Execute OR
+	i_eStateBuffer3 = eSingleState.Execute OR
+	i_eStateBuffer4 = eSingleState.Execute OR
+	i_eStateBuffer5 = eSingleState.Execute OR
+	i_eStateDepalletizer = eSingleState.Execute OR
+	i_eStateBandDepalletizerPalletizer = eSingleState.Execute OR
+	i_eStatePalletizer = eSingleState.Execute OR
+	i_eStateBlikjesBand = eSingleState.Execute
 THEN
-	o_eGeneralState := o_eGeneralState.Execute;
+	o_eGeneralState := eGeneralState.Execute;
 END_IF
 
 //Stopped
-IF i_eStateInvoerBuffer1 = i_eStateInvoerBuffer1.Stopped AND
-	i_eStateBuffer2 = i_eStateBuffer2.Stopped AND
-	i_eStateBuffer3 = i_eStateBuffer3.Stopped AND
-	i_eStateBuffer4 = i_eStateBuffer4.Stopped AND
-	i_eStateBuffer5 = i_eStateBuffer5.Stopped AND
-	i_eStateDepalletizer = i_eStateDepalletizer.Stopped AND
-	i_eStateBandDepalletizerPalletizer = i_eStateBandDepalletizerPalletizer.Stopped AND
-	i_eStatePalletizer = i_eStatePalletizer.Stopped AND
-	i_eStateBlikjesBand = i_eStateBlikjesBand.Stopped
+IF i_eStateInvoerBuffer1 = eSingleState.Stopped AND
+	i_eStateBuffer2 = eSingleState.Stopped AND
+	i_eStateBuffer3 = eSingleState.Stopped AND
+	i_eStateBuffer4 = eSingleState.Stopped AND
+	i_eStateBuffer5 = eSingleState.Stopped AND
+	i_eStateDepalletizer = eSingleState.Stopped AND
+	i_eStateBandDepalletizerPalletizer = eSingleState.Stopped AND
+	i_eStatePalletizer = eSingleState.Stopped AND
+	i_eStateBlikjesBand = eSingleState.Stopped
 THEN
-	o_eGeneralState := o_eGeneralState.Stopped;
+	o_eGeneralState := eGeneralState.Stopped;
 END_IF
 
 //Aborted
-IF i_eStateInvoerBuffer1 = i_eStateInvoerBuffer1.Aborted AND
-	i_eStateBuffer2 = i_eStateBuffer2.Aborted AND
-	i_eStateBuffer3 = i_eStateBuffer3.Aborted AND
-	i_eStateBuffer4 = i_eStateBuffer4.Aborted AND
-	i_eStateBuffer5 = i_eStateBuffer5.Aborted AND
-	i_eStateDepalletizer = i_eStateDepalletizer.Aborted AND
-	i_eStateBandDepalletizerPalletizer = i_eStateBandDepalletizerPalletizer.Aborted AND
-	i_eStatePalletizer = i_eStatePalletizer.Aborted AND
-	i_eStateBlikjesBand = i_eStateBlikjesBand.Aborted
+IF i_eStateInvoerBuffer1 = eSingleState.Aborted AND
+	i_eStateBuffer2 = eSingleState.Aborted AND
+	i_eStateBuffer3 = eSingleState.Aborted AND
+	i_eStateBuffer4 = eSingleState.Aborted AND
+	i_eStateBuffer5 = eSingleState.Aborted AND
+	i_eStateDepalletizer = eSingleState.Aborted AND
+	i_eStateBandDepalletizerPalletizer = eSingleState.Aborted AND
+	i_eStatePalletizer = eSingleState.Aborted AND
+	i_eStateBlikjesBand = eSingleState.Aborted
 THEN
-	o_eGeneralState := o_eGeneralState.Aborted;
+	o_eGeneralState := eGeneralState.Aborted;
 END_IF
 ]]></ST>
     </Implementation>

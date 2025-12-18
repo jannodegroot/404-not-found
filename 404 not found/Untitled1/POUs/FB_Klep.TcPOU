@@ -6,7 +6,7 @@ VAR_INPUT
 	i_eState 				: eSingleState;
 	i_eModus				: eModus;
 	i_eAutoWantedPosition 	: eValvePosition;
-	i_eManualWantedPosition : eValvePosition;
+	i_eManualWantedPosition	: eValvePosition;
 	i_xHallSensorIn			: BOOL;
 	i_xHallSensorOut 		: BOOL;
 	i_xWarningReset			: BOOL;
@@ -16,13 +16,170 @@ VAR_OUTPUT
 	o_eCurrentPosition 			: eValvePosition;
 	o_xMagnetValve				: BOOL;
 	o_xWarningPositionDown 		: BOOL; //Warning when position is down becease it not stopped the machineflow
-	o_xErrorPositionUpOrUnknow	: BOOL; //Error when valve is up orunknow beceause it stopped te flow of the machine
+	o_xErrorPositionUpOrUnknow	: BOOL; //Error when valve is up or unknow beceause it stopped te flow of the machine
 	o_xAlarmPositionUpOrUnknow	: BOOL;
 END_VAR
 VAR
+	modeAuto					: BOOL;
+	modeManual					: BOOL;
+	Timer 						: TON;
+	IN 							: BOOL;
+	PT 							: TON;
+	TimerValue 					: TIME := T#5S;
+	TimerStartButton 			: BOOL;
+	fbBlinking 					: FB_Blinking;
+	xError						: BOOL;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[// Van Emma
+CASE i_eModus OF
+	eModus.Off:
+		modeAuto := FALSE;
+		modeManual := FALSE;
+	eModus.Auto:
+		modeAuto := TRUE;
+		modeManual := FALSE;
+	eModus.Manual:
+		modeAuto := FALSE;
+		modeManual := TRUE;
+END_CASE 
+
+
+CASE i_eState OF
+	eSingleState.Idle:
+		// beneden positie
+		GoDown();
+	eSingleState.Execute:
+		// Ga naar de gewenste stand
+		// wanneer auto en manual
+		IF modeAuto THEN
+			CASE i_eAutoWantedPosition OF
+			eValvePosition.Down:
+				GoDown();
+
+			eValvePosition.Up:
+				GoUp();
+
+			eValvePosition.Unkown:
+				TimerStartButton := TRUE;
+		
+			END_CASE
+		ELSIF modeManual THEN
+			CASE i_eManualWantedPosition OF
+			eValvePosition.Down:
+				GoDown();
+
+			eValvePosition.Up:
+				GoUp();
+
+			eValvePosition.Unkown:
+				TimerStartButton := TRUE;
+		
+			END_CASE
+		END_IF
+		
+	eSingleState.Stopping:
+		// naar beneden
+		GoDown();
+	eSingleState.Stopped:
+		GoDown();
+		// niks aansturen alles uit		
+	eSingleState.Suspending:
+		// Wachten
+	eSingleState.Suspended:
+		// Wachten
+	eSingleState.Aborting:
+		// alles uit zetten
+		GoDown();
+	eSingleState.Aborted:
+		GoDown();
+		// 
+END_CASE
+
+IF	i_xHallSensorIn AND i_xHallSensorOut THEN
+	o_eCurrentPosition := eValvePosition.Unkown;
+ELSIF i_xHallSensorIn	THEN
+	o_eCurrentPosition := eValvePosition.Down;
+ELSIF i_xHallSensorOut THEN
+	o_eCurrentPosition := eValvePosition.Up;
+ELSE
+	o_eCurrentPosition := eValvePosition.Unkown;
+END_IF
+
+
+IF o_eCurrentPosition = i_eAutoWantedPosition THEN
+	xError := FALSE;
+ELSIF o_eCurrentPosition = i_eManualWantedPosition THEN
+	xError := FALSE;
+ELSE 
+	TimerStartButton := TRUE;
+END_IF
+
+
+Timer(IN:=TimerStartButton, PT := TimerValue);
+
+IF Timer.Q THEN
+	Errors();
+END_IF
+
+Resets();
+
+//blinking error
+IF xError THEN
+	fbBlinking(io_xBlinking:= o_xErrorPositionUpOrUnknow);
+ELSIF NOT xError AND o_xAlarmPositionUpOrUnknow THEN
+	o_xErrorPositionUpOrUnknow := TRUE;
+ELSE
+	o_xErrorPositionUpOrUnknow := FALSE;
+END_IF;
+]]></ST>
     </Implementation>
+    <Method Name="Errors" Id="{c01a7d59-0d58-4142-8c14-7eba332b4019}">
+      <Declaration><![CDATA[METHOD Errors
+VAR
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE o_eCurrentPosition OF
+	eValvePosition.Up :
+			xError := TRUE;
+			o_xAlarmPositionUpOrUnknow := TRUE;	
+	eValvePosition.Down :
+			o_xWarningPositionDown := TRUE;
+	eValvePosition.Unkown :
+			xError := TRUE;
+			o_xAlarmPositionUpOrUnknow := TRUE;	
+END_CASE
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GoDown" Id="{9aff8792-5df6-4760-b1da-ad782bf6930f}">
+      <Declaration><![CDATA[METHOD GoDown]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[o_xMagnetValve := FALSE;
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GoUp" Id="{31034355-e3ba-4c55-b09d-18e1e6f0f4ff}">
+      <Declaration><![CDATA[METHOD GoUp]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[o_xMagnetValve := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Resets" Id="{abc28e97-cc6e-4383-9eed-944a9215df0b}">
+      <Declaration><![CDATA[METHOD Resets]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF 	i_xWarningReset THEN
+	o_xWarningPositionDown := FALSE;
+	TimerStartButton := FALSE;
+END_IF
+
+IF i_xAlarmReset THEN
+	TimerStartButton := FALSE;
+	o_xAlarmPositionUpOrUnknow := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>

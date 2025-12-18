@@ -20,21 +20,19 @@ VAR_OUTPUT
 	o_xAlarmGeneral		: BOOL;
 	o_xGivingToNext		: BOOL;
 	o_xEmpty			: BOOL;
+	o_sStateString 		: STRING(30);
 END_VAR
 VAR	
-	tonErrorMotor 			: TON;
+	xError				: BOOL;
+	tonError			: TON;
+	fbBlinking 			: FB_Blinking;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//-------------------------------------------------------------------------------------------------------------------------
 //Change the state
-//idle
-IF NOT (i_eModus = eModus.Off) AND NOT (i_eStartStop = eStartStop.Start) AND NOT (i_eStartStop = eStartStop.Stop) AND NOT i_xAbort AND NOT o_xErrorGeneral THEN
-	o_eState := eSingleState.Idle;
-END_IF
-
 //execute
-IF NOT (i_eModus = eModus.Off) AND (i_eStartStop = eStartStop.Start) AND NOT i_xAbort AND NOT o_xErrorGeneral THEN
+IF NOT (i_eModus = eModus.Off) AND (i_eStartStop = eStartStop.Start) AND NOT i_xAbort AND NOT xError THEN
 	o_eState := eSingleState.Execute;
 END_IF
 
@@ -72,14 +70,23 @@ END_IF
 
 //-----------------------------------------------------------------------------------------------------------------------------------------
 //Check error and set error, alarm and state = aboarting
-tonErrorMotor(IN := NOT i_xLightSensor AND o_xMotor, PT := T#20S);
-IF  o_xMotor AND tonErrorMotor.Q THEN
+tonError(IN := NOT i_xLightSensor AND o_xMotor, PT := T#20S);
+IF  o_xMotor AND tonError.Q THEN
     o_eState := eSingleState.Aborting;
 	
-	IF tonErrorMotor.Q THEN
+	IF tonError.Q THEN
 		o_xErrorGeneral := TRUE;
 		o_xAlarmGeneral := TRUE;
 	END_IF
+END_IF;
+
+//blinking error
+IF xError THEN
+	fbBlinking(io_xBlinking:= o_xErrorGeneral);
+ELSIF NOT xError AND o_xAlarmGeneral THEN
+	o_xErrorGeneral := TRUE;
+ELSE
+	o_xErrorGeneral := FALSE;
 END_IF;
 
 //----------------------------------------------------------------------------------------------------------------------------------------
@@ -87,7 +94,7 @@ END_IF;
 IF (i_eModus = eModus.Auto) AND 
 	(o_eState = eSingleState.Execute AND i_xPreviousEmptying AND NOT i_xLightSensor OR 
 	o_eState = eSingleState.Execute AND i_xLightSensor AND i_xNextEmpty) OR
-	(i_eModus = eModus.Manual AND NOT i_xManualCmdMotor) THEN
+	(i_eModus = eModus.Manual AND i_xManualCmdMotor) THEN
 
 	o_xMotor := TRUE;
 END_IF
@@ -103,6 +110,7 @@ IF (i_eModus = eModus.Auto) AND
 	o_xMotor := FALSE;		
 END_IF
 
+//----------------------------------------------------------------------------------------------------------------------------------------
 //write o_xGivingToNext
 IF o_eState = eSingleState.Execute AND i_xLightSensor AND NOT i_xNextEmpty THEN
 	o_xGivingToNext := FALSE;	
@@ -110,6 +118,7 @@ ELSIF o_eState = eSingleState.Execute AND i_xLightSensor AND i_xNextEmpty THEN
 	o_xGivingToNext := TRUE;
 END_IF
 
+//----------------------------------------------------------------------------------------------------------------------------------------
 //check if buffer is empty
 IF NOT i_xLightSensor THEN
 	o_xEmpty := TRUE;
@@ -120,13 +129,16 @@ END_IF
 //-------------------------------------------------------------------------------------------------------------------
 //reset alarm and error
 IF NOT (o_eState = eSingleState.Aborting) AND i_xLightSensor THEN
-	o_xErrorGeneral := FALSE;
+	xError := FALSE;
 END_IF
 
 //reset alarm
 IF i_xAlarmReset AND NOT (o_eState = eSingleState.Aborting) THEN
 	o_xAlarmGeneral := FALSE;
-END_IF]]></ST>
+END_IF
+
+//state enum to string for HMI
+o_sStateString := F_StateEnumToString(o_eState);]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Band" Id="{17428d00-3899-4c32-a33d-f4bdb5ab68f1}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Band
+VAR_INPUT
+	i_eState		: eSingleState;
+	i_xGoHold 		: BOOL; //keep pallet on band wachten
+	i_xGoEmpty		: BOOL; //move pallet to other segment go
+	i_xAlarmReset	: BOOL;
+END_VAR
+VAR_OUTPUT
+	o_xMotor 		: BOOL := FALSE;
+	o_xErrorMotor 	: BOOL := FALSE;
+	o_xAlarmMotor	: BOOL;
+	o_xGivingToNext	: BOOL;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Van Emma
+
+IF i_xGoHold = TRUE THEN
+	o_xMotor := FALSE; 
+END_IF
+
+IF i_xGoEmpty = TRUE THEN
+	o_xMotor := TRUE; 
+	o_xGivingToNext := TRUE;
+ELSE
+	o_xGivingToNext := FALSE;
+END_IF
+
+IF i_xGoEmpty = FALSE AND o_xMotor := TRUE THEN
+	o_xErrorMotor := TRUE;	
+	o_xAlarmMotor := TRUE;
+ELSE
+	o_xErrorMotor := FALSE;	
+END_IF
+
+IF i_xGoHold = TRUE AND o_xMotor := TRUE THEN
+	o_xErrorMotor := TRUE;	
+	o_xAlarmMotor := TRUE;
+ELSE
+	o_xErrorMotor := FALSE;	
+END_IF 
+
+IF i_xAlarmReset THEN
+	o_xAlarmMotor := FALSE;
+END_IF
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
