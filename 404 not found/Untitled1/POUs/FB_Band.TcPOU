@@ -31,14 +31,14 @@ ELSE
 	o_xGivingToNext := FALSE;
 END_IF
 
-IF i_xGoEmpty = FALSE AND o_xMotor := TRUE THEN
+IF i_xGoEmpty = FALSE AND o_xMotor = TRUE THEN
 	o_xErrorMotor := TRUE;	
 	o_xAlarmMotor := TRUE;
 ELSE
 	o_xErrorMotor := FALSE;	
 END_IF
 
-IF i_xGoHold = TRUE AND o_xMotor := TRUE THEN
+IF i_xGoHold = TRUE AND o_xMotor = TRUE THEN
 	o_xErrorMotor := TRUE;	
 	o_xAlarmMotor := TRUE;
 ELSE
