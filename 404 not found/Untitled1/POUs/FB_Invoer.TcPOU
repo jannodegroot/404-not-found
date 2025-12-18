@@ -10,8 +10,9 @@ VAR_INPUT
 	i_xNextEmpty		: BOOL;
 	i_xAlarmReset		: BOOL;
 	i_eNextState		: eSingleState;
-	i_eModus			: eModus;
+	i_eModus			: eModus := eModus.Auto;
 	i_xManualCmdMotor	: BOOL;
+	test: BOOL;
 END_VAR
 VAR_OUTPUT
 	o_eState 			: eSingleState := eSinglestate.Idle;
@@ -19,11 +20,14 @@ VAR_OUTPUT
 	o_xErrorGeneral	 	: BOOL := FALSE;
 	o_xAlarmGeneral		: BOOL;
 	o_xGivingToNext		: BOOL;
-	o_xEmpty			: BOOL;
+	o_xEmpty			: BOOL	:= TRUE;
 	o_sStateString 		: STRING(30);
 END_VAR
 VAR
-	xError							: BOOL;
+	xError						 	: BOOL := FALSE;
+	tonError						: TON;
+	fbBlinking 						: FB_Blinking;
+	
 	rTrigPallet						: R_TRIG;
 	xPalletPresent 					: BOOL;
 	tonPalletDetected				: TON;
@@ -32,9 +36,6 @@ VAR
 	fbKlep 							: FB_Klep;
 	eValveCurrentPosition			: eValvePosition;
 	
-	tonError						: TON;
-	
-	fbBlinking						: FB_Blinking;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -42,17 +43,17 @@ END_VAR
 //init objects
 fbKlep(	i_eState 						:= o_eState,
 		i_eModus						:= i_eModus,
-		i_eAutoWantedPosition 			:= ,
-		i_eManualWantedPosition 		:= (*from HMI??*),
-		i_xHallSensorIn 				:= (*from simulation*),
-		i_xHallSensorOut 				:= (*from simulation*),
-		i_xWarningReset 				:= (*from simulation*),
-		i_xAlarmReset 					:= (*from simulation*),
-		o_eCurrentPosition 				:= (*from simulation*),	
-		o_xMagnetValve					:= (*from simulation*),
-		o_xWarningPositionDown 			:= (*from simulation*),
-		o_xErrorPositionUpOrUnknow		:= (*from simulation*),
-		o_xAlarmPositionUpOrUnknow		:= (*from simulation*));
+		i_eAutoWantedPosition 			:= (*Set in this FB*),
+		i_eManualWantedPosition 		:= (*Used in HMI*),
+		i_xHallSensorIn 				:= ,
+		i_xHallSensorOut 				:= ,
+		i_xWarningReset 				:= (*Used in HMI*),
+		i_xAlarmReset 					:= (*Used in HMI*),
+		o_eCurrentPosition 				:= (*Used in HMI*),	
+		o_xMagnetValve					:= ,
+		o_xWarningPositionDown 			:= (*Used in HMI*),
+		o_xErrorPositionUpOrUnknow		:= (*Used in HMI*),
+		o_xAlarmPositionUpOrUnknow		:= (*Used in HMI*));
 
 //-------------------------------------------------------------------------------------------------------------------------
 //Change the state
@@ -119,6 +120,7 @@ END_IF;
 rTrigPallet(CLK := i_xPalletPlaced);
 IF rTrigPallet.Q THEN
     xPalletPresent := TRUE;
+ELSIF xPalletPresent AND i_xLightSensor THEN
 	o_xEmpty 		:= FALSE;
 ELSIF xTimerPalletDetectedCompleted AND NOT i_xLightSensor THEN
 	xPalletPresent := FALSE;
