@@ -5,6 +5,7 @@
 			<Settings MaxCpus="12" NonWinCpus="1"/>
 			<Licenses>
 				<Target>
+					<ManualSelect>{BDCC0070-42D5-49AE-ABF1-1D4434813D60}</ManualSelect>
 					<ManualSelect>{6952449D-F68C-49A2-ADE4-8639D85B33A4}</ManualSelect>
 				</Target>
 			</Licenses>

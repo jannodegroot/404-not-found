@@ -362,6 +362,8 @@ ELSIF i_xHallSensorOut THEN
 ELSE
 	o_eCiliderPosition := eZuigerCilinderposition.Unkown;
 END_IF
+//i want to dont like this
+//eWistedHorizotalPosition = o_eHorizotalPosition;
 
 IF	i_xEndSwitchIn AND i_xEndSwitchOut THEN
 	o_eHorizotalPosition := eZuigerHorizontaal.Unkown;
