@@ -128,31 +128,31 @@ END_VAR
 VAR
 	//geen meuk
 	//de echte zooi
-	Timerlong : TON;
 	timTimerValueLong : TIME := T#7S;
 	xTimerLongRunning: BOOL;
-	TimerShort : TON;
+
 	timTimerValueShort : TIME := T#2S;
 	xTimerShortRunning: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//timer long and short for simulating wait time before somnething happens in the code
-Timerlong(IN:=xTimerLongRunning, PT:=timTimerValueLong);
-IF Timerlong.Q THEN
+GVL.Timerlong(IN:=xTimerLongRunning, PT:=timTimerValueLong);
+IF GVL.Timerlong.Q THEN
 	xTimerLongRunning:=FALSE;
 ELSE
 	xTimerLongRunning:=TRUE;
 END_IF
 
-TimerShort(IN:=xTimerShortRunning, PT:=timTimerValueShort);
-IF TimerShort.Q THEN
+GVL.TimerShort(IN:=xTimerShortRunning, PT:=timTimerValueShort);
+IF GVL.TimerShort.Q THEN
 	xTimerShortRunning:=FALSE;
 ELSE
 	xTimerShortRunning:=TRUE;
 END_IF
 
-deplelitizerzuiger();]]></ST>
+deplelitizerzuiger();
+]]></ST>
     </Implementation>
     <Method Name="deplelitizerzuiger" Id="{8051e9b7-c22e-4778-aa38-5be337bf3f0e}">
       <Declaration><![CDATA[METHOD deplelitizerzuiger

@@ -99,6 +99,10 @@
     <Compile Include="POUs\FB_StateManager.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\GVL.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
