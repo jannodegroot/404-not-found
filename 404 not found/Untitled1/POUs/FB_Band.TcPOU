@@ -21,7 +21,7 @@ END_VAR
       <ST><![CDATA[// Van Emma
 
 IF i_xGoHold = TRUE THEN
-	o_xMotor := FALSE; 
+	o_xMotor := FALSE; //
 END_IF
 
 IF i_xGoEmpty = TRUE THEN
