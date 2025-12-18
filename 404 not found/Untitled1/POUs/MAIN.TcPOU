@@ -7,6 +7,10 @@ VAR
 	fbBuffer2		: FB_BufferMetKlep;
 	fbBuffer5		: FB_BufferZonderKlep;
 	
+	fbBlikband		: FB_BlikjesBand;
+	fbKlep			: FB_Klep;
+	fbBand			: FB_Band;
+	
 	Abort			: BOOL;
 	StartStop		: eStartStop;
 	PalletPlaced	: BOOL;
@@ -23,10 +27,20 @@ VAR
 	Empty			: BOOL;
 	StateString		: BOOL;
 	
+	
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[fbInvoerBuffer1(	i_xAbort			:= Abort, 
+      <ST><![CDATA[fbBlikband();
+
+fbKlep();
+
+fbBand();
+
+
+
+(*fbInvoerBuffer1(	i_xAbort			:= Abort, 
 					i_eStartStop		:= StartStop, 
 					i_xPalletPlaced		:= PalletPlaced, 
 					i_xLightSensor		:= LightSensor, 
@@ -41,6 +55,7 @@ END_VAR
 					o_xAlarmGeneral		=> AlarmGeneral, 
 					o_xGivingToNext		=> GivingToNext,
 					o_sStateString		=> );			
+					*)
 (* 
 fbBuffer2( i_xAbort			:= Abort, 
 			i_eStartStop		:= StartStop,  
@@ -75,6 +90,8 @@ fbBuffer5(	i_xAbort			:= Abort,
 			o_xGivingToNext		=> GivingToNext,
 			o_xEmpty 			=> Empty);
 *)
+
+
 ]]></ST>
     </Implementation>
   </POU>
