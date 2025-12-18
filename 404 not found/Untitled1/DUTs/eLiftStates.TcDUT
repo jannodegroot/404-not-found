@@ -11,10 +11,8 @@ TYPE eLiftStates :
     WaitForPallet := 2,
     Impale := 3,
     MoveUpToLayer := 4,
-    Finished := 5,
-    MoveDownAfterPlace := 6,
-    Complete := 7,
-    Error := 99
+	CheckNextLayer := 5,
+	Finish := 6
 );
 END_TYPE
 ]]></Declaration>

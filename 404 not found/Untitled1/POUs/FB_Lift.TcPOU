@@ -31,6 +31,7 @@ VAR_INPUT
 	i_iLayerHeight		: INT;	// Height of each layer
 	i_iNumberOfLayers   : INT;  // Total number of layers
 	i_iNormalHeight		: INT;	// Standard height for grabbing or releasing pallet
+	i_xLiftSelection	: BOOL;	// 0 = Depalletizer, 1 = Palletizer
 END_VAR
 VAR_OUTPUT
 	o_xMotor 			: BOOL; // Motor Lift
@@ -70,6 +71,30 @@ CASE i_eMode OF
 	eModus.Auto :
 	CASE i_eState OF
 		eSingleState.Execute :
+			CASE eLiftState OF
+				eLiftStates.InitHome :
+					// Initialiseer je HOME
+					
+				eLiftStates.MoveDownToHome :
+					// Ga naar je HOME Positie
+					
+				eLiftStates.WaitForPallet :
+					// Wanneer in Normal Height (home) positie, laat pallet door.
+					// Check welke lift het is. Dan uitvoeren wat voor dat deel werkt.
+					
+				eLiftStates.Impale :
+					// Impale op de manier van welke lift het is
+					
+				eLiftStates.MoveUpToLayer :
+				 	// Ga naar de positie van de volgende laag.
+					// 
+					
+				eLiftStates.CheckNextLayer :
+					// check of je verder kan en of er een volgende laag is. Zo niet, rondt af
+					
+				
+					
+			END_CASE
 
 		eSingleState.Suspending :
 			
@@ -87,10 +112,11 @@ CASE i_eMode OF
 	
 	eModus.Manual :
 		// Doe effe zelf																			// TOEVOEGEN MET HMI
-		
+		// Lift handmatig bedienen door INT invoer?
+		// Pins handmatig in en uit, met beveiliging zodat pallet niet naar beneden dondert
 	eModus.Off :
 		// Doe niks
-		
+		// Stop
 END_CASE
 
 /////////////////
