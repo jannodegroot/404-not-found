@@ -10,7 +10,7 @@ VAR_INPUT
 	i_xNextEmpty		: BOOL;
 	i_xAlarmReset		: BOOL;
 	i_eNextState		: eSingleState;
-	i_eModus			: eModus;
+	i_eModus			: eModus := eModus.Auto;
 	i_xManualCmdMotor	: BOOL;
 	test: BOOL;
 END_VAR
@@ -20,7 +20,7 @@ VAR_OUTPUT
 	o_xErrorGeneral	 	: BOOL := FALSE;
 	o_xAlarmGeneral		: BOOL;
 	o_xGivingToNext		: BOOL;
-	o_xEmpty			: BOOL;
+	o_xEmpty			: BOOL	:= TRUE;
 	o_sStateString 		: STRING(30);
 END_VAR
 VAR
@@ -120,6 +120,7 @@ END_IF;
 rTrigPallet(CLK := i_xPalletPlaced);
 IF rTrigPallet.Q THEN
     xPalletPresent := TRUE;
+ELSIF xPalletPresent AND i_xLightSensor THEN
 	o_xEmpty 		:= FALSE;
 ELSIF xTimerPalletDetectedCompleted AND NOT i_xLightSensor THEN
 	xPalletPresent := FALSE;
