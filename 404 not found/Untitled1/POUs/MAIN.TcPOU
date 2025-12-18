@@ -12,6 +12,8 @@ VAR
 	fbBuffer4						: FB_BufferZonderKlep;
 	fbBuffer5						: FB_BufferMetKlep;
 	fbBandDepalletizerPalletizer	: FB_BufferMetKlep;
+	fbsim							: FB_Simulation;
+	fbDepalletizer					: FB_Depalletizer;
 	
 	//safety
 	xAbortGeneral				: BOOL;
@@ -208,6 +210,43 @@ fbBandDepalletizerPalletizer(	i_xAbort				:= xAbortGeneral,
 								o_xGivingToNext			=> xBandDepalletizerPalletizerEmptying,
 								o_xEmpty 				=> xBandDepalletizerPalletizerEmpty,
 								o_sStateString			=> (*Used in HMI*));
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+fbsim();
+fbDepalletizer();
+
 ]]></ST>
     </Implementation>
   </POU>

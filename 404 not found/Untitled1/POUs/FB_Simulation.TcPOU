@@ -36,6 +36,12 @@ VAR_INPUT
 	/////////////////////////////////
 	i_eMachineStateLamp1 	: eMachineStateLamp; // Lamp Invoer
 	i_eMachineStateLamp2 	: eMachineStateLamp; // Lamp Depalletizer
+	//hiermee kan ik letterlijk niks
+	
+		
+	//niet die meuk
+	i_xCilinderdepalitizerwerkt : BOOL;
+	i_xHorizontalmovementWorking : BOOL;
 END_VAR
 VAR_OUTPUT
 	/////////////////////////////////
@@ -117,12 +123,75 @@ VAR_OUTPUT
 	/////////////////////////////////
 	o_iPressureSensorZuigerDepalletizer	: INT;
 	o_iPressureSensorGeneral			: INT;
+
 END_VAR
 VAR
+	//geen meuk
+	//de echte zooi
+	Timerlong : TON;
+	timTimerValueLong : TIME := T#7S;
+	xTimerLongRunning: BOOL;
+	TimerShort : TON;
+	timTimerValueShort : TIME := T#2S;
+	xTimerShortRunning: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[//timer long and short for simulating wait time before somnething happens in the code
+Timerlong(IN:=xTimerLongRunning, PT:=timTimerValueLong);
+IF Timerlong.Q THEN
+	xTimerLongRunning:=FALSE;
+ELSE
+	xTimerLongRunning:=TRUE;
+END_IF
+
+TimerShort(IN:=xTimerShortRunning, PT:=timTimerValueShort);
+IF TimerShort.Q THEN
+	xTimerShortRunning:=FALSE;
+ELSE
+	xTimerShortRunning:=TRUE;
+END_IF
+
+deplelitizerzuiger();]]></ST>
     </Implementation>
+    <Method Name="deplelitizerzuiger" Id="{8051e9b7-c22e-4778-aa38-5be337bf3f0e}">
+      <Declaration><![CDATA[METHOD deplelitizerzuiger
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//als ciliderwerkt
+IF i_xCilinderdepalitizerwerkt THEN
+	//cilinder to wishsed positon
+	main.fbDepalletizer.fbzuiger.eWistedHorizotalPosition;
+END_IF
+
+IF i_xHorizontalmovementWorking THEN
+	//logica
+END_IF
+//als horizontaal werkt
+
+
+
+// main.fbDepalletizer.fbZuiger.i_xEndSwitchIn := TRUE;
+// main.fbDepalletizer.fbZuiger.i_xEndSwitchOut := TRUE;
+// main.fbDepalletizer.fbZuiger.i_xHallSensorIn := TRUE;
+// main.fbDepalletizer.fbZuiger.i_xHallSensorOut := TRUE;
+// main.fbDepalletizer.fbZuiger.i_rPressureSensor := 4000;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="InvoerBuffer1" Id="{2d9eb01e-8bfe-4d6d-bd0b-e4acfc4bf527}">
+      <Declaration><![CDATA[METHOD InvoerBuffer1
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//simulatie voor invoer buffer1
+
+//klep
+
+//sensor]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>

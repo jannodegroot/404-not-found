@@ -15,14 +15,14 @@ VAR_OUTPUT
 	o_xWarningNoProduct	: BOOL; //Warning after ...  time no products detected.
 END_VAR
 VAR
-	fbBand 		: FB_BandMetKlep;
+	fbBand 		: FB_Band;
 	fbLift		: FB_Lift;
 	fbSchuif	: FB_Schuif;
 	fbZuiger 	: FB_Zuiger;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[fbzuiger();]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
