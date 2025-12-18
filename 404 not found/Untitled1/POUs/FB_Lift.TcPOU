@@ -124,5 +124,23 @@ END_CASE
 /////////////////
 ]]></ST>
     </Implementation>
+    <Method Name="Impale" Id="{453b88bf-dc78-4993-b4a4-6ebb48f55463}">
+      <Declaration><![CDATA[METHOD Impale : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="InitHome" Id="{82471372-9ccc-4059-b0ab-808e2a70ad2a}">
+      <Declaration><![CDATA[METHOD InitHome : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>
