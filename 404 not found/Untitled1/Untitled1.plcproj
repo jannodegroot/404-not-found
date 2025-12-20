@@ -57,6 +57,9 @@
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\FB_LiftA_Extended.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\F_StateEnumToString.TcPOU">
       <SubType>Code</SubType>
     </Compile>

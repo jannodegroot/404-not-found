@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_LiftA_Extended" Id="{29ce4f32-d5ec-44c6-b550-ed18c3714c4b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_LiftA_Extended EXTENDS FB_Lift
+// This is an extended functionblock of FB_Lift. This Functionblock is for Lift A (Depalletizer)
+VAR_INPUT
+	i_iBaseHeight		: INT;
+	i_iNumberOfLayers	: INT;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	aLayerHeights	: ARRAY[1..10] OF INT;
+	i				: INT := 0;
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[iConveyorHeight := 0;
+
+FOR i := 1 TO i_iNumberOfLayers DO
+	aLayerHeights[i] := i_iBaseHeight + (i - 1) * i_iLayerHeight;
+END_FOR
+
+CASE i_eMode OF
+	eModus.Auto :
+	CASE i_eState OF
+		eSingleState.Execute :
+			CASE eLiftState OF
+				eLiftStates.WaitForPallet :
+					// Wanneer in Normal Height positie, laat pallet door.
+					// Check welke lift het is. Dan uitvoeren wat voor dat deel werkt.
+				o_xNewPalletPossible := TRUE; // Command to start conveyor
+				
+				IF i_xLightSensor1 AND NOT i_xLightSensor2 THEN
+					//Klep omhoog														TOEVOEGEN
+					
+				END_IF
+				
+				IF NOT i_xLightSensor1 AND i_xLightSensor2 THEN
+					o_xNewPalletPossible := FALSE; // Stop conveyor
+					o_xPalletInPosition := TRUE;
+				END_IF
+				
+				IF o_xPalletInPosition THEN
+					eLiftState := eLiftStates.Impale;
+				END_IF
+					
+				eLiftStates.MoveUpToLayer :
+				 	// Ga naar de positie van de volgende laag.
+					// 
+					
+				eLiftStates.CheckNextLayer :
+					// check of je verder kan en of er een volgende laag is. Zo niet, rondt af
+					
+					
+			END_CASE
+	END_CASE
+	
+	eModus.Manual :
+		// Doe effe zelf																			// TOEVOEGEN MET HMI
+		// Lift handmatig bedienen door INT invoer?
+		// Pins handmatig in en uit, met beveiliging zodat pallet niet naar beneden dondert
+	eModus.Off :
+		// Doe niks
+		// Stop
+END_CASE]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
