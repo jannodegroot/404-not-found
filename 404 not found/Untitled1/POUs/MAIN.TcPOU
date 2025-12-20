@@ -7,6 +7,7 @@ VAR
 	fbBuffer2		: FB_BufferMetKlep;
 	fbBuffer5		: FB_BufferZonderKlep;
 	fbSchuif		: FB_Schuif;
+	fbLift			: FB_Lift;
 	
 	Abort			: BOOL;
 	StartStop		: eStartStop;
@@ -78,7 +79,8 @@ fbBuffer5(	i_xAbort			:= Abort,
 			o_xGivingToNext		=> GivingToNext,
 			o_xEmpty 			=> Empty);
 *)
-fbSchuif();]]></ST>
+fbSchuif();
+fbLift();]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

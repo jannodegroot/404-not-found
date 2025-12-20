@@ -7,13 +7,9 @@
 TYPE eLiftposition :
 (
 	Home 		:= 0,
-	Position_1	:= 1,
-	Position_2	:= 2,
-	Position_3	:= 3,
-	Position_4	:= 4,
-	Position_5	:= 5,
-	GoingUp 	:= 6,
-	GoingDown 	:= 7
+	Idle		:= 1,
+	GoingUp 	:= 2,
+	GoingDown 	:= 3
 	
 );
 END_TYPE
