@@ -63,9 +63,9 @@ END_VAR
 END_CASE
 
 //safty aborting of machine and parts
-IF i_xEmergencyButton OR o_xErrorPressureGeneral THEN 		 //if emergencybutten or no air pressure then complete machine go's into Aborted
+IF xErrorEmergency OR xErrorPressure THEN 		 //if emergencybutten or no air pressure then complete machine go's into Aborted
 	o_xAbortGeneral := 1;
-ELSIF NOT i_xEmergencyButton AND NOT o_xErrorPressureGeneral THEN
+ELSIF NOT xErrorEmergency AND NOT xErrorPressure THEN
 	o_xAbortGeneral := 0;
 END_IF
 o_xAbortInvoerBuffer1 := i_xSafetyMat; //only for InvoerBuffer 1 Aborted
