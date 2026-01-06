@@ -182,6 +182,8 @@ AND i_iServoEncoder = o_xTargetPos THEN
 		o_eLiftPosition := eLiftPosition.Home;
 	END_IF;
 END_IF;
+
+// Zorgen dat dit niet loop is
 ]]></ST>
       </Implementation>
     </Method>
