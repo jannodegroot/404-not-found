@@ -105,7 +105,8 @@ IF (i_eModus = eModus.Auto) AND
 	o_eState = eSingleState.Stopping OR
 	o_eState = eSingleState.Suspending OR
 	o_eState = eSingleState.Aborting) OR
-	(i_eModus = eModus.Manual AND NOT i_xManualCmdMotor) THEN
+	(i_eModus = eModus.Manual AND NOT i_xManualCmdMotor) OR
+	(o_xEmpty)THEN
 
 	o_xMotor := FALSE;		
 END_IF
@@ -116,6 +117,8 @@ IF o_eState = eSingleState.Execute AND i_xLightSensor AND NOT i_xNextEmpty THEN
 	o_xGivingToNext := FALSE;	
 ELSIF o_eState = eSingleState.Execute AND i_xLightSensor AND i_xNextEmpty THEN
 	o_xGivingToNext := TRUE;
+ELSIF NOT i_xLightSensor AND NOT i_xNextEmpty THEN //then placed on the next buffer
+	o_xGivingToNext := FALSE;
 END_IF
 
 //----------------------------------------------------------------------------------------------------------------------------------------
