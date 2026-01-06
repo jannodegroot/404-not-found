@@ -17,7 +17,7 @@ VAR_OUTPUT
 END_VAR
 VAR
 	fbLift	: FB_Lift;
-	fbBand	: FB_BandZonderKlep;
+	fbBand	: FB_Band;
 	TimerLift: TON;
 	xTimerLiftRunning: BOOL;
 	timTimerValue: TIME;
@@ -29,7 +29,15 @@ TimerLift(IN:=xTimerLiftRunning, PT := timTimerValue);
 
 
 //aansturen band
-
+fbBand(
+	i_eState:= o_eState, 
+	i_xGoHold:= , 
+	i_xGoEmpty:= , 
+	i_xAlarmReset:= , 
+	o_xMotor=> , 
+	o_xErrorMotor=> , 
+	o_xAlarmMotor=> , 
+	o_xGivingToNext=> );
 //aansturen lift
 
 //aansturen zichzelf

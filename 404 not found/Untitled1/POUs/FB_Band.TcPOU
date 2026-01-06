@@ -48,7 +48,9 @@ END_IF
 IF i_xAlarmReset THEN
 	o_xAlarmMotor := FALSE;
 END_IF
-]]></ST>
+
+//sim
+//niks]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
