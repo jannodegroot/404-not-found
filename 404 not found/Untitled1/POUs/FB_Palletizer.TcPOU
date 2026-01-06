@@ -8,6 +8,7 @@ VAR_INPUT
 	i_PreviousEmptying	: BOOL;
 	i_xDoorOpenButton	: BOOL;	
 	i_xWarningReset		: BOOL;
+	i_eModus			: eModus := eModus.Auto;
 END_VAR
 VAR_OUTPUT
 	o_eState 			: eSingleState;
@@ -21,6 +22,9 @@ VAR
 	TimerLift: TON;
 	xTimerLiftRunning: BOOL;
 	timTimerValue: TIME;
+	xGoHoldBand : BOOL;
+	xGoEmptyBand : BOOL;
+	istep		: INT;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -31,8 +35,8 @@ TimerLift(IN:=xTimerLiftRunning, PT := timTimerValue);
 //aansturen band
 fbBand(
 	i_eState:= o_eState, 
-	i_xGoHold:= , 
-	i_xGoEmpty:= , 
+	i_xGoHold:= xGoHoldBand, 
+	i_xGoEmpty:= xGoEmptyBand, 
 	i_xAlarmReset:= , 
 	o_xMotor=> , 
 	o_xErrorMotor=> , 
@@ -41,7 +45,190 @@ fbBand(
 //aansturen lift
 
 //aansturen zichzelf
+CASE o_eState OF
+	eSingleState.Idle:
+		IF i_eStartStop = eStartStop.Start THEN
+			o_eState := eSingleState.Execute;
+		END_IF
+	
+	eSingleState.Execute:
+		// Normal palletizing operation
+		
+		// Abort has highest priority
+		IF i_xAbort THEN
+			o_eState := eSingleState.Aborting;
 
+		// Door opened -> suspend machine
+		ELSIF i_xDoorOpenButton THEN
+			o_eState := eSingleState.Suspending;
+
+		// Stop button pressed
+		ELSIF i_eStartStop = eStartStop.Stop THEN
+			o_eState := eSingleState.Stopping;
+		END_IF
+		
+		//normal opperation
+		CASE i_eModus OF
+			eModus.Auto:
+				CASE istep OF
+					0:
+					//start position
+						xGoHoldBand := TRUE;
+						xGoEmptyBand := FALSE;
+						o_xExpectingPallet := 0;
+						//lift in start
+						
+						IF NOT fbBand.o_xMotor THEN//and lift
+							istep:=1;
+						END_IF
+					1:
+					//accepting pallet
+						o_xExpectingPallet := 1;
+						IF i_PreviousEmptying THEN
+							xGoHoldBand := FALSE;
+							xGoEmptyBand := TRUE;
+							istep:=2;
+						END_IF
+					2:
+					//position witch pallet
+// 						
+// 							
+//							if not impaled and not in start and o_xExpectingPallet then
+//								move to start
+//								impale pallet
+//								o_xExpectingPallet:=0;
+//							end_if
+
+//							if not impaled and  in start and o_xExpectingPallet then
+//								impale pallet
+//								o_xExpectingPallet:=0;
+//							end_if
+
+//							if  impaled and not in start and o_xExpectingPallet then
+//								deimpale
+//								move to start
+//								impale pallet
+//								o_xExpectingPallet:=0;
+//							end_if
+
+						IF NOT o_xExpectingPallet THEN
+							xGoHoldBand := TRUE;
+							xGoEmptyBand := FALSE;
+							istep:=3;
+						END_IF
+					
+					3:
+					//holding and accepting pallets
+						xGoHoldBand := TRUE;
+						xGoEmptyBand := FALSE;
+						//move to holding
+						//if holding then
+						//	istep:=1;
+						//end_if
+					
+					
+				END_CASE
+				//
+			eModus.Manual:
+				//
+			eModus.Off:
+				o_eState := eSingleState.Stopping;
+		END_CASE
+		
+		
+		
+
+	eSingleState.Stopping:
+		// Stop band movement
+		xGoHoldBand := TRUE;
+		xGoEmptyBand := FALSE;
+
+		// Lift: move to home/start position
+		// Lift moves to bottom / start position
+
+		// When everything is in start position
+		//IF not fbBand.o_xMotor THEN
+			// Assume lift is also in start position
+			//o_eState := eSingleState.Stopped;
+		//END_IF
+
+		// Abort overrides stopping
+		IF i_xAbort THEN
+			o_eState := eSingleState.Aborting;
+		END_IF
+
+	eSingleState.Stopped:
+		// All movements stopped
+
+		IF i_eStartStop = eStartStop.Start THEN
+			o_eState := eSingleState.Execute;
+		END_IF
+
+		IF i_xAbort THEN
+			o_eState := eSingleState.Aborting;
+		END_IF
+
+	eSingleState.Suspending:
+		// Stop band movement
+		xGoHoldBand := TRUE;
+		xGoEmptyBand := FALSE;
+
+		// Lift: move to door open / service position
+		// Lift moves to door open position
+
+		// When band stopped and lift is in open position
+		IF NOT fbBand.o_xMotor THEN
+			o_eState := eSingleState.Suspended;
+		END_IF
+
+
+		IF i_xAbort THEN
+			o_eState := eSingleState.Aborting;
+		END_IF
+
+
+
+	eSingleState.Suspended:
+		// Machine is safe, waiting
+
+// 		IF NOT i_xDoorOpenButton THEN
+// 			// Door closed, resume operation
+//				o_iStorageCount:=0;
+//				istep := 0;
+// 			o_eState := eSingleState.Execute;
+// 		END_IF
+
+		IF i_xAbort THEN
+			o_eState := eSingleState.Aborting;
+		END_IF
+
+
+
+	eSingleState.Aborting:
+		// Immediately stop band
+		xGoHoldBand := TRUE;
+		xGoEmptyBand := FALSE;
+
+		// Lift: immediately stop movement
+		// Lift stops immediately at current position
+
+		// When everything is stopped
+		IF NOT fbBand.o_xMotor THEN
+			o_eState := eSingleState.Aborted;
+		END_IF
+
+
+
+	eSingleState.Aborted:
+		// Machine is halted due to abort or alarm
+
+		IF NOT i_xAbort AND NOT o_xWarningFull AND NOT fbBand.o_xErrorMotor THEN
+			// Reset abort condition
+			o_eState := eSingleState.Stopped;
+		END_IF
+
+
+END_CASE
 //errors
 
 //allarmen
@@ -53,9 +240,7 @@ END_IF
 
 //warnings
 
-IF i_xDoorOpenButton THEN
-	//lift naar beneden
-END_IF]]></ST>
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
