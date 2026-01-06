@@ -3,7 +3,7 @@
 
 
 
-<div id="MAIN_SCREEN" data-tchmi-type="TcHmi.Controls.System.TcHmiRegion" data-tchmi-height="800" data-tchmi-height-unit="px" data-tchmi-left="220" data-tchmi-left-unit="px" data-tchmi-top="0" data-tchmi-top-unit="px" data-tchmi-width="1060" data-tchmi-width-unit="px" data-tchmi-target-content="Content/Home.content">
+<div id="MAIN_SCREEN" data-tchmi-type="TcHmi.Controls.System.TcHmiRegion" data-tchmi-height="800" data-tchmi-height-unit="px" data-tchmi-left="210" data-tchmi-left-unit="px" data-tchmi-top="0" data-tchmi-top-unit="px" data-tchmi-width="1060" data-tchmi-width-unit="px" data-tchmi-target-content="Content/Home.content">
 </div>
 <div id="TcHmiButton_4" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="33" data-tchmi-height-unit="px" data-tchmi-left="7" data-tchmi-left-unit="px" data-tchmi-text="Invoer/Buffer1" data-tchmi-top="7" data-tchmi-top-unit="px" data-tchmi-width="184" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="15" data-tchmi-visibility="Collapsed">
 
@@ -498,6 +498,33 @@
 {
   "color": "None"
 }
+</script>
+<div id="Button_Page_BlikjesBand" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Blikjes Band" data-tchmi-top="610" data-tchmi-top-unit="px" data-tchmi-width="180" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="15">
+<script data-tchmi-target-attribute="data-tchmi-text-color" type="application/json">
+{
+  "color": "rgba(0, 0, 0, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "%ctx%owner::Id|EventRegistrationMode=Resolve%/ctx%.onMouseClick",
+    "actions": [
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%MAIN_SCREEN::TargetContent%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:framework#/definitions/ContentPath",
+          "value": "Content/BlikjeBand.content"
+        },
+        "asyncWait": true
+      }
+    ]
+  }
+]
 </script>
 <div id="ErrorInvoerBuffer1_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="13" data-tchmi-height-unit="px" data-tchmi-left="21" data-tchmi-left-unit="px" data-tchmi-top="59" data-tchmi-top-unit="px" data-tchmi-width="22" data-tchmi-width-unit="px" data-tchmi-word-wrap="&amp;quot;Tru" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Top">
 

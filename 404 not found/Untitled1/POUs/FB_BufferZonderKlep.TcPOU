@@ -10,7 +10,7 @@ VAR_INPUT
 	i_xPreviousEmptying	: BOOL;
 	i_xAlarmReset		: BOOL;
 	i_eNextState		: eSingleState;
-	i_eModus			: eModus;
+	i_eModus			: eModus := eModus.Auto;
 	i_xManualCmdMotor	: BOOL;
 END_VAR
 VAR_OUTPUT
@@ -19,7 +19,7 @@ VAR_OUTPUT
 	o_xErrorGeneral 	: BOOL := FALSE;
 	o_xAlarmGeneral		: BOOL;
 	o_xGivingToNext		: BOOL;
-	o_xEmpty			: BOOL;
+	o_xEmpty			: BOOL	:= TRUE;
 	o_sStateString 		: STRING(30);
 END_VAR
 VAR	
@@ -75,7 +75,7 @@ IF  o_xMotor AND tonError.Q THEN
     o_eState := eSingleState.Aborting;
 	
 	IF tonError.Q THEN
-		o_xErrorGeneral := TRUE;
+		xError := TRUE;
 		o_xAlarmGeneral := TRUE;
 	END_IF
 END_IF;

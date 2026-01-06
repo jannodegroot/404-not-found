@@ -30,7 +30,7 @@
     <HmiCommunicationRouterPort>10100</HmiCommunicationRouterPort>
     <HmiCommunicationServerAuthPort>13000</HmiCommunicationServerAuthPort>
     <HmiInitial>14.3.436.1</HmiInitial>
-    <HmiRecent>14.3.436.1</HmiRecent>
+    <HmiRecent>14.3.602.1</HmiRecent>
     <HmiServerNodeAdvancedView>False</HmiServerNodeAdvancedView>
   </PropertyGroup>
   <PropertyGroup>
@@ -157,6 +157,9 @@
     <Content Include="Content\BandDepalletizerPalletizer.content">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Content\BlikjeBand.content">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Content\Buffer2.content">
       <SubType>Content</SubType>
     </Content>
@@ -266,6 +269,9 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="Images\Safetymat\Safetymat (niet actief).png">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\ADS\ADS.Config.default.json">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Server\TcHmiLua\TcHmiLua.Config.default.json">

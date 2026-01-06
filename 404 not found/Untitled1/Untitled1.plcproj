@@ -54,6 +54,9 @@
     <Compile Include="POUs\FB_Band.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\FB_Blinking.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\FB_ControlSystem.TcPOU">
       <SubType>Code</SubType>
     </Compile>

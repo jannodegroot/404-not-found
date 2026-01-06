@@ -36,10 +36,12 @@ VAR_OUTPUT
 	o_eMachineStateLamp2 	: eMachineStateLamp; // Lamp Depalletizer
 END_VAR
 VAR
+	xErrorEmergency			: BOOL := FALSE;
+	fbBlinking 				: FB_Blinking;
 	
 	rlowpressure			: REAL := 4;
-	rPressure_bar: REAL;
-	rMaxbarsensor: REAL :=6;
+	rPressure_bar			: REAL;
+	rMaxbarsensor			: REAL :=6;
 END_VAR
 
 ]]></Declaration>
@@ -85,16 +87,25 @@ ELSE
 END_IF
 
 //Errors
-o_xErrorEmergencyButton := i_xEmergencyButton;
+xErrorEmergency := i_xEmergencyButton;
 
 //ALARM
 IF o_xErrorPressureGeneral THEN
 	o_xAlarmPressureGeneral:=1;
 END_IF
 
-IF o_xErrorEmergencyButton THEN
+IF xErrorEmergency THEN
 	o_xAlarmEmergencyButton:=1;
 END_IF
+
+//blinking error
+IF xErrorEmergency THEN
+	fbBlinking(io_xBlinking:= o_xErrorEmergencyButton);
+ELSIF NOT xErrorEmergency AND o_xAlarmEmergencyButton THEN
+	o_xErrorEmergencyButton := TRUE;
+ELSE
+	o_xErrorEmergencyButton := FALSE;
+END_IF;
 
 //Warning
 IF o_xAbortInvoerBuffer1 THEN
@@ -113,7 +124,7 @@ END_IF
 IF NOT o_xErrorPressureGeneral AND i_xAlarmResetPressureGeneral THEN
 	o_xAlarmPressureGeneral:=0;
 END_IF
-IF NOT o_xErrorEmergencyButton AND i_xAlarmResetEmergencyButton THEN
+IF NOT xErrorEmergency AND i_xAlarmResetEmergencyButton THEN
 	o_xAlarmEmergencyButton:=0;
 END_IF
 
