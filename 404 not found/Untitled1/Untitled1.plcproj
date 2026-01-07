@@ -60,6 +60,9 @@
     <Compile Include="POUs\FB_LiftA_Extended.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\FB_LiftB_Extended.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\F_StateEnumToString.TcPOU">
       <SubType>Code</SubType>
     </Compile>

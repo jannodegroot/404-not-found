@@ -5,7 +5,6 @@
 // This is an extended functionblock of FB_Lift. This Functionblock is for Lift A (Depalletizer)
 VAR_INPUT
 	i_iBaseHeight		: INT;
-	i_iNumberOfLayers	: INT;
 END_VAR
 VAR_OUTPUT
 END_VAR
@@ -26,7 +25,7 @@ CASE i_eMode OF
 	eModus.Auto :
 	CASE i_eState OF
 		eSingleState.Execute :
-			CASE eLiftState OF
+			CASE i_eLiftState OF
 				eLiftStates.WaitForPallet :
 					// Wanneer in Normal Height positie, laat pallet door.
 					// Check welke lift het is. Dan uitvoeren wat voor dat deel werkt.

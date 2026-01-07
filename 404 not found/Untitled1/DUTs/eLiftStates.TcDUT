@@ -7,7 +7,7 @@
 TYPE eLiftStates :
 (
 	InitHome := 0,
-    MoveDownToHome := 1,
+    MoveToHome := 1,
     WaitForPallet := 2,
     Impale := 3,
     MoveUpToLayer := 4,
