@@ -120,31 +120,31 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[o_xTargetPos := iConveyorHeight;
-o_xMotor := TRUE;
-
-// Release pallet before going down.
-IF i_iServoEncoder = o_xTargetPos THEN
-	o_xMagnetValve := FALSE;
-	o_xMotor := FALSE;
-END_IF
-
-// Pins are in, possible to move home
-IF i_xPin1HallSensorIn 
-AND i_xPin2HallSensorIn 
-AND i_xPin3HallSensorIn 
-AND i_xPin4HallSensorIn 
-AND i_iServoEncoder = o_xTargetPos THEN
+        <ST><![CDATA[IF NOT i_xEndSwitch THEN
+	o_xTargetPos := iConveyorHeight;
 	o_xMotor := TRUE;
 	
-	IF i_xEndSwitch THEN
+	// Release pallet before going down.
+	IF i_iServoEncoder = o_xTargetPos THEN
+		o_xMagnetValve := FALSE;
 		o_xMotor := FALSE;
-		iHomePosition := i_iServoEncoder;
-		o_eLiftPosition := eLiftPosition.Home;
+	END_IF
+	
+	// Pins are in, possible to move home
+	IF i_xPin1HallSensorIn 
+	AND i_xPin2HallSensorIn 
+	AND i_xPin3HallSensorIn 
+	AND i_xPin4HallSensorIn 
+	AND i_iServoEncoder = o_xTargetPos THEN
+		o_xMotor := TRUE;
+		
+		IF i_xEndSwitch THEN
+			o_xMotor := FALSE;
+			iHomePosition := i_iServoEncoder;
+			o_eLiftPosition := eLiftPosition.Home;
+		END_IF;
 	END_IF;
-END_IF;
-
-// Zorgen dat dit niet loop is
+END_IF
 ]]></ST>
       </Implementation>
     </Method>

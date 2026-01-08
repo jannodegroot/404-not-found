@@ -15,6 +15,8 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Janno geeft door naar welke laag hij moet. Laag 0 = home, laag 1 = band, laag 2 = pallet op pallet, laag 3 = pallets hoog
+FB_Lift();
+
 CASE i_eMode OF
 	eModus.Auto :
 	CASE i_eState OF
@@ -22,6 +24,7 @@ CASE i_eMode OF
 			CASE i_eLiftState OF
 				eLiftStates.WaitForPallet :														// Niet af
 					// Wanneer in Normal Height positie, laat pallet door.
+					
 					
 					
 				eLiftStates.MoveUpToLayer :														// Testen
@@ -102,6 +105,15 @@ o_xTargetPos := iPalletizeHeight;
 IF i_iServoEncoder = iPalletizeHeight THEN
 	o_xMotor := FALSE;
 END_IF;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WaitForPallet" Id="{9e1f5748-783f-41ae-a152-4ce137f7d7ea}">
+      <Declaration><![CDATA[METHOD WaitForPallet : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Wait for pallet]]></ST>
       </Implementation>
     </Method>
   </POU>

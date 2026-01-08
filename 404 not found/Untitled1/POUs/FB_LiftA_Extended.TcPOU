@@ -27,31 +27,16 @@ CASE i_eMode OF
 		eSingleState.Execute :
 			CASE i_eLiftState OF
 				eLiftStates.WaitForPallet :
-					// Wanneer in Normal Height positie, laat pallet door.
-					// Check welke lift het is. Dan uitvoeren wat voor dat deel werkt.
-				o_xNewPalletPossible := TRUE; // Command to start conveyor
-				
-				IF i_xLightSensor1 AND NOT i_xLightSensor2 THEN
-					//Klep omhoog														TOEVOEGEN
-					
-				END_IF
-				
-				IF NOT i_xLightSensor1 AND i_xLightSensor2 THEN
-					o_xNewPalletPossible := FALSE; // Stop conveyor
-					o_xPalletInPosition := TRUE;
-				END_IF
-				
-				IF o_xPalletInPosition THEN
-					eLiftState := eLiftStates.Impale;
-				END_IF
+					// Let a new pallet through if there are any.
+					THIS^.WaitForPallet();
 					
 				eLiftStates.MoveUpToLayer :
-				 	// Ga naar de positie van de volgende laag.
-					// 
-					
+				 	// Go to the next layer.
+					THIS^.MoveUpToLayer();
+
 				eLiftStates.CheckNextLayer :
-					// check of je verder kan en of er een volgende laag is. Zo niet, rondt af
-					
+					// Check if it is possible to move up.
+					THIS^.CheckNextLayer();
 					
 			END_CASE
 	END_CASE
@@ -65,5 +50,64 @@ CASE i_eMode OF
 		// Stop
 END_CASE]]></ST>
     </Implementation>
+    <Method Name="CheckNextLayer" Id="{8f1d2526-a33e-4d40-9997-1757c01d0527}">
+      <Declaration><![CDATA[METHOD CheckNextLayer : BOOL
+VAR_INPUT
+	
+END_VAR
+
+VAR
+	fbSchuif : FB_Schuif;
+	eSlidePosition : eSlidePosition := fbSchuif.o_eSlidePosition;
+	TestVar : INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Nog maken
+IF eSlidePosition = eSlideposition.In THEN
+	// Yay
+	TestVar := 100;
+ELSE
+	TestVar := 20;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="MoveUpToLayer" Id="{3339177a-337e-4fd8-a5b4-139eb710ec0a}">
+      <Declaration><![CDATA[METHOD MoveUpToLayer : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WaitForPallet" Id="{411af908-da43-45f2-beac-587db957c43f}">
+      <Declaration><![CDATA[METHOD WaitForPallet : BOOL
+VAR_INPUT
+	
+END_VAR
+
+VAR
+	fbKlep : FB_Klep;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Wanneer in Normal Height positie, laat pallet door.
+// Check welke lift het is. Dan uitvoeren wat voor dat deel werkt.
+o_xNewPalletPossible := TRUE; // Command to start conveyor
+
+IF i_xLightSensor1 AND NOT i_xLightSensor2 THEN
+//Klep omhoog														TOEVOEGEN
+	fbKlep(i_eAutoWantedPosition := 1);
+END_IF
+
+IF NOT i_xLightSensor1 AND i_xLightSensor2 THEN
+o_xNewPalletPossible := FALSE; // Stop conveyor
+o_xPalletInPosition := TRUE;
+END_IF
+
+IF o_xPalletInPosition THEN
+i_eLiftState := eLiftStates.Impale;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>

@@ -45,6 +45,7 @@ ELSE
 	o_eSlidePosition := eSlideposition.Unknown;
 END_IF
 /////////////////////////////////////////////////
+
 CASE i_eMode OF
 	eModus.Auto :
 	CASE i_eState OF
