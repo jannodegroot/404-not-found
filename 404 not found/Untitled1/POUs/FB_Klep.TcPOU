@@ -7,7 +7,7 @@ VAR_INPUT
 	i_eModus				: eModus;
 	i_eAutoWantedPosition 	: eValvePosition;
 	i_eManualWantedPosition	: eValvePosition;
-	i_xHallSensorIn			: BOOL;
+	i_xHallSensorIn			: BOOL := TRUE;
 	i_xHallSensorOut 		: BOOL;
 	i_xWarningReset			: BOOL;
 	i_xAlarmReset			: BOOL;
@@ -107,9 +107,9 @@ ELSE
 END_IF
 
 
-IF o_eCurrentPosition = i_eAutoWantedPosition THEN
+IF modeAuto AND o_eCurrentPosition = i_eAutoWantedPosition THEN
 	xError := FALSE;
-ELSIF o_eCurrentPosition = i_eManualWantedPosition THEN
+ELSIF modeManual AND o_eCurrentPosition = i_eManualWantedPosition THEN
 	xError := FALSE;
 ELSE 
 	TimerStartButton := TRUE;
