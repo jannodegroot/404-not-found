@@ -58,7 +58,6 @@
     }
   ],
   "userControls": [],
-  "controls": [],
   "content": [
     {
       "url": "Content/BandDepalletizerPalletizer.content",
@@ -178,8 +177,7 @@
   "symbols": {
     "internal": {},
     "themedResources": {},
-    "timer": {},
-    "package": {}
+    "timer": {}
   },
   "intervals": {},
   "trigger": [],
@@ -203,24 +201,15 @@
   "packages": [
     {
       "name": "Beckhoff.TwinCAT.HMI.Controls",
-      "basePath": "/Beckhoff.TwinCAT.HMI.Controls",
-      "symbols": {
-        "package": {}
-      }
+      "basePath": "/Beckhoff.TwinCAT.HMI.Controls"
     },
     {
       "name": "Beckhoff.TwinCAT.HMI.Framework",
-      "basePath": "/Beckhoff.TwinCAT.HMI.Framework",
-      "symbols": {
-        "package": {}
-      }
+      "basePath": "/Beckhoff.TwinCAT.HMI.Framework"
     },
     {
       "name": "Beckhoff.TwinCAT.HMI.Functions",
-      "basePath": "/Beckhoff.TwinCAT.HMI.Functions",
-      "symbols": {
-        "package": {}
-      }
+      "basePath": "/Beckhoff.TwinCAT.HMI.Functions"
     }
   ],
   "keyboardLayouts": [
