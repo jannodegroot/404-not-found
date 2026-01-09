@@ -7,7 +7,7 @@ VAR_INPUT
 	i_eModus				: eModus;
 	i_eAutoWantedPosition 	: eValvePosition;
 	i_eManualWantedPosition	: eValvePosition;
-	i_xHallSensorIn			: BOOL;
+	i_xHallSensorIn			: BOOL := TRUE;
 	i_xHallSensorOut 		: BOOL;
 	i_xWarningReset			: BOOL;
 	i_xAlarmReset			: BOOL;
@@ -20,13 +20,15 @@ VAR_OUTPUT
 	o_xAlarmPositionUpOrUnknow	: BOOL;
 END_VAR
 VAR
-	modeAuto: BOOL;
-	modeManual: BOOL;
-	Timer : TON;
-	IN : BOOL;
-	PT : TON;
-	TimerValue : TIME := T#5S;
-	TimerStartButton : BOOL;
+	modeAuto					: BOOL;
+	modeManual					: BOOL;
+	Timer 						: TON;
+	IN 							: BOOL;
+	PT 							: TON;
+	TimerValue 					: TIME := T#5S;
+	TimerStartButton 			: BOOL;
+	fbBlinking 					: FB_Blinking;
+	xError						: BOOL;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Van Emma
@@ -105,10 +107,10 @@ ELSE
 END_IF
 
 
-IF o_eCurrentPosition = i_eAutoWantedPosition THEN
-	o_xErrorPositionUpOrUnknow := FALSE;
-ELSIF o_eCurrentPosition = i_eManualWantedPosition THEN
-	o_xErrorPositionUpOrUnknow := FALSE;
+IF modeAuto AND o_eCurrentPosition = i_eAutoWantedPosition THEN
+	xError := FALSE;
+ELSIF modeManual AND o_eCurrentPosition = i_eManualWantedPosition THEN
+	xError := FALSE;
 ELSE 
 	TimerStartButton := TRUE;
 END_IF
@@ -120,27 +122,33 @@ IF Timer.Q THEN
 	Errors();
 END_IF
 
-Resets();]]></ST>
+Resets();
+
+//blinking error
+IF xError THEN
+	fbBlinking(io_xBlinking:= o_xErrorPositionUpOrUnknow);
+ELSIF NOT xError AND o_xAlarmPositionUpOrUnknow THEN
+	o_xErrorPositionUpOrUnknow := TRUE;
+ELSE
+	o_xErrorPositionUpOrUnknow := FALSE;
+END_IF;
+]]></ST>
     </Implementation>
     <Method Name="Errors" Id="{c01a7d59-0d58-4142-8c14-7eba332b4019}">
       <Declaration><![CDATA[METHOD Errors
 VAR
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
-CASE o_eCurrentPosition OF
+        <ST><![CDATA[CASE o_eCurrentPosition OF
 	eValvePosition.Up :
-			o_xErrorPositionUpOrUnknow := TRUE;
+			xError := TRUE;
 			o_xAlarmPositionUpOrUnknow := TRUE;	
 	eValvePosition.Down :
 			o_xWarningPositionDown := TRUE;
 	eValvePosition.Unkown :
-			o_xErrorPositionUpOrUnknow := TRUE;
+			xError := TRUE;
 			o_xAlarmPositionUpOrUnknow := TRUE;	
 END_CASE
-
-
-
 ]]></ST>
       </Implementation>
     </Method>
