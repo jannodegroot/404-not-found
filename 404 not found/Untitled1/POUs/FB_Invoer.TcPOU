@@ -179,7 +179,7 @@ IF NOT (o_eState = eSingleState.Aborting) AND i_xLightSensor THEN
 END_IF
 
 //reset alarm
-IF i_xAlarmReset AND NOT (o_eState = eSingleState.Aborting) THEN
+IF i_xAlarmReset AND NOT xError AND NOT (o_eState = eSingleState.Aborting) THEN
 	o_xAlarmGeneral := FALSE;
 END_IF
 
