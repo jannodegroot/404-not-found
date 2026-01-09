@@ -125,6 +125,7 @@ IF (i_eModus = eModus.Auto) AND
 	o_eState = eSingleState.Suspending OR
 	o_eState = eSingleState.Aborting) OR
 	(i_eModus = eModus.Manual AND NOT i_xManualCmdMotor) OR 
+	(o_xEmpty AND NOT i_xPreviousEmptying AND NOT (i_eModus = eModus.Manual)) OR
 	NOT(eValveCurrentPosition = eValvePosition.Down) THEN
 
 	o_xMotor := FALSE;		
