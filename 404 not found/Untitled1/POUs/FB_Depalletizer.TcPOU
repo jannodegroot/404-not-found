@@ -17,12 +17,63 @@ END_VAR
 VAR
 	fbBand 		: FB_BandMetKlep;
 	fbLift		: FB_Lift;
-	fbSchuif	: FB_Schuif;
+	fbSchuif: FB_Schuif;
 	fbZuiger 	: FB_Zuiger;
+	eSlidePositions : eSlidePosition;
+	fbLiftA: FB_LiftA_Extended;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// Yvo]]></ST>
+      <ST><![CDATA[// Yvo
+fbSchuif(
+	i_eState:= , 
+	i_eMode:= , 
+	i_xMove:= , 
+	i_xMovePossible:= , 
+	i_xMoveHome:= , 
+	i_xEndSwitchIn:= , 
+	i_xEndSwitchOut:= , 
+	i_xAlarmReset:= , 
+	o_xMotor=> , 
+	o_xMotorDirection=> , 
+	o_xErrorSlide=> , 
+	o_xAlarmSlide=> , 
+	o_xMoveDone=> , 
+	o_eSlidePosition=> eSlidePositions);
+	
+fbLiftA(
+	i_eState:= , 
+	i_eMode:= , 
+	i_eLiftState:= , 
+	i_xAllowedToMoveUp:= eSlidePositions = eSlideposition.In , 
+	i_xAllowedToMoveDown:= , 
+	i_xAlarmReset:= , 
+	i_xLightSensor1:= , 
+	i_xLightSensor2:= , 
+	i_xPin1HallSensorIn:= , 
+	i_xPin1HallSensorOut:= , 
+	i_xPin2HallSensorIn:= , 
+	i_xPin2HallSensorOut:= , 
+	i_xPin3HallSensorIn:= , 
+	i_xPin3HallSensorOut:= , 
+	i_xPin4HallSensorIn:= , 
+	i_xPin4HallSensorOut:= , 
+	i_xEndSwitch:= , 
+	i_iServoEncoder:= , 
+	i_iDistanceSensor:= , 
+	i_iLayerHeight:= , 
+	i_iNumberOfLayers:= , 
+	o_xMotor=> , 
+	o_xTargetPos=> , 
+	o_xErrorLift=> , 
+	o_xAlarmLift=> , 
+	o_xMagnetValve=> , 
+	o_xErrorImpaler=> , 
+	o_xAlarmImpaler=> , 
+	o_xNewPalletPossible=> , 
+	o_xPalletInPosition=> , 
+	o_eLiftPosition=> , 
+	i_iBaseHeight:= );]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

@@ -28,6 +28,7 @@ VAR
 	Empty			: BOOL;
 	StateString		: BOOL;
 	
+	fbDepalletizer: FB_Depalletizer;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -82,7 +83,16 @@ fbBuffer5(	i_xAbort			:= Abort,
 *)
 fbSchuif();
 fbLift();
-fbLiftA();]]></ST>
+fbLiftA();
+fbDepalletizer(
+	i_xAbort:= , 
+	i_eStartStop:= , 
+	i_PreviousEmptying:= , 
+	i_NextEmpty:= , 
+	i_eNextState:= , 
+	o_eState=> , 
+	o_xEmpty=> , 
+	o_xWarningNoProduct=> );]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

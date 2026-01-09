@@ -53,22 +53,14 @@ END_CASE]]></ST>
     <Method Name="CheckNextLayer" Id="{8f1d2526-a33e-4d40-9997-1757c01d0527}">
       <Declaration><![CDATA[METHOD CheckNextLayer : BOOL
 VAR_INPUT
-	
+
 END_VAR
 
 VAR
-	fbSchuif : FB_Schuif;
-	eSlidePosition : eSlidePosition := fbSchuif.o_eSlidePosition;
-	TestVar : INT;
+
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[// Nog maken
-IF eSlidePosition = eSlideposition.In THEN
-	// Yay
-	TestVar := 100;
-ELSE
-	TestVar := 20;
-END_IF]]></ST>
+        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
     <Method Name="MoveUpToLayer" Id="{3339177a-337e-4fd8-a5b4-139eb710ec0a}">
