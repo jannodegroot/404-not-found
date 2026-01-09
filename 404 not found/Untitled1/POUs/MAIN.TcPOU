@@ -12,6 +12,7 @@ VAR
 	fbBuffer4						: FB_BufferZonderKlep;
 	fbBuffer5						: FB_BufferMetKlep;
 	fbBandDepalletizerPalletizer	: FB_BufferMetKlep;
+	fbBlikjesBand					: FB_BlikjesBand;
 	
 	//safety
 	xAbortGeneral				: BOOL;
@@ -27,6 +28,7 @@ VAR
 	xLightSensorBuffer4					: BOOL;
 	xLightSensorBuffer5					: BOOL;
 	xLightSensorDepalletizerPalletizer	: BOOL;
+	xLightSensorBlikjesBand				: BOOL;
 	
 	//empty buffers/banden
 	xBuffer2Empty						: BOOL;
@@ -46,6 +48,7 @@ VAR
 	xDepalletizerEmptying				: BOOL;
 	xBandDepalletizerPalletizerEmptying	: BOOL;
 	xPalletizerEmptying					: BOOL;
+	xBlikjesBandAccepting				: BOOL;
 	
 	// current and next state
 	eStateInvoerBuffer1					: eSingleState;
@@ -208,6 +211,30 @@ fbBandDepalletizerPalletizer(	i_xAbort				:= xAbortGeneral,
 								o_xGivingToNext			=> xBandDepalletizerPalletizerEmptying,
 								o_xEmpty 				=> xBandDepalletizerPalletizerEmpty,
 								o_sStateString			=> (*Used in HMI*));
+
+//----Blikjes band-------------
+fbBlikjesBand( 	i_xAbort		 		:= xAbortGeneral,
+				i_eStartStop 			:= eStartStopGeneral,
+				i_eModus				:= (*Used in HMI*), 
+				i_xLightSensor 			:= xLightSensorBlikjesBand, 
+				i_xAlarmReset			:= (*Used in HMI*), 
+				i_eNextState			:= ,
+				i_xManualMotor			:= (*Used in HMI*), 
+				o_eState 				=> eStateBlikjesBand,
+				o_xMotor 				=> (*Used in HMI*), 
+				o_xWarningFull			=> (*Used in HMI*), 
+				o_xAcceptingCans		=> xBlikjesBandAccepting);
+
+
+
+
+
+
+
+
+
+
+
 ]]></ST>
     </Implementation>
   </POU>
