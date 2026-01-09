@@ -5,22 +5,116 @@
 VAR_INPUT
 	i_xAbort		 		: BOOL;
 	i_eStartStop 			: eStartStop;
-	i_xLightSensor 			: BOOL;
+	i_eModus				: eModus; // 0= off 1= auto 2= manual
+	i_xLightSensor 			: BOOL; // checking for cans after 10 sec alarm
 	i_xAlarmReset			: BOOL;
 	i_eNextState			: eSingleState;
+	i_xManualMotor			: BOOL;
 END_VAR
 VAR_OUTPUT
 	o_eState 				: eSingleState := eSingleState.Idle;
 	o_xMotor 				: BOOL := FALSE;
-	o_xErrorMotor 			: BOOL := FALSE;
-	o_xAlarmMotor			: BOOL;
+	o_xWarningFull			: BOOL;
 	o_xAcceptingCans		: BOOL; //For other machines that this one is working and has space for cans
 END_VAR
 VAR
+	xError : BOOL;
+
+	Timer : TON;
+	IN : BOOL;
+	PT : TON;
+	TimerValue : TIME := T#20S;
+	TimerStartButton : BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[// Van Emma
+StateChange();
+
+CASE i_eModus OF
+	eModus.Off:
+		o_xMotor := FALSE;
+		
+	eModus.Auto:
+		o_xMotor := TRUE;
+		
+	eModus.Manual:
+		IF i_xManualMotor THEN
+			o_xMotor := TRUE;
+		ELSE
+			o_xMotor := FALSE;
+		END_IF
+		
+END_CASE
+
+IF i_xLightSensor THEN
+	TimerStartButton := TRUE;
+END_IF
+
+Timer(IN:=TimerStartButton, PT := TimerValue);
+IF Timer.Q THEN
+	o_xAcceptingCans := FALSE;
+	o_xWarningFull := TRUE;
+ELSE
+	o_xAcceptingCans := TRUE;
+END_IF
+
+IF i_xAlarmReset = TRUE THEN
+	TimerStartButton := FALSE;
+END_IF
+]]></ST>
     </Implementation>
+    <Method Name="StateChange" Id="{3ee96072-e7a5-43fd-8628-c36b06173ae4}">
+      <Declaration><![CDATA[METHOD StateChange
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//execute
+IF NOT (i_eModus = eModus.Off) AND (i_eStartStop = eStartStop.Start) AND NOT i_xAbort AND NOT xError THEN
+	o_eState := eSingleState.Execute;
+END_IF
+
+//stop request
+IF i_eStartStop = eStartStop.Stop OR i_eModus = eModus.Off THEN
+	o_eState := eSingleState.Stopping;
+END_IF
+
+//stopping
+IF o_eState = eSingleState.Stopping AND o_xMotor = FALSE THEN
+	o_eState := eSingleState.Stopped;
+END_IF
+
+//suspening
+IF (NOT i_xAbort AND NOT (o_eState = eSingleState.Stopped))  AND 
+   (i_eNextState = eSingleState.Suspended OR
+    i_eNextState = eSingleState.Stopped   OR
+    i_eNextState = eSingleState.Aborted) THEN
+	o_eState := eSingleState.Suspending;
+END_IF
+
+//suspended
+IF o_eState = eSingleState.Suspending AND o_xMotor = FALSE THEN
+	o_eState := eSingleState.Suspended;
+END_IF
+
+IF i_xAbort THEN
+	o_eState := eSingleState.Aborting;
+END_IF
+
+//aborted
+IF o_eState = eSingleState.Aborting AND o_xMotor = FALSE THEN
+	o_eState := eSingleState.aborted;
+END_IF
+
+
+
+
+
+
+
+
+
+]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>

@@ -6,9 +6,10 @@ VAR
 	fbInvoerBuffer1 : FB_Invoer;
 	fbBuffer2		: FB_BufferMetKlep;
 	fbBuffer5		: FB_BufferZonderKlep;
-	fbSchuif		: FB_Schuif;
-	fbLift			: FB_Lift;
-	fbLiftA			: FB_LiftA_Extended;
+	
+	fbBlikband		: FB_BlikjesBand;
+	fbKlep			: FB_Klep;
+	fbBand			: FB_Band;
 	
 	Abort			: BOOL;
 	StartStop		: eStartStop;
@@ -19,8 +20,6 @@ VAR
 	AlarmReset		: BOOL;
 	NextState		: eSingleState;	
 	CurrentState	: eSingleState;
-	Modus 			: eModus;
-	ManualCmdMotor	: BOOL;
 	Motor			: BOOL;
 	ErrorGeneral	: BOOL;
 	AlarmGeneral	: BOOL;
@@ -28,25 +27,35 @@ VAR
 	Empty			: BOOL;
 	StateString		: BOOL;
 	
-	fbDepalletizer: FB_Depalletizer;
+	
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[fbInvoerBuffer1(	i_xAbort			:= Abort, 
+      <ST><![CDATA[fbBlikband();
+
+fbKlep();
+
+fbBand();
+
+
+
+(*fbInvoerBuffer1(	i_xAbort			:= Abort, 
 					i_eStartStop		:= StartStop, 
 					i_xPalletPlaced		:= PalletPlaced, 
 					i_xLightSensor		:= LightSensor, 
 					i_xNextEmpty		:= NextEmpty, 
 					i_xAlarmReset		:= AlarmReset, 
 					i_eNextState		:= NextState,
-					i_eModus			:= Modus,
-					i_xManualCmdMotor 	:= ManualCmdMotor,	 
+					i_eModus			:= ,
+					i_xManualCmdMotor 	:= ,	 
 					o_eState			=> CurrentState, 
 					o_xMotor			=> Motor, 
 					o_xErrorGeneral		=> ErrorGeneral, 
 					o_xAlarmGeneral		=> AlarmGeneral, 
 					o_xGivingToNext		=> GivingToNext,
 					o_sStateString		=> );			
+					*)
 (* 
 fbBuffer2( i_xAbort			:= Abort, 
 			i_eStartStop		:= StartStop,  
@@ -55,7 +64,7 @@ fbBuffer2( i_xAbort			:= Abort,
 			i_xNextEmpty		:= NextEmpty, 
 			i_xAlarmReset		:= AlarmReset, 
 			i_eNextState		:= NextState, 
-			i_eModus			:= Modus,
+			i_eModus			:= ,
 			i_xManualCmdMotor 	:= ManualCmdMotor,
 			o_eState			=> CurrentState, 
 			o_xMotor			=> Motor, 
@@ -72,7 +81,7 @@ fbBuffer5(	i_xAbort			:= Abort,
 			i_xNextEmpty		:= NextEmpty, 
 			i_xAlarmReset		:= AlarmReset, 
 			i_eNextState		:= NextState,
-			i_eModus			:= Modus,
+			i_eModus			:= ,
 			i_xManualCmdMotor 	:= ManualCmdMotor, 
 			o_eState			=> CurrentState, 
 			o_xMotor			=> Motor, 
@@ -81,18 +90,9 @@ fbBuffer5(	i_xAbort			:= Abort,
 			o_xGivingToNext		=> GivingToNext,
 			o_xEmpty 			=> Empty);
 *)
-fbSchuif();
-fbLift();
-fbLiftA();
-fbDepalletizer(
-	i_xAbort:= , 
-	i_eStartStop:= , 
-	i_PreviousEmptying:= , 
-	i_NextEmpty:= , 
-	i_eNextState:= , 
-	o_eState=> , 
-	o_xEmpty=> , 
-	o_xWarningNoProduct=> );]]></ST>
+
+
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
