@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_LiftB_Extended" Id="{022bf68b-4ff6-4ee2-a1a9-2548f4459c37}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_LiftB_Extended EXTENDS FB_Lift
+VAR_INPUT
+	i_iMoveToLayer : INT;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	iConveyorHeight : INT := iHomePosition + 1000;
+	iPalletizeHeight: INT := iHomePosition + 2000;
+	iHighestHeight	: INT := iHomePosition + 3000;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Janno geeft door naar welke laag hij moet. Laag 0 = home, laag 1 = band, laag 2 = pallet op pallet, laag 3 = pallets hoog
+FB_Lift();
+
+CASE i_eMode OF
+	eModus.Auto :
+	CASE i_eState OF
+		eSingleState.Execute :
+			CASE i_eLiftState OF
+				eLiftStates.WaitForPallet :														// Niet af
+					// Wanneer in Normal Height positie, laat pallet door.
+					
+					
+					
+				eLiftStates.MoveUpToLayer :														// Testen
+				 	// Ga naar de positie van de volgende laag.
+					CASE i_iMoveToLayer OF
+						0 :
+							// Ga naar home
+							IF i_xPin1HallSensorIn AND
+								i_xPin1HallSensorIn AND
+								i_xPin1HallSensorIn AND
+								i_xPin1HallSensorIn THEN
+								// Ga naar HOME
+								FB_Lift(i_eLiftState := eLiftStates.MoveToHome);
+							ELSE
+								// Error: Kan niet naar home, pins niet in
+							END_IF
+						1 :
+							// Ga naar band hoogte
+							THIS^.GoToConveyorHeight();
+						2 : 
+							// Ga naar stapelhoogte
+							THIS^.GoToHighestHeight();
+						3 :
+							// Ga hoog
+							THIS^.GoToPalletizeHeight();
+					END_CASE
+					
+				
+			END_CASE
+	END_CASE
+	
+	eModus.Manual :
+		// Doe effe zelf																			// TOEVOEGEN MET HMI
+		// Lift handmatig bedienen door INT invoer?
+		// Pins handmatig in en uit, met beveiliging zodat pallet niet naar beneden dondert
+	eModus.Off :
+		// Doe niks
+		// Stop
+END_CASE]]></ST>
+    </Implementation>
+    <Method Name="GoToConveyorHeight" Id="{7cad701c-9196-42fa-8f7e-e699c93a2475}">
+      <Declaration><![CDATA[METHOD GoToConveyorHeight : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[o_xMotor := TRUE;
+o_xTargetPos := iConveyorHeight;
+
+IF i_iServoEncoder = iConveyorHeight THEN
+	o_xMotor := FALSE;
+END_IF;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GoToHighestHeight" Id="{2f40e67c-8ede-47e5-be8a-cec585c7b8c6}">
+      <Declaration><![CDATA[METHOD GoToHighestHeight : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[o_xMotor := TRUE;
+o_xTargetPos := iHighestHeight;
+
+IF i_iServoEncoder = iHighestHeight THEN
+	o_xMotor := FALSE;
+END_IF;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GoToPalletizeHeight" Id="{476f6baa-9624-49ef-b539-9d4df5151943}">
+      <Declaration><![CDATA[METHOD GoToPalletizeHeight : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[o_xMotor := TRUE;
+o_xTargetPos := iPalletizeHeight;
+
+IF i_iServoEncoder = iPalletizeHeight THEN
+	o_xMotor := FALSE;
+END_IF;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WaitForPallet" Id="{9e1f5748-783f-41ae-a152-4ce137f7d7ea}">
+      <Declaration><![CDATA[METHOD WaitForPallet : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Wait for pallet]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

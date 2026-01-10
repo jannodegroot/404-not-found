@@ -4,22 +4,161 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Schuif
 VAR_INPUT
 	i_eState 				: eSingleState;
-	i_xMove					: BOOL;
+	i_eMode					: eModus;
+	
+	i_xMove					: BOOL; // Start moving to push
+	i_xMovePossible			: BOOL; // Is there room on the conveyor? 
+	i_xMoveHome				: BOOL; // Move to Home Position
+	
 	i_xEndSwitchIn			: BOOL;
 	i_xEndSwitchOut			: BOOL;
+	
 	i_xAlarmReset			: BOOL;
 END_VAR
 VAR_OUTPUT
 	o_xMotor 			: BOOL := FALSE;
-	o_xErrorSlide 		: BOOL := FALSE;
-	o_xAlarmSlide		: BOOL;
+	o_xMotorDirection	: BOOL;			 // 0 = Going In, 1 = Going Out
+	o_xErrorSlide 		: BOOL := FALSE; 
+	o_xAlarmSlide		: BOOL := FALSE;
+	o_xMoveDone			: BOOL;
 	o_eSlidePosition	: eSlideposition;
 END_VAR
 VAR
+	eSchuifState : eSchuifStates := eSchuifStates.Idle;
+	TimerUnknownPos : TON;
+	timTimerValue	: TIME := T#20S;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[// Yvo
+TimerUnknownPos(IN := (o_eSlidePosition = eSlideposition.Unknown), PT := timTimerValue);
+
+IF i_xEndSwitchIn AND i_xEndSwitchOut THEN
+	o_eSlidePosition := eSlideposition.Unknown;
+ELSIF i_xEndSwitchIn THEN
+	o_eSlidePosition := eSlideposition.In;
+ELSIF i_xEndSwitchOut THEN
+	o_eSlidePosition := eSlideposition.Out;
+ELSE
+	o_eSlidePosition := eSlideposition.Unknown;
+END_IF
+
+CASE i_eMode OF
+	eModus.Auto :
+	CASE i_eState OF
+		eSingleState.Execute :
+			CASE eSchuifState OF
+				eSchuifStates.Idle : // Wait for command
+					IF i_xMoveHome THEN
+						eSchuifState := eSchuifStates.MovingHome;
+					END_IF
+					
+					IF i_xMove THEN
+						eSchuifState := eSchuifStates.MoveOut;
+					END_IF
+					
+				eSchuifStates.MovingHome : // Move Home
+					THIS^.MoveHome();
+					
+				eSchuifStates.MoveOut : // Move out
+					IF i_xMovePossible THEN
+						o_xMotor := TRUE;
+						o_xMotorDirection := 1;
+						IF i_xEndSwitchOut THEN
+							o_xMoveDone := TRUE;
+							eSchuifState := eSchuifStates.MovingHome;
+						END_IF
+					ELSE
+						eSchuifState := eSchuifStates.WaitingForConveyor;
+					END_IF
+					
+				eSchuifStates.WaitingForConveyor : // Wait for conveyor
+					o_xMotor := FALSE;
+					IF i_xMovePossible THEN
+						eSchuifState := eSchuifStates.MoveOut;
+					END_IF
+					
+			END_CASE
+			
+		eSingleState.Suspending :
+			// Go to Home
+			o_xMotor := TRUE;
+			o_xMotorDirection := 0;
+			IF i_xEndSwitchIn THEN
+				o_xMotor := FALSE;
+				o_xMoveDone := FALSE;
+			END_IF
+			
+		eSingleState.Suspended :
+			// Go to Home
+			o_xMotor := TRUE;
+			o_xMotorDirection := 0;
+			IF i_xEndSwitchIn THEN
+				o_xMotor := FALSE;
+				o_xMoveDone := FALSE;
+			END_IF
+		
+		eSingleState.Stopping :
+			o_xMotor := TRUE;
+			o_xMotorDirection := 0;
+			IF i_xEndSwitchIn THEN
+				o_xMotor := FALSE;
+				o_xMoveDone := FALSE;
+			END_IF
+			
+		eSingleState.Stopped :
+			o_xMotor := TRUE;
+			o_xMotorDirection := 0;
+			IF i_xEndSwitchIn THEN
+				o_xMotor := FALSE;
+				o_xMoveDone := FALSE;
+			END_IF
+			
+		eSingleState.Aborting :
+			o_xMotor := FALSE;
+			
+		eSingleState.Aborted :
+			o_xMotor := FALSE;
+			
+	END_CASE
+	
+	eModus.Manual :
+		// Doe effe zelf																			// TOEVOEGEN MET HMI
+		
+		
+	eModus.Off :
+		// Doe niks
+		o_xMotor 			:= FALSE;
+		
+END_CASE
+
+/////////////////
+//ERRORHANDLING//
+/////////////////
+IF TimerUnknownPos.Q THEN
+	o_xErrorSlide := TRUE;
+	o_xAlarmSlide := TRUE;
+END_IF
+
+IF i_xAlarmReset THEN
+	o_xErrorSlide := FALSE;
+	o_xAlarmSlide := FALSE;
+END_IF]]></ST>
     </Implementation>
+    <Method Name="MoveHome" Id="{05ab75b9-d799-460f-ac3e-a4e03268ea9b}">
+      <Declaration><![CDATA[METHOD MoveHome : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[o_xMotor := TRUE;
+o_xMotorDirection := 0;
+IF i_xEndSwitchIn THEN
+	o_xMotor := FALSE;
+	o_xMoveDone := FALSE;
+	eSchuifState := eSchuifStates.Idle;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>

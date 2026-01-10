@@ -24,16 +24,22 @@
     <Compile Include="DUTs\eLiftposition.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\eLiftStates.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\eMachineStateLamp.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\eModus.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\eSlideposition.TcDUT">
+    <Compile Include="DUTs\eSchuifStates.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\eSingleState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\eSlideposition.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\eStartStop.TcDUT">
@@ -58,6 +64,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_ControlSystem.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FB_LiftA_Extended.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FB_LiftB_Extended.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_Palletizer.TcPOU">
