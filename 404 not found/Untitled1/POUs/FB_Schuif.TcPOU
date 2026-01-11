@@ -18,8 +18,10 @@ END_VAR
 VAR_OUTPUT
 	o_xMotor 			: BOOL := FALSE;
 	o_xMotorDirection	: BOOL;			 // 0 = Going In, 1 = Going Out
+	
 	o_xErrorSlide 		: BOOL := FALSE; 
 	o_xAlarmSlide		: BOOL := FALSE;
+	
 	o_xMoveDone			: BOOL;
 	o_eSlidePosition	: eSlideposition;
 END_VAR
@@ -27,6 +29,7 @@ VAR
 	eSchuifState : eSchuifStates := eSchuifStates.Idle;
 	TimerUnknownPos : TON;
 	timTimerValue	: TIME := T#20S;
+	fbBlikjesBand: FB_BlikjesBand;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -143,7 +146,22 @@ END_IF
 IF i_xAlarmReset THEN
 	o_xErrorSlide := FALSE;
 	o_xAlarmSlide := FALSE;
-END_IF]]></ST>
+END_IF
+
+
+// FunctionBlock BlikjesBand
+fbBlikjesBand(
+	i_xAbort:= , 
+	i_eStartStop:= , 
+	i_eModus:= , 
+	i_xLightSensor:= , 
+	i_xAlarmReset:= , 
+	i_eNextState:= , 
+	i_xManualMotor:= , 
+	o_eState=> , 
+	o_xMotor=> , 
+	o_xWarningFull=> , 
+	o_xAcceptingCans=> i_xMovePossible);]]></ST>
     </Implementation>
     <Method Name="MoveHome" Id="{05ab75b9-d799-460f-ac3e-a4e03268ea9b}">
       <Declaration><![CDATA[METHOD MoveHome : BOOL

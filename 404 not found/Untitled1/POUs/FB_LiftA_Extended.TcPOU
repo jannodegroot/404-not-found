@@ -4,22 +4,19 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_LiftA_Extended EXTENDS FB_Lift
 // This is an extended functionblock of FB_Lift. This Functionblock is for Lift A (Depalletizer)
 VAR_INPUT
-	i_iBaseHeight		: INT;
+
 END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
+	fbDepalletizer: FB_Depalletizer;
+	
 	aLayerHeights	: ARRAY[1..10] OF INT;
-	i				: INT := 0;
 END_VAR
 
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[iConveyorHeight := 0;
-
-FOR i := 1 TO i_iNumberOfLayers DO
-	aLayerHeights[i] := i_iBaseHeight + (i - 1) * i_iLayerHeight;
-END_FOR
 
 CASE i_eMode OF
 	eModus.Auto :
@@ -48,7 +45,20 @@ CASE i_eMode OF
 	eModus.Off :
 		// Doe niks
 		// Stop
-END_CASE]]></ST>
+END_CASE
+
+fbDepalletizer(
+	i_xAbort:= , 
+	i_eStartStop:= , 
+	i_PreviousEmptying:= , 
+	i_NextEmpty:= , 
+	i_eNextState:= , 
+	i_iCanType:= , 
+	i_iNumberOfLayers:= , 
+	o_eState=> , 
+	o_xEmpty=> , 
+	o_xWarningNoProduct=> , 
+	o_aLayerHeights=> aLayerHeights);]]></ST>
     </Implementation>
     <Method Name="CheckNextLayer" Id="{8f1d2526-a33e-4d40-9997-1757c01d0527}">
       <Declaration><![CDATA[METHOD CheckNextLayer : BOOL

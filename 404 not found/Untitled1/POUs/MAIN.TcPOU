@@ -64,6 +64,7 @@ VAR
 	//genaral state
 	eGeneralState						: eGeneralState;
 	
+	fbDepalletizer: FB_Depalletizer;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -225,17 +226,18 @@ fbBlikjesBand( 	i_xAbort		 		:= xAbortGeneral,
 				o_xWarningFull			=> (*Used in HMI*), 
 				o_xAcceptingCans		=> xBlikjesBandAccepting);
 
-
-
-
-
-
-
-
-
-
-
-]]></ST>
+fbDepalletizer(
+	i_xAbort:= , 
+	i_eStartStop:= , 
+	i_PreviousEmptying:= , 
+	i_NextEmpty:= , 
+	i_eNextState:= , 
+	i_iCanType:= , 
+	i_iNumberOfLayers:= , 
+	o_eState=> , 
+	o_xEmpty=> , 
+	o_xWarningNoProduct=> , 
+	o_aLayerHeights=> );]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

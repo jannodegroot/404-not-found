@@ -8,24 +8,76 @@ VAR_INPUT
 	i_PreviousEmptying	: BOOL;
 	i_NextEmpty			: BOOL;
 	i_eNextState		: eSingleState;
+	
+	// Light Sensors
+	i_xLightSensor1		: BOOL; // De eerste sensor die de pallet detecteerd
+	i_xLightSensor2		: BOOL; // De tweede sensor die de pallet detecteerd
+	
+	// HMI
+	i_iCanType			: INT;	// Type of can loaded on pallet
+	i_iNumberOfLayers	: INT;	// Number of layers on the pallet
 END_VAR
 VAR_OUTPUT
 	o_eState 			: eSingleState;
 	o_xEmpty			: BOOL;
 	o_xWarningNoProduct	: BOOL; //Warning after ...  time no products detected.
-	o_iNumberOfLayers	: INT;
+	
+	o_aLayerHeights	: ARRAY[1..10] OF INT;
 END_VAR
 VAR
-	fbBand		: FB_Band;
-	fbLift		: FB_Lift;
-	fbSchuif: FB_Schuif;
-	fbZuiger: FB_Zuiger;
+	fbBand				: FB_Band;
+	fbLift				: FB_Lift;
+	fbSchuif			: FB_Schuif;
+	fbZuiger			: FB_Zuiger;
+	fbKlep			: FB_Klep;
 	
-	xAskNewPallet : BOOL;
+	xAskNewPallet 		: BOOL;
+	
+	iLayerHeight	: INT;
+	iBaseHeight		: INT := 0;
+	i				: INT := 0;
+	iSlideHeight	: INT := 2500;
+	
+	eMoveKlepUp		: eValvePosition;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Yvo
+
+// Check the type of can and give the height of each layer
+IF i_iCanType = 1 THEN
+	iLayerHeight := 500;
+ELSIF i_iCanType = 2 THEN
+	iLayerHeight := 1000;
+ELSIF i_iCanType = 3 THEN
+	iLayerHeight := 1500;
+END_IF
+
+// Calculate the layer heights
+FOR i := 1 TO i_iNumberOfLayers DO
+	o_aLayerHeights[i] := (iBaseHeight + (i - 1) * iLayerHeight) + (iSlideHeight - iLayerHeight);
+END_FOR
+
+// If sensor detects new pallet, move Klep up
+IF i_xLightSensor1 THEN
+	// Move klep up
+	eMoveKlepUp := eValvePosition.Up;
+END_IF
+
+fbKlep(
+	i_eState:= , 
+	i_eModus:= , 
+	i_eAutoWantedPosition:= , 
+	i_eManualWantedPosition:= , 
+	i_xHallSensorIn:= , 
+	i_xHallSensorOut:= , 
+	i_xWarningReset:= , 
+	i_xAlarmReset:= , 
+	o_eCurrentPosition=> , 
+	o_xMagnetValve=> , 
+	o_xWarningPositionDown=> , 
+	o_xErrorPositionUpOrUnknow=> , 
+	o_xAlarmPositionUpOrUnknow=> );
 
 // Functionblock Schuif
 fbSchuif(

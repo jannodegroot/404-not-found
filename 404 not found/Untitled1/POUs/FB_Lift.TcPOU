@@ -11,10 +11,6 @@ VAR_INPUT
 	i_xAllowedToMoveDown: BOOL;
 	i_xAlarmReset		: BOOL;
 	
-	// Light Sensors
-	i_xLightSensor1		: BOOL; // De eerste sensor die de pallet detecteerd
-	i_xLightSensor2		: BOOL; // De tweede sensor die de pallet detecteerd
-	
 	// Hall Sensors
 	i_xPin1HallSensorIn	: BOOL;
 	i_xPin1HallSensorOut: BOOL;
