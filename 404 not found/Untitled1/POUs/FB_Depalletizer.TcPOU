@@ -39,6 +39,7 @@ VAR
 	iSlideHeight	: INT := 2500;
 	
 	eMoveKlepUp		: eValvePosition;
+	fbLiftA: FB_LiftA_Extended;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -62,12 +63,18 @@ END_FOR
 IF i_xLightSensor1 THEN
 	// Move klep up
 	eMoveKlepUp := eValvePosition.Up;
+	IF i_xLightSensor2 THEN
+		xAskNewPallet := FALSE;
+		eMoveKlepUp := eValvePosition.Down;
+	END_IF
 END_IF
+
+// If Lift is done, release pallet
 
 fbKlep(
 	i_eState:= , 
 	i_eModus:= , 
-	i_eAutoWantedPosition:= , 
+	i_eAutoWantedPosition:= eMoveKlepUp, 
 	i_eManualWantedPosition:= , 
 	i_xHallSensorIn:= , 
 	i_xHallSensorOut:= , 
@@ -140,15 +147,13 @@ fbBand(
 	o_xGivingToNext=> );
 	
 // Functionblock Lift
-fbLift(
+fbLiftA(
 	i_eState:= , 
 	i_eMode:= , 
 	i_eLiftState:= , 
 	i_xAllowedToMoveUp:= , 
 	i_xAllowedToMoveDown:= , 
 	i_xAlarmReset:= , 
-	i_xLightSensor1:= , 
-	i_xLightSensor2:= , 
 	i_xPin1HallSensorIn:= , 
 	i_xPin1HallSensorOut:= , 
 	i_xPin2HallSensorIn:= , 
