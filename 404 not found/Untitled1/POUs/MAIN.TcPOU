@@ -212,7 +212,7 @@ fbBandDepalletizerPalletizer(	i_xAbort				:= xAbortGeneral,
 								o_xEmpty 				=> xBandDepalletizerPalletizerEmpty,
 								o_sStateString			=> (*Used in HMI*));
 
-//----Blikjes band-------------
+//----Blikjes band--------------------------------------------------------------------------------------------------------
 fbBlikjesBand( 	i_xAbort		 		:= xAbortGeneral,
 				i_eStartStop 			:= eStartStopGeneral,
 				i_eModus				:= (*Used in HMI*), 

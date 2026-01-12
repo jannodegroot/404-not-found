@@ -1199,6 +1199,128 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbBlikjesBand.i_eModus": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbBlikjesBand::i_eModus",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:server#/definitions/ADS-PLC1.eModus"
+                    },
+                    {
+                        "comment": "0= off 1= auto 2= manual",
+                        "propertyOrder": 3
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbBlikjesBand.i_xAlarmReset": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbBlikjesBand::i_xAlarmReset",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 5
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbBlikjesBand.i_xLightSensor": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbBlikjesBand::i_xLightSensor",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "checking for cans after 10 sec alarm",
+                        "propertyOrder": 4
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbBlikjesBand.i_xManualMotor": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbBlikjesBand::i_xManualMotor",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 7
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbBlikjesBand.o_xAcceptingCans": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbBlikjesBand::o_xAcceptingCans",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "For other machines that this one is working and has space for cans",
+                        "propertyOrder": 11
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbBlikjesBand.o_xMotor": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbBlikjesBand::o_xMotor",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 9
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbBlikjesBand.o_xWarningFull": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbBlikjesBand::o_xWarningFull",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 10
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbBuffer2.i_eModus": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -5470,6 +5592,13 @@
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.o_xEmpty": 3,
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.o_xErrorGeneral": 3,
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.o_xMotor": 3,
+                "ADS.PLC1.MAIN.fbBlikjesBand.i_eModus": 3,
+                "ADS.PLC1.MAIN.fbBlikjesBand.i_xAlarmReset": 3,
+                "ADS.PLC1.MAIN.fbBlikjesBand.i_xLightSensor": 3,
+                "ADS.PLC1.MAIN.fbBlikjesBand.i_xManualMotor": 3,
+                "ADS.PLC1.MAIN.fbBlikjesBand.o_xAcceptingCans": 3,
+                "ADS.PLC1.MAIN.fbBlikjesBand.o_xMotor": 3,
+                "ADS.PLC1.MAIN.fbBlikjesBand.o_xWarningFull": 3,
                 "ADS.PLC1.MAIN.fbBuffer2.i_eModus": 3,
                 "ADS.PLC1.MAIN.fbBuffer2.i_xAlarmReset": 3,
                 "ADS.PLC1.MAIN.fbBuffer2.i_xLightSensor": 3,
