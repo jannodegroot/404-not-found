@@ -21,6 +21,9 @@ VAR_INPUT
 	i_xPin4HallSensorIn	: BOOL;
 	i_xPin4HallSensorOut: BOOL;
 	
+	i_xLightSensor1		: BOOL; // De eerste sensor die de pallet detecteerd
+	i_xLightSensor2		: BOOL; // De tweede sensor die de pallet detecteerd
+	
 	i_xEndSwitch		: BOOL; // Check if the lift is down
 	
 	i_iServoEncoder		: INT;

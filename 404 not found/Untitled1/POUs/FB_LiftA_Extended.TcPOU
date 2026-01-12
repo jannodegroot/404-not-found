@@ -7,10 +7,9 @@ VAR_INPUT
 
 END_VAR
 VAR_OUTPUT
+	o_xTaskDone : BOOL;
 END_VAR
-VAR
-	fbDepalletizer: FB_Depalletizer;
-	
+VAR	
 	aLayerHeights	: ARRAY[1..10] OF INT;
 END_VAR
 
@@ -45,20 +44,7 @@ CASE i_eMode OF
 	eModus.Off :
 		// Doe niks
 		// Stop
-END_CASE
-
-fbDepalletizer(
-	i_xAbort:= , 
-	i_eStartStop:= , 
-	i_PreviousEmptying:= , 
-	i_NextEmpty:= , 
-	i_eNextState:= , 
-	i_iCanType:= , 
-	i_iNumberOfLayers:= , 
-	o_eState=> , 
-	o_xEmpty=> , 
-	o_xWarningNoProduct=> , 
-	o_aLayerHeights=> aLayerHeights);]]></ST>
+END_CASE]]></ST>
     </Implementation>
     <Method Name="CheckNextLayer" Id="{8f1d2526-a33e-4d40-9997-1757c01d0527}">
       <Declaration><![CDATA[METHOD CheckNextLayer : BOOL
@@ -67,18 +53,10 @@ VAR_INPUT
 END_VAR
 
 VAR
-	fbSchuif : FB_Schuif;
-	eSlidePosition : eSlidePosition := fbSchuif.o_eSlidePosition;
-	TestVar : INT;
+
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[// Nog maken
-IF eSlidePosition = eSlideposition.In THEN
-	// Yay
-	TestVar := 100;
-ELSE
-	TestVar := 20;
-END_IF]]></ST>
+        <ST><![CDATA[// Nog maken]]></ST>
       </Implementation>
     </Method>
     <Method Name="MoveUpToLayer" Id="{3339177a-337e-4fd8-a5b4-139eb710ec0a}">
