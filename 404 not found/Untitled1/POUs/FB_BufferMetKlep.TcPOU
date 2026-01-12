@@ -29,10 +29,6 @@ VAR
 	
 	fbKlep 					: FB_Klep;
 	eValveCurrentPosition	: eValvePosition;
-	
-	
-	
-
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -46,11 +42,11 @@ fbKlep(	i_eState 						:= o_eState,
 		i_xHallSensorOut 				:= ,
 		i_xWarningReset 				:= (*Used in HMI*),
 		i_xAlarmReset 					:= (*Used in HMI*),
-		o_eCurrentPosition 				:= (*Used in HMI*),	
-		o_xMagnetValve					:= ,
-		o_xWarningPositionDown 			:= (*Used in HMI*),
-		o_xErrorPositionUpOrUnknow		:= (*Used in HMI*),
-		o_xAlarmPositionUpOrUnknow		:= (*Used in HMI*));
+		o_eCurrentPosition 				=> eValveCurrentPosition,	
+		o_xMagnetValve					=> ,
+		o_xWarningPositionDown 			=> (*Used in HMI*),
+		o_xErrorPositionUpOrUnknow		=> (*Used in HMI*),
+		o_xAlarmPositionUpOrUnknow		=> (*Used in HMI*));
 
 //-------------------------------------------------------------------------------------------------------------------------
 //Change the state
@@ -128,7 +124,9 @@ IF (i_eModus = eModus.Auto) AND
 	o_eState = eSingleState.Stopping OR
 	o_eState = eSingleState.Suspending OR
 	o_eState = eSingleState.Aborting) OR
-	(i_eModus = eModus.Manual AND NOT i_xManualCmdMotor) THEN
+	(i_eModus = eModus.Manual AND NOT i_xManualCmdMotor) OR 
+	(o_xEmpty AND NOT i_xPreviousEmptying AND NOT (i_eModus = eModus.Manual)) OR
+	NOT(eValveCurrentPosition = eValvePosition.Down) THEN
 
 	o_xMotor := FALSE;		
 END_IF
@@ -138,10 +136,11 @@ END_IF
 IF o_eState = eSingleState.Execute AND i_xLightSensor AND NOT i_xNextEmpty THEN
 	fbKlep(i_eAutoWantedPosition 		:= eValvePosition.Up);
 	o_xGivingToNext := FALSE;
-	
 ELSIF o_eState = eSingleState.Execute AND i_xLightSensor AND i_xNextEmpty THEN
 	fbKlep(i_eAutoWantedPosition := eValvePosition.Down);
 	o_xGivingToNext := TRUE;
+ELSIF NOT i_xLightSensor AND NOT i_xNextEmpty THEN //then placed on the next buffer
+	o_xGivingToNext := FALSE;
 END_IF
 
 //----------------------------------------------------------------------------------------------------------------------------------------
@@ -159,12 +158,12 @@ IF NOT (o_eState = eSingleState.Aborting) AND i_xLightSensor THEN
 END_IF
 
 //reset alarm
-IF i_xAlarmReset AND NOT (o_eState = eSingleState.Aborting) THEN
+IF i_xAlarmReset AND NOT xError AND NOT (o_eState = eSingleState.Aborting) THEN
 	o_xAlarmGeneral := FALSE;
 END_IF
 
 //state enum to string for HMI
-o_sStateString := F_StateEnumToString(o_eState);]]></ST>
+o_sStateString := F_StateEnumToStringSingleState(o_eState);]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

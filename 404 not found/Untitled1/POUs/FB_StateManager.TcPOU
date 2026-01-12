@@ -14,7 +14,8 @@ VAR_INPUT
 	i_eStateBlikjesBand					: eSingleState;
 END_VAR
 VAR_OUTPUT
-	o_eGeneralState	: eGeneralState;
+	o_eGeneralState 		: eGeneralState;
+	o_sGeneralStateString 	: STRING(30);
 END_VAR
 VAR
 END_VAR
@@ -75,6 +76,9 @@ IF i_eStateInvoerBuffer1 = eSingleState.Aborted AND
 THEN
 	o_eGeneralState := eGeneralState.Aborted;
 END_IF
+
+//state enum to string for HMI
+o_sGeneralStateString := F_StateEnumToStringGeneralState (o_eGeneralState);
 ]]></ST>
     </Implementation>
   </POU>

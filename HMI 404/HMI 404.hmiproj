@@ -136,6 +136,7 @@
     <Folder Include="Images\Doorlock" />
     <Folder Include="Images\Lichtsensor" />
     <Folder Include="Images\Eindschakelaar" />
+    <Folder Include="Images\Hoofdpagina" />
     <Folder Include="Images\Safetymat" />
     <Folder Include="Imports" />
     <Folder Include="Imports\Images" />
@@ -230,6 +231,9 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="Images\Eindschakelaar\End switch open .png">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Images\Hoofdpagina\Buffer.png">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Images\Klep\Klep omhoog (actief).png">
