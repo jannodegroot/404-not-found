@@ -65,7 +65,7 @@ IF i_xAlarmReset = TRUE THEN
 END_IF
 
 //state enum to string for HMI
-o_sStateString := F_StateEnumToString(o_eState);
+o_sStateString := F_StateEnumToStringSingleState(o_eState);
 
 
 

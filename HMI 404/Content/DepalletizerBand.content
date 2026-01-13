@@ -8,10 +8,6 @@
 </script>
 <div id="TcHmiTextblock_10" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="350" data-tchmi-left-unit="px" data-tchmi-text="Depalletizer - Band" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="360" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="30" data-tchmi-text-horizontal-alignment="Center">
 </div>
-<div id="text_state_64" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="11" data-tchmi-left-unit="px" data-tchmi-text="State:" data-tchmi-top="12" data-tchmi-top-unit="px" data-tchmi-width="55" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Center">
-</div>
-<div id="State_7" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="66" data-tchmi-left-unit="px" data-tchmi-top="12" data-tchmi-top-unit="px" data-tchmi-width="102" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Left" data-tchmi-text-vertical-alignment="Center" data-tchmi-background-image-horizontal-alignment="Left" data-tchmi-text="%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_eState%/s%">
-</div>
 <div id="text_Mode_25" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="178" data-tchmi-left-unit="px" data-tchmi-text="Mode:" data-tchmi-top="12" data-tchmi-top-unit="px" data-tchmi-width="55" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Center">
 </div>
 <div id="TcHmiCombobox_11" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCombobox" data-tchmi-auto-focus-out="True" data-tchmi-combobox-text="Select" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="233" data-tchmi-left-unit="px" data-tchmi-top="23" data-tchmi-top-unit="px" data-tchmi-width="109" data-tchmi-width-unit="px" data-tchmi-text-font-size="20" data-tchmi-input-processing-point="InteractionFinished" data-tchmi-enum-data-symbol="%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_eModus%/s%">
@@ -355,7 +351,7 @@
                 "value": {
                   "objectType": "StaticValue",
                   "valueType": "tchmi:general#/definitions/String",
-                  "value": "Warning Full"
+                  "value": "General Error"
                 },
                 "asyncWait": true
               },
@@ -581,7 +577,7 @@
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
-    "event": "%s%ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.i_eModus%/s%",
+    "event": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_eModus%/s%",
     "actions": [
       {
         "objectType": "Condition",
@@ -593,7 +589,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:server#/definitions/ADS-PLC1.eModus",
-                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.i_eModus%/s%"
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_eModus%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -799,7 +795,7 @@
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
-    "event": "%s%ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.i_eModus%/s%",
+    "event": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_eModus%/s%",
     "actions": [
       {
         "objectType": "Condition",
@@ -811,7 +807,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:server#/definitions/ADS-PLC1.eModus",
-                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.i_eModus%/s%"
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_eModus%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",

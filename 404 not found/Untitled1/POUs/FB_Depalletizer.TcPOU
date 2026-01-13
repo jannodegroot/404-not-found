@@ -22,7 +22,18 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[fbBand(
+	i_eState:= , 
+	i_xGoHold:= , 
+	i_xGoEmpty:= , 
+	i_xAlarmReset:= , 
+	i_eModus:= , 
+	i_xManualMotor:= , 
+	o_xMotor=> , 
+	o_xErrorMotor=> , 
+	o_xAlarmMotor=> , 
+	o_xGivingToNext=> );
+	]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

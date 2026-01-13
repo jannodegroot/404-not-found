@@ -8,12 +8,6 @@
 </script>
 <div id="TcHmiTextblock_16" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="350" data-tchmi-left-unit="px" data-tchmi-text="Blikjes Band" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="360" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="30" data-tchmi-text-horizontal-alignment="Center">
 </div>
-<div id="text_state_54" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="12" data-tchmi-left-unit="px" data-tchmi-text="State:" data-tchmi-top="12" data-tchmi-top-unit="px" data-tchmi-width="55" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Center">
-</div>
-<div id="State_6" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="67" data-tchmi-left-unit="px" data-tchmi-text="%s%ADS.PLC1.MAIN.fbBlikjesBand.o_sStateString%/s%" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="102" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Left" data-tchmi-text-vertical-alignment="Center" data-tchmi-background-image-horizontal-alignment="Left">
-
-
-</div>
 <div id="text_Mode_22" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="179" data-tchmi-left-unit="px" data-tchmi-text="Mode:" data-tchmi-top="12" data-tchmi-top-unit="px" data-tchmi-width="55" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Center">
 </div>
 <div id="TcHmiCombobox_10" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCombobox" data-tchmi-auto-focus-out="True" data-tchmi-combobox-text="Select" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="234" data-tchmi-left-unit="px" data-tchmi-top="22" data-tchmi-top-unit="px" data-tchmi-width="109" data-tchmi-width-unit="px" data-tchmi-enum-data-symbol="%s%ADS.PLC1.MAIN.fbBlikjesBand.i_eModus%/s%" data-tchmi-text-font-size="20" data-tchmi-input-processing-point="InteractionFinished">
@@ -288,8 +282,6 @@
 </div>
 <div id="text_Mode_23" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="19" data-tchmi-height-unit="px" data-tchmi-left="21" data-tchmi-left-unit="px" data-tchmi-text="SR901" data-tchmi-top="194" data-tchmi-top-unit="px" data-tchmi-width="83" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="12" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Center" data-tchmi-zindex="1">
 </div>
-<div id="text_state_55" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="28" data-tchmi-height-unit="px" data-tchmi-left="21" data-tchmi-left-unit="px" data-tchmi-text="Sensoren" data-tchmi-top="86" data-tchmi-top-unit="px" data-tchmi-width="89" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Center" data-tchmi-background-image-horizontal-alignment="Left" data-tchmi-background-image-vertical-alignment="Center" data-tchmi-zindex="1">
-</div>
 <div id="text_state_56" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="28" data-tchmi-height-unit="px" data-tchmi-left="641" data-tchmi-left-unit="px" data-tchmi-text="Stage" data-tchmi-top="86" data-tchmi-top-unit="px" data-tchmi-width="89" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Center" data-tchmi-background-image-horizontal-alignment="Left" data-tchmi-background-image-vertical-alignment="Center">
 </div>
 <div id="TcHmiButton_25" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="27" data-tchmi-height-unit="px" data-tchmi-left="641" data-tchmi-left-unit="px" data-tchmi-top="124" data-tchmi-top-unit="px" data-tchmi-width="89" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="15">
@@ -406,7 +398,7 @@
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
-    "event": "%s%ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.o_xMotor%/s%",
+    "event": "%s%ADS.PLC1.MAIN.fbBlikjesBand.o_xMotor%/s%",
     "actions": [
       {
         "objectType": "Condition",
@@ -512,7 +504,7 @@
                   "objectType": "StaticValue",
                   "valueType": "tchmi:framework#/definitions/Color",
                   "value": {
-                    "color": "rgba(250, 6, 6, 1)"
+                    "color": "rgba(250, 231, 6, 1)"
                   }
                 },
                 "asyncWait": true
@@ -750,7 +742,7 @@
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
-    "event": "%s%ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.i_eModus%/s%",
+    "event": "%s%ADS.PLC1.MAIN.fbBlikjesBand.i_eModus%/s%",
     "actions": [
       {
         "objectType": "Condition",
@@ -762,7 +754,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:server#/definitions/ADS-PLC1.eModus",
-                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.i_eModus%/s%"
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBlikjesBand.i_eModus%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -810,7 +802,7 @@
 ]
 </script>
 </div>
-<div id="TcHmiToggleButton_7" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="807" data-tchmi-left-unit="px" data-tchmi-top="113" data-tchmi-top-unit="px" data-tchmi-width="77" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="15" data-tchmi-state-symbol="%s%ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.i_xManualCmdMotor%/s%">
+<div id="TcHmiToggleButton_7" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="807" data-tchmi-left-unit="px" data-tchmi-top="117" data-tchmi-top-unit="px" data-tchmi-width="77" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="15" data-tchmi-state-symbol="%s%ADS.PLC1.MAIN.fbBlikjesBand.i_xManualMotor%/s%">
 <script data-tchmi-target-attribute="data-tchmi-text-color" type="application/json">
 {
   "color": "rgba(0, 0, 0, 1)"
@@ -837,7 +829,7 @@
                 "compare2": {
                   "objectType": "StaticValue",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "value": false
+                  "value": true
                 },
                 "compareOperator": "==",
                 "logic": null
@@ -968,7 +960,7 @@
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
-    "event": "%s%ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.i_eModus%/s%",
+    "event": "%s%ADS.PLC1.MAIN.fbBlikjesBand.i_eModus%/s%",
     "actions": [
       {
         "objectType": "Condition",
@@ -980,7 +972,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:server#/definitions/ADS-PLC1.eModus",
-                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.i_eModus%/s%"
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBlikjesBand.i_eModus%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -1028,5 +1020,13 @@
 ]
 </script>
 </div>
+<div id="text_state_70" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="28" data-tchmi-height-unit="px" data-tchmi-left="21" data-tchmi-left-unit="px" data-tchmi-text="Sensoren" data-tchmi-top="84" data-tchmi-top-unit="px" data-tchmi-width="89" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Center" data-tchmi-background-image-horizontal-alignment="Left" data-tchmi-background-image-vertical-alignment="Center" data-tchmi-zindex="4">
+</div>
+<div id="text_state_71" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="13" data-tchmi-left-unit="px" data-tchmi-text="State:" data-tchmi-top="13" data-tchmi-top-unit="px" data-tchmi-width="55" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Center" data-tchmi-zindex="4">
+</div>
+<div id="State_7" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="68" data-tchmi-left-unit="px" data-tchmi-text="%s%ADS.PLC1.MAIN.fbBlikjesBand.o_sStateString%/s%" data-tchmi-top="13" data-tchmi-top-unit="px" data-tchmi-width="102" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Left" data-tchmi-text-vertical-alignment="Center" data-tchmi-background-image-horizontal-alignment="Left" data-tchmi-zindex="4">
+</div>
+</div>
+<div id="text_state_55" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="28" data-tchmi-height-unit="px" data-tchmi-left="-86" data-tchmi-left-unit="px" data-tchmi-text="Sensoren" data-tchmi-top="-802" data-tchmi-top-unit="px" data-tchmi-width="89" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Center" data-tchmi-background-image-horizontal-alignment="Left" data-tchmi-background-image-vertical-alignment="Center" data-tchmi-zindex="1">
 </div>
 </div>
