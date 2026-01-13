@@ -78,7 +78,8 @@ fbStateManager(	i_eStateInvoerBuffer1				:= eStateInvoerBuffer1,
 				i_eStateBandDepalletizerPalletizer	:= eStateBandDepalletizerPalletizer, 
 				i_eStatePalletizer					:= eStatePalletizer, 
 				i_eStateBlikjesBand					:= eStateBlikjesBand, 
-				o_eGeneralState						=> eGeneralState);
+				o_eGeneralState						=> eGeneralState,
+				o_sGeneralStateString				=> );
 
 //----ControlSystem------------------------------------------------------------------------------------------------------------					
 fbControlSystem(i_eGeneralState					:= eGeneralState, 

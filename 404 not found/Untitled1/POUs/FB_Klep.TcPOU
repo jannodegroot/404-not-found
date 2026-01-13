@@ -25,7 +25,7 @@ VAR
 	Timer 						: TON;
 	IN 							: BOOL;
 	PT 							: TON;
-	TimerValue 					: TIME := T#5S;
+	TimerValue 					: TIME := T#10S;
 	TimerStartButton 			: BOOL;
 	fbBlinking 					: FB_Blinking;
 	xError						: BOOL;
@@ -109,8 +109,10 @@ END_IF
 
 IF modeAuto AND o_eCurrentPosition = i_eAutoWantedPosition THEN
 	xError := FALSE;
+	TimerStartButton := FALSE;
 ELSIF modeManual AND o_eCurrentPosition = i_eManualWantedPosition THEN
 	xError := FALSE;
+	TimerStartButton := FALSE;
 ELSE 
 	TimerStartButton := TRUE;
 END_IF
