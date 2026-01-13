@@ -15,10 +15,8 @@ VAR_INPUT
 	i_xAlarmResetAlarmHorizontalMovement	: BOOL;
 	i_xAlarmResetPressure : BOOL;
 	i_xButtonManStopall : BOOL;
-	i_xButtonManCiliderUP : BOOL;
-	i_xButtonManCiliderDown : BOOL;
-	i_xButtonManHoriztalOUT : BOOL;
-	i_xButtonManHorizontalIN : BOOL;
+	eManCiliderPosition		: eZuigerCilinderposition;
+	eManHorizotalPosition	: eZuigerHorizontaal;
 	i_xButtonManVacumOn	: BOOL;
 END_VAR
 VAR_OUTPUT
@@ -108,14 +106,14 @@ CASE i_eModes OF
 	eModus.Manual: //manual controll
 		IF i_xButtonManStopall THEN
 			StopALL(); //stopall
-		ELSIF i_xButtonManCiliderUP THEN
+		ELSIF eManCiliderPosition =  eZuigerCilinderposition.up THEN
 			CiliderUP(); //to startingpostion
-		ELSIF i_xButtonManCiliderDown THEN
+		ELSIF eManCiliderPosition =  eZuigerCilinderposition.Down THEN
 			CilinderDOwn();
 		END_IF
-		IF NOT i_xButtonManStopall AND i_xButtonManHorizontalIN THEN
+		IF NOT i_xButtonManStopall AND eManHorizotalPosition	= eZuigerHorizontaal.In THEN
 			HorizontalIN();
-		ELSIF NOT i_xButtonManStopall AND i_xButtonManHoriztalOUT THEN
+		ELSIF NOT i_xButtonManStopall AND eManHorizotalPosition	= eZuigerHorizontaal.Out THEN
 			HoriztalOUT();
 		END_IF
 		IF NOT i_xButtonManStopall AND NOT i_xButtonManVacumOn THEN
