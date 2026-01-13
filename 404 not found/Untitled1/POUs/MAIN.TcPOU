@@ -233,7 +233,7 @@ fbDepalletizer(
 	i_PreviousEmptying:= , 
 	i_NextEmpty:= , 
 	i_eNextState:= , 
-	i_iCanType:= , 
+	i_iCanTypeHMI:= , 
 	i_iNumberOfLayersHMI:= , 
 	o_eState=> , 
 	o_xEmpty=> , 

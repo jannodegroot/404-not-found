@@ -14,7 +14,7 @@ VAR_INPUT
 	i_xLightSensor2		: BOOL; // De tweede sensor die de pallet detecteerd
 	
 	// HMI
-	i_iCanType			: INT;	// Type of can loaded on pallet
+	i_iCanTypeHMI			: INT;	// Type of can loaded on pallet
 	i_iNumberOfLayersHMI: INT;	// Number of layers on the pallet
 END_VAR
 VAR_OUTPUT
@@ -203,11 +203,11 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF i_iCanType = 1 THEN
+        <ST><![CDATA[IF i_iCanTypeHMI = 1 THEN
 	iLayerHeight := 500;
-ELSIF i_iCanType = 2 THEN
+ELSIF i_iCanTypeHMI = 2 THEN
 	iLayerHeight := 1000;
-ELSIF i_iCanType = 3 THEN
+ELSIF i_iCanTypeHMI = 3 THEN
 	iLayerHeight := 1500;
 END_IF]]></ST>
       </Implementation>
@@ -264,8 +264,10 @@ END_VAR
       <Implementation>
         <ST><![CDATA[IF xLiftIsDone AND i_NextEmpty THEN
 	xReleasePallet := TRUE;
+	xHoldPallet := FALSE;
 ELSIF xLiftIsDone AND i_NextEmpty = FALSE THEN
 	xHoldPallet := TRUE;
+	xReleasePallet := FALSE;
 END_IF]]></ST>
       </Implementation>
     </Method>
