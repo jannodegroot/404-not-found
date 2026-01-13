@@ -53,17 +53,8 @@ VAR
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Yvo
-IF i_iServoEncoder = o_xTargetPos THEN
-	// Idle
-	o_eLiftPosition := eLiftPosition.Idle;
-ELSIF i_iServoEncoder < o_xTargetPos THEN
-	// Going Up
-	o_eLiftPosition := eLiftPosition.GoingUp;
-ELSIF i_iServoEncoder > o_xTargetPos THEN
-	// Going Down
-	o_eLiftPosition := eLiftPosition.GoingDown;
-END_IF
 
+THIS^.LiftStates();
 
 CASE i_eLiftState OF
 	eLiftStates.Idle :
@@ -145,6 +136,24 @@ END_VAR
 	END_IF;
 END_IF
 ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="LiftStates" Id="{4112812d-824a-41f6-ad29-8a4c95970b94}">
+      <Declaration><![CDATA[METHOD LiftStates : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF i_iServoEncoder = o_xTargetPos THEN
+	// Idle
+	o_eLiftPosition := eLiftPosition.Idle;
+ELSIF i_iServoEncoder < o_xTargetPos THEN
+	// Going Up
+	o_eLiftPosition := eLiftPosition.GoingUp;
+ELSIF i_iServoEncoder > o_xTargetPos THEN
+	// Going Down
+	o_eLiftPosition := eLiftPosition.GoingDown;
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="MoveHome" Id="{865b77f7-5c1a-48fc-b43f-da4cbe1c0d1f}">

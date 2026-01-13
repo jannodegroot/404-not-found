@@ -249,6 +249,9 @@ END_VAR
 	eMoveKlepUp := eValvePosition.Up;
 	IF i_xLightSensor2 THEN
 		eMoveKlepUp := eValvePosition.Down;
+		xHoldPallet := TRUE;
+	ELSE
+		xHoldPallet := FALSE;
 	END_IF
 END_IF]]></ST>
       </Implementation>
