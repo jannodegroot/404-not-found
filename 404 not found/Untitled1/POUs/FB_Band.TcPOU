@@ -29,9 +29,7 @@ CASE i_eModus OF
 	eModus.Auto:
 		IF i_xGoHold = TRUE THEN
 			o_xMotor := FALSE; //
-		END_IF
-
-		IF i_xGoEmpty = TRUE THEN
+		ELSIF i_xGoEmpty = TRUE THEN
 			o_xMotor := TRUE; 
 			o_xGivingToNext := TRUE;
 		ELSE
