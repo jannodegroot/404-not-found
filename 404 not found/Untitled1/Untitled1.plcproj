@@ -81,7 +81,7 @@
     <Compile Include="POUs\FB_Blinking.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\F_StateEnumToString.TcPOU">
+    <Compile Include="POUs\F_StateEnumToStringSingleState.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_BlikjesBand.TcPOU">
@@ -115,6 +115,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\F_StateEnumToStringGeneralState.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

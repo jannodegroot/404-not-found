@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="F_StateEnumToStringGeneralState" Id="{42b1279a-3c78-4fd1-b837-f3a59e245a59}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_StateEnumToStringGeneralState : String
+VAR_INPUT
+		eState  : eGeneralState;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE eState OF
+	eGeneralState.Idle:
+		F_StateEnumToStringGeneralState := 'Idle';
+	eGeneralState.Execute:
+		F_StateEnumToStringGeneralState := 'Execute';
+	eGeneralState.Stopped:
+		F_StateEnumToStringGeneralState := 'Stopped';
+	eGeneralState.Aborted:
+		F_StateEnumToStringGeneralState := 'Aborted';
+ELSE
+	F_StateEnumToStringGeneralState := 'Unknown';
+END_CASE
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
