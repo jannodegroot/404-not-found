@@ -65,8 +65,8 @@ VAR
 	
 	//genaral state
 	eGeneralState						: eGeneralState;
-	
-	fbDepalletizer: FB_Depalletizer;
+	fbPalletizer						: FB_Palletizer;
+
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -240,7 +240,9 @@ fbDepalletizer(
 	o_eState=> , 
 	o_xEmpty=> , 
 	o_xWarningNoProduct=> , 
-	o_aLayerHeights=> );]]></ST>
+	o_aLayerHeights=> );
+	
+fbPalletizer();]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

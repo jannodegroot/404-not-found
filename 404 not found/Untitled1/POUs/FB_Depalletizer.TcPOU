@@ -124,10 +124,7 @@ fbZuiger(
 	i_xAlarmResetAlarmHorizontalMovement:= , 
 	i_xAlarmResetPressure:= , 
 	i_xButtonManStopall:= , 
-	i_xButtonManCiliderUP:= , 
-	i_xButtonManCiliderDown:= , 
-	i_xButtonManHoriztalOUT:= , 
-	i_xButtonManHorizontalIN:= , 
+ 
 	i_xButtonManVacumOn:= , 
 	o_xMotor=> , 
 	o_xMotorDirectionOut=> , 

@@ -15,7 +15,7 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Janno geeft door naar welke laag hij moet. Laag 0 = home, laag 1 = band, laag 2 = pallet op pallet, laag 3 = pallets hoog
-FB_Lift();
+
 
 CASE i_eMode OF
 	eModus.Auto :
