@@ -8,7 +8,7 @@ TYPE eSlideposition :
 (
 	In := 0,
 	Out:=1,
-	Unkown:=2
+	Unknown:=2
 );
 END_TYPE
 ]]></Declaration>

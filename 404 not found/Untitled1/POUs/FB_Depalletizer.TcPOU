@@ -8,21 +8,276 @@ VAR_INPUT
 	i_PreviousEmptying	: BOOL;
 	i_NextEmpty			: BOOL;
 	i_eNextState		: eSingleState;
+	
+	// Light Sensors
+	i_xLightSensor1		: BOOL; // De eerste sensor die de pallet detecteerd
+	i_xLightSensor2		: BOOL; // De tweede sensor die de pallet detecteerd
+	
+	// HMI
+	i_iCanType			: INT;	// Type of can loaded on pallet
+	i_iNumberOfLayersHMI: INT;	// Number of layers on the pallet
 END_VAR
 VAR_OUTPUT
 	o_eState 			: eSingleState;
-	o_xEmpty			: BOOL;
-	o_xWarningNoProduct	: BOOL; //Warning after ...  time no products detected.
+	o_xEmpty			: BOOL;	// Depalletizer is empty
+	o_xWarningNoProduct	: BOOL; // Warning after ...  time no products detected.
+	
+	o_aLayerHeights	: ARRAY[1..10] OF INT;
 END_VAR
 VAR
-	fbBand 		: FB_Band;
-	fbLift		: FB_Lift;
-	fbSchuif	: FB_Schuif;
-	fbZuiger 	: FB_Zuiger;
+	fbBand			: FB_Band;
+	fbLift			: FB_Lift;
+	fbSchuif		: FB_Schuif;
+	fbZuiger		: FB_Zuiger;
+	fbKlep			: FB_Klep;
+	fbLiftA			: FB_LiftA_Extended;
+	
+	xLiftIsDone		: BOOL;
+	xReleasePallet	: BOOL;
+	xHoldPallet		: BOOL;
+	
+	iLayerHeight	: INT;
+	iBaseHeight		: INT := 0;
+	i				: INT := 0;
+	iSlideHeight	: INT := 2500;
+	
+	eMoveKlepUp		: eValvePosition;
+	
+	eZuigerSafe		: eZuigerCilinderPosition;
+	eSchuifSafe		: eSlideposition;
+	eConveyorSafe	: eValvePosition;
+	
+	xMoveUpSafe		: BOOL;
+	xMoveDownSafe	: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[fbzuiger();]]></ST>
+      <ST><![CDATA[// Yvo
+
+// Check the type of can and give the height of each layer
+THIS^.CheckCanType();
+
+// Calculate the layer heights
+THIS^.CalculateLayerHeights();
+
+// Set as empty if no sensor detects pallet
+THIS^.SetEmpty();
+
+// If sensor detects new pallet, move Klep up
+THIS^.DetectNewPallet();
+
+// Check Zuiger and Schuif are safe so the lift can move up
+THIS^.CheckMoveUp();
+
+// Check if lift can move down
+THIS^.CheckMoveDown();
+
+// If Lift is done, release pallet. If not possible, hold pallet.
+THIS^.ReleaseOrHoldPallet();
+
+
+
+fbKlep(
+// 	i_eState:= , 
+// 	i_eModus:= , 
+	i_eAutoWantedPosition:= eMoveKlepUp, 
+// 	i_eManualWantedPosition:= , 
+// 	i_xHallSensorIn:= , 
+// 	i_xHallSensorOut:= , 
+// 	i_xWarningReset:= , 
+// 	i_xAlarmReset:= , 
+// 	o_eCurrentPosition=> , 
+// 	o_xMagnetValve=> , 
+// 	o_xWarningPositionDown=> , 
+// 	o_xErrorPositionUpOrUnknow=> , 
+// 	o_xAlarmPositionUpOrUnknow=> 
+);
+
+// Functionblock Schuif
+fbSchuif(
+	i_eState:= , 
+	i_eMode:= , 
+	i_xMove:= , 
+	i_xMovePossible:= , 
+	i_xMoveHome:= , 
+	i_xEndSwitchIn:= , 
+	i_xEndSwitchOut:= , 
+	i_xAlarmReset:= , 
+	o_xMotor=> , 
+	o_xMotorDirection=> , 
+	o_xErrorSlide=> , 
+	o_xAlarmSlide=> , 
+	o_xMoveDone=> , 
+	o_eSlidePosition=> );
+	
+// Functionblock Zuiger
+fbZuiger(
+	i_eState:= , 
+	i_eModes:= , 
+	i_xMoveCiliderDown:= , 
+	i_xHallSensorIn:= , 
+	i_xHallSensorOut:= , 
+	i_xEndSwitchIn:= , 
+	i_xEndSwitchOut:= , 
+	i_rPressureSensor:= , 
+	i_xAlarmResetCilinder:= , 
+	i_xAlarmResetAlarmHorizontalMovement:= , 
+	i_xAlarmResetPressure:= , 
+	i_xButtonManStopall:= , 
+	i_xButtonManCiliderUP:= , 
+	i_xButtonManCiliderDown:= , 
+	i_xButtonManHoriztalOUT:= , 
+	i_xButtonManHorizontalIN:= , 
+	i_xButtonManVacumOn:= , 
+	o_xMotor=> , 
+	o_xMotorDirectionOut=> , 
+	o_xErrorHorizontalMovement=> , 
+	o_xAlarmHorizontalMovement=> , 
+	o_xMagnetValveCilinder=> , 
+	o_xMagnetValveVacum=> , 
+	o_xErrorCilinder=> , 
+	o_xAlarmCilinder=> , 
+	o_xErrorPressure=> , 
+	o_xAlarmPressure=> , 
+	o_eCiliderPosition=> eZuigerSafe, 
+	o_eHorizotalPosition=> );
+
+// Functionblock Lift
+fbBand(
+	i_eState:= , 
+	i_xGoHold:= xHoldPallet, // Als volgende band vol is
+	i_xGoEmpty:= xReleasePallet, // aansturen als de lift klaar is
+	i_xAlarmReset:= , 
+	o_xMotor=> , 
+	o_xErrorMotor=> , 
+	o_xAlarmMotor=> , 
+	o_xGivingToNext=> );
+	
+// Functionblock Lift
+fbLiftA(
+	i_eState:= , 
+	i_eMode:= , 
+	i_eLiftState:= , 
+	i_xAllowedToMoveUp:= xMoveUpSafe, 		// Schuif & Zuiger check
+	i_xAllowedToMoveDown:= xMoveDownSafe, 	// Klep check
+	i_xAlarmReset:= , 
+	i_xPin1HallSensorIn:= , 
+	i_xPin1HallSensorOut:= , 
+	i_xPin2HallSensorIn:= , 
+	i_xPin2HallSensorOut:= , 
+	i_xPin3HallSensorIn:= , 
+	i_xPin3HallSensorOut:= , 
+	i_xPin4HallSensorIn:= , 
+	i_xPin4HallSensorOut:= , 
+	i_xEndSwitch:= , 
+	i_iServoEncoder:= , 
+	i_iDistanceSensor:= , 
+	i_iLayerHeight:= iLayerHeight, 				// Layerheight
+	i_iNumberOfLayers:= i_iNumberOfLayersHMI, 		// Number of layers
+	o_xMotor=> , 
+	o_xTargetPos=> , 
+	o_xErrorLift=> , 
+	o_xAlarmLift=> , 
+	o_xMagnetValve=> , 
+	o_xErrorImpaler=> , 
+	o_xAlarmImpaler=> , 
+	o_xNewPalletPossible=> , 
+	o_xPalletInPosition=> , 
+	o_eLiftPosition=> ,
+	o_xTaskDone=> xLiftIsDone);]]></ST>
     </Implementation>
+    <Method Name="CalculateLayerHeights" Id="{4681791a-85d1-4fce-987f-2c5c95bae363}">
+      <Declaration><![CDATA[METHOD CalculateLayerHeights : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i := 1 TO i_iNumberOfLayersHMI DO
+	o_aLayerHeights[i] := (iBaseHeight + (i - 1) * iLayerHeight) + (iSlideHeight - iLayerHeight);
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CheckCanType" Id="{63e45677-419b-4429-940d-fef16d4ae4e9}">
+      <Declaration><![CDATA[METHOD CheckCanType : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF i_iCanType = 1 THEN
+	iLayerHeight := 500;
+ELSIF i_iCanType = 2 THEN
+	iLayerHeight := 1000;
+ELSIF i_iCanType = 3 THEN
+	iLayerHeight := 1500;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CheckMoveDown" Id="{14f90908-5c48-4cf3-baaa-2cf99b45e66d}">
+      <Declaration><![CDATA[METHOD CheckMoveDown : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF eConveyorSafe = eValvePosition.Down THEN
+	xMoveDownSafe := TRUE;
+ELSE
+	xMoveDownSafe := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CheckMoveUp" Id="{e4fd6b63-b2a9-402c-9706-a01af0d893b3}">
+      <Declaration><![CDATA[METHOD CheckMoveUp : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF eZuigerSafe = eZuigerCilinderPosition.Up AND eSchuifSafe = eSlidePosition.In THEN
+	xMoveUpSafe := TRUE;
+ELSE
+	xMoveUpSafe := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="DetectNewPallet" Id="{73a9bb72-da61-40b4-94bd-77c4d71e8ffa}">
+      <Declaration><![CDATA[METHOD DetectNewPallet : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF i_xLightSensor1 THEN
+	// Move klep up
+	eMoveKlepUp := eValvePosition.Up;
+	IF i_xLightSensor2 THEN
+		eMoveKlepUp := eValvePosition.Down;
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ReleaseOrHoldPallet" Id="{8fe35f10-14d0-4581-a98e-30c316a50068}">
+      <Declaration><![CDATA[METHOD ReleaseOrHoldPallet : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF xLiftIsDone AND i_NextEmpty THEN
+	xReleasePallet := TRUE;
+ELSIF xLiftIsDone AND i_NextEmpty = FALSE THEN
+	xHoldPallet := TRUE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetEmpty" Id="{8226ecdb-e7e1-41f7-a502-427faf9c490d}">
+      <Declaration><![CDATA[METHOD SetEmpty : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF i_xLightSensor1 = FALSE AND i_xLightSensor2 = FALSE THEN
+	o_xEmpty := TRUE;
+ELSE 
+	o_xEmpty := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>
