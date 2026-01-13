@@ -8,14 +8,14 @@ END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	iConveyorHeight : INT := iHomePosition + 1000;
+	
 	iPalletizeHeight: INT := iHomePosition + 2000;
 	iHighestHeight	: INT := iHomePosition + 3000;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Janno geeft door naar welke laag hij moet. Laag 0 = home, laag 1 = band, laag 2 = pallet op pallet, laag 3 = pallets hoog
-
+iConveyorHeight := iHomePosition + 1000;
 
 CASE i_eMode OF
 	eModus.Auto :
@@ -37,7 +37,7 @@ CASE i_eMode OF
 								i_xPin1HallSensorIn AND
 								i_xPin1HallSensorIn THEN
 								// Ga naar HOME
-								FB_Lift(i_eLiftState := eLiftStates.MoveToHome);
+								i_eLiftState := eLiftStates.MoveToHome;
 							ELSE
 								// Error: Kan niet naar home, pins niet in
 							END_IF

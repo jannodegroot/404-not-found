@@ -17,7 +17,7 @@ VAR_OUTPUT
 	o_xExpectingPallet	: BOOL;
 END_VAR
 VAR
-	fbLift	: FB_Lift;
+	
 	fbBand	: FB_Band;
 	TimerLift: TON;
 	xTimerLiftRunning: BOOL;
@@ -25,6 +25,8 @@ VAR
 	xGoHoldBand : BOOL;
 	xGoEmptyBand : BOOL;
 	istep		: INT;
+
+	fbLiftB : FB_LiftB_Extended;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -42,7 +44,11 @@ fbBand(
 	o_xErrorMotor=> , 
 	o_xAlarmMotor=> , 
 	o_xGivingToNext=> );
+	
+
+fbLiftB();
 //aansturen lift
+
 
 //aansturen zichzelf
 CASE o_eState OF
@@ -77,8 +83,8 @@ CASE o_eState OF
 						xGoEmptyBand := FALSE;
 						o_xExpectingPallet := 0;
 						//lift in start
-						
-						IF NOT fbBand.o_xMotor THEN//and lift
+						fbLiftB.i_iMoveToLayer:=1;
+						IF NOT fbBand.o_xMotor AND NOT fbLiftB.o_xMotor THEN//and lift
 							istep:=1;
 						END_IF
 					1:
@@ -91,25 +97,26 @@ CASE o_eState OF
 						END_IF
 					2:
 					//position witch pallet
-// 						
-// 							
-//							if not impaled and not in start and o_xExpectingPallet then
-//								move to start
-//								impale pallet
-//								o_xExpectingPallet:=0;
-//							end_if
+					
+ 						
+							
+							if not impaled and not in start and o_xExpectingPallet then
+								move to start
+								impale pallet
+								o_xExpectingPallet:=0;
+							end_if
 
-//							if not impaled and  in start and o_xExpectingPallet then
-//								impale pallet
-//								o_xExpectingPallet:=0;
-//							end_if
+							if not impaled and  in start and o_xExpectingPallet then
+								impale pallet
+								o_xExpectingPallet:=0;
+							end_if
 
-//							if  impaled and not in start and o_xExpectingPallet then
-//								deimpale
-//								move to start
-//								impale pallet
-//								o_xExpectingPallet:=0;
-//							end_if
+							if  impaled and not in start and o_xExpectingPallet then
+								deimpale
+								move to start
+								impale pallet
+								o_xExpectingPallet:=0;
+							end_if
 
 						IF NOT o_xExpectingPallet THEN
 							xGoHoldBand := TRUE;

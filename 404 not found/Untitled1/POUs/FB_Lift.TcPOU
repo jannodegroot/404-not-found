@@ -64,7 +64,6 @@ ELSIF i_iServoEncoder > o_xTargetPos THEN
 	o_eLiftPosition := eLiftPosition.GoingDown;
 END_IF
 
-
 CASE i_eLiftState OF
 	eLiftStates.Idle :
 		// Wait for command								// moet dit erin?
