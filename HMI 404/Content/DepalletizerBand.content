@@ -1,4 +1,4 @@
-<div id="DepalletizerBand" data-tchmi-type="TcHmi.Controls.System.TcHmiContent" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width="1060" data-tchmi-height="800">
+<div id="DepalletizerBand" data-tchmi-type="TcHmi.Controls.System.TcHmiContent" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width="1060" data-tchmi-height="800" data-tchmi-creator-viewport-width="800">
 
 
 <script data-tchmi-target-attribute="data-tchmi-background-color" type="application/json">
@@ -10,11 +10,11 @@
 </div>
 <div id="text_state_64" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="11" data-tchmi-left-unit="px" data-tchmi-text="State:" data-tchmi-top="12" data-tchmi-top-unit="px" data-tchmi-width="55" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Center">
 </div>
-<div id="State_7" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="66" data-tchmi-left-unit="px" data-tchmi-text="%s%ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.o_sStateString%/s%" data-tchmi-top="12" data-tchmi-top-unit="px" data-tchmi-width="102" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Left" data-tchmi-text-vertical-alignment="Center" data-tchmi-background-image-horizontal-alignment="Left">
+<div id="State_7" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="66" data-tchmi-left-unit="px" data-tchmi-top="12" data-tchmi-top-unit="px" data-tchmi-width="102" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Left" data-tchmi-text-vertical-alignment="Center" data-tchmi-background-image-horizontal-alignment="Left" data-tchmi-text="%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_eState%/s%">
 </div>
 <div id="text_Mode_25" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="178" data-tchmi-left-unit="px" data-tchmi-text="Mode:" data-tchmi-top="12" data-tchmi-top-unit="px" data-tchmi-width="55" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Center">
 </div>
-<div id="TcHmiCombobox_11" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCombobox" data-tchmi-auto-focus-out="True" data-tchmi-combobox-text="Select" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="233" data-tchmi-left-unit="px" data-tchmi-top="22" data-tchmi-top-unit="px" data-tchmi-width="109" data-tchmi-width-unit="px" data-tchmi-enum-data-symbol="%s%ADS.PLC1.MAIN.fbBlikjesBand.i_eModus%/s%" data-tchmi-text-font-size="20" data-tchmi-input-processing-point="InteractionFinished">
+<div id="TcHmiCombobox_11" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCombobox" data-tchmi-auto-focus-out="True" data-tchmi-combobox-text="Select" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="233" data-tchmi-left-unit="px" data-tchmi-top="23" data-tchmi-top-unit="px" data-tchmi-width="109" data-tchmi-width-unit="px" data-tchmi-text-font-size="20" data-tchmi-input-processing-point="InteractionFinished" data-tchmi-enum-data-symbol="%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_eModus%/s%">
 <script data-tchmi-target-attribute="data-tchmi-content-padding" type="application/json">
 {
   "top": 3,
@@ -211,94 +211,7 @@
 <div id="text_state_65" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="28" data-tchmi-height-unit="px" data-tchmi-left="640" data-tchmi-left-unit="px" data-tchmi-text="Stage" data-tchmi-top="86" data-tchmi-top-unit="px" data-tchmi-width="89" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="20" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Center" data-tchmi-background-image-horizontal-alignment="Left" data-tchmi-background-image-vertical-alignment="Center">
 </div>
 <div id="TcHmiButton_27" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="27" data-tchmi-height-unit="px" data-tchmi-left="640" data-tchmi-left-unit="px" data-tchmi-top="124" data-tchmi-top-unit="px" data-tchmi-width="89" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="15">
-<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
-[
-  {
-    "event": "%s%ADS.PLC1.MAIN.fbBlikjesBand.o_xAcceptingCans%/s%",
-    "actions": [
-      {
-        "objectType": "Condition",
-        "active": true,
-        "parts": [
-          {
-            "if": [
-              {
-                "compare1": {
-                  "objectType": "Symbol",
-                  "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBlikjesBand.o_xAcceptingCans%/s%"
-                },
-                "compare2": {
-                  "objectType": "StaticValue",
-                  "valueType": "tchmi:general#/definitions/BOOL",
-                  "value": false
-                },
-                "compareOperator": "==",
-                "logic": null
-              }
-            ],
-            "then": [
-              {
-                "objectType": "WriteToSymbol",
-                "active": true,
-                "symbolExpression": "%ctx%owner::BackgroundColor%/ctx%",
-                "value": {
-                  "objectType": "StaticValue",
-                  "valueType": "tchmi:framework#/definitions/Color",
-                  "value": {
-                    "color": "rgba(100, 118, 135, 1)"
-                  }
-                },
-                "asyncWait": true
-              },
-              {
-                "objectType": "WriteToSymbol",
-                "active": true,
-                "symbolExpression": "%ctx%owner::Text%/ctx%",
-                "value": {
-                  "objectType": "StaticValue",
-                  "valueType": "tchmi:general#/definitions/String",
-                  "value": "Full"
-                },
-                "asyncWait": true
-              }
-            ]
-          },
-          {
-            "else": [
-              {
-                "objectType": "WriteToSymbol",
-                "active": true,
-                "symbolExpression": "%ctx%owner::BackgroundColor%/ctx%",
-                "value": {
-                  "objectType": "StaticValue",
-                  "valueType": "tchmi:framework#/definitions/Color",
-                  "value": {
-                    "color": "rgba(213, 213, 216, 1)"
-                  }
-                },
-                "asyncWait": true
-              },
-              {
-                "objectType": "WriteToSymbol",
-                "active": true,
-                "symbolExpression": "%ctx%owner::Text%/ctx%",
-                "value": {
-                  "objectType": "StaticValue",
-                  "valueType": "tchmi:general#/definitions/String",
-                  "value": "Empty"
-                },
-                "asyncWait": true
-              }
-            ]
-          }
-        ],
-        "asyncWait": true
-      }
-    ]
-  }
-]
-</script>
+
 
 <script data-tchmi-target-attribute="data-tchmi-text-color" type="application/json">
 {
@@ -324,7 +237,7 @@
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
-    "event": "%s%ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.o_xMotor%/s%",
+    "event": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xMotor%/s%",
     "actions": [
       {
         "objectType": "Condition",
@@ -336,7 +249,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBlikjesBand.o_xMotor%/s%"
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xMotor%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -398,7 +311,7 @@
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
-    "event": "%s%ADS.PLC1.MAIN.fbBlikjesBand.o_xWarningFull%/s%",
+    "event": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xAlarmMotor%/s%",
     "actions": [
       {
         "objectType": "Condition",
@@ -410,7 +323,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBlikjesBand.o_xWarningFull%/s%"
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xAlarmMotor%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -491,7 +404,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%s%ADS.PLC1.MAIN.fbBlikjesBand.i_xAlarmReset%/s%",
+        "symbolExpression": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_xAlarmReset%/s%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/BOOL",
@@ -513,7 +426,7 @@
     ]
   },
   {
-    "event": "%s%ADS.PLC1.MAIN.fbBlikjesBand.i_eModus%/s%",
+    "event": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_eModus%/s%",
     "actions": [
       {
         "objectType": "Condition",
@@ -525,7 +438,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:server#/definitions/ADS-PLC1.eModus",
-                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBlikjesBand.i_eModus%/s%"
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_eModus%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -576,7 +489,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%s%ADS.PLC1.MAIN.fbBlikjesBand.i_xAlarmReset%/s%",
+        "symbolExpression": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_xAlarmReset%/s%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/BOOL",
@@ -604,7 +517,7 @@
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
-    "event": "%s%ADS.PLC1.MAIN.fbBlikjesBand.i_eModus%/s%",
+    "event": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_eModus%/s%",
     "actions": [
       {
         "objectType": "Condition",
@@ -616,7 +529,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:server#/definitions/ADS-PLC1.eModus",
-                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBlikjesBand.i_eModus%/s%"
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_eModus%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -728,7 +641,7 @@
 ]
 </script>
 </div>
-<div id="TcHmiToggleButton_8" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="806" data-tchmi-left-unit="px" data-tchmi-top="115" data-tchmi-top-unit="px" data-tchmi-width="77" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="15" data-tchmi-state-symbol="%s%ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.i_xManualCmdMotor%/s%">
+<div id="TcHmiToggleButton_8" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="806" data-tchmi-left-unit="px" data-tchmi-top="115" data-tchmi-top-unit="px" data-tchmi-width="77" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="15" data-tchmi-state-symbol="%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_xManualMotor%/s%">
 <script data-tchmi-target-attribute="data-tchmi-text-color" type="application/json">
 {
   "color": "rgba(0, 0, 0, 1)"
@@ -738,7 +651,7 @@
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
-    "event": "%s%ADS.PLC1.MAIN.fbBlikjesBand.i_xManualMotor%/s%",
+    "event": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_xManualMotor%/s%",
     "actions": [
       {
         "objectType": "Condition",
@@ -750,7 +663,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBlikjesBand.i_xManualMotor%/s%"
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_xManualMotor%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -822,7 +735,7 @@
     ]
   },
   {
-    "event": "%s%ADS.PLC1.MAIN.fbBlikjesBand.i_eModus%/s%",
+    "event": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_eModus%/s%",
     "actions": [
       {
         "objectType": "Condition",
@@ -834,7 +747,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:server#/definitions/ADS-PLC1.eModus",
-                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbBlikjesBand.i_eModus%/s%"
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_eModus%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",

@@ -16,6 +16,7 @@ VAR_OUTPUT
 	o_xMotor 				: BOOL := FALSE;
 	o_xWarningFull			: BOOL;
 	o_xAcceptingCans		: BOOL; //For other machines that this one is working and has space for cans
+	o_sStateString 			: STRING(30);
 END_VAR
 VAR
 	xError : BOOL;
@@ -62,6 +63,20 @@ END_IF
 IF i_xAlarmReset = TRUE THEN
 	TimerStartButton := FALSE;
 END_IF
+
+//state enum to string for HMI
+o_sStateString := F_StateEnumToString(o_eState);
+
+
+
+
+
+
+
+
+
+
+
 ]]></ST>
     </Implementation>
     <Method Name="StateChange" Id="{3ee96072-e7a5-43fd-8628-c36b06173ae4}">

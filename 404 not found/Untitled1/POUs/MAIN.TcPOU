@@ -13,6 +13,7 @@ VAR
 	fbBuffer5						: FB_BufferMetKlep;
 	fbBandDepalletizerPalletizer	: FB_BufferMetKlep;
 	fbBlikjesBand					: FB_BlikjesBand;
+	fbDepalletizer					: FB_Depalletizer;
 	
 	//safety
 	xAbortGeneral				: BOOL;
@@ -223,10 +224,19 @@ fbBlikjesBand( 	i_xAbort		 		:= xAbortGeneral,
 				o_eState 				=> eStateBlikjesBand,
 				o_xMotor 				=> (*Used in HMI*), 
 				o_xWarningFull			=> (*Used in HMI*), 
-				o_xAcceptingCans		=> xBlikjesBandAccepting);
+				o_xAcceptingCans		=> xBlikjesBandAccepting,
+				o_sStateString			=> (*Used in HMI*));
 
 
-
+//----Depalletizer----------------------------------------------------------------------------------------------------------
+fbDepalletizer(	i_xAbort:= , 
+				i_eStartStop:= , 
+				i_PreviousEmptying:= , 
+				i_NextEmpty:= , 
+				i_eNextState:= , 
+				o_eState=> , 
+				o_xEmpty=> , 
+				o_xWarningNoProduct=> );
 
 
 
