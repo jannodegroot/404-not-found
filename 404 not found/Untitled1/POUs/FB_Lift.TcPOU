@@ -30,10 +30,12 @@ VAR_INPUT
 	i_iDistanceSensor	: INT;
 	i_iLayerHeight		: INT;	// Height of each layer
 	i_iNumberOfLayers   : INT;  // Total number of layers
+	
+	i_xPalletInPosition	: BOOL;
 END_VAR
 VAR_OUTPUT
 	o_xMotor 			: BOOL; // Motor Lift
-	o_xTargetPos		: INT;
+	o_iTargetPos		: INT;
 	o_xErrorLift 		: BOOL;
 	o_xAlarmLift 		: BOOL;
 	
@@ -41,8 +43,6 @@ VAR_OUTPUT
 	o_xErrorImpaler 	: BOOL;
 	o_xAlarmImpaler		: BOOL;
 	
-	o_xNewPalletPossible: BOOL;
-	o_xPalletInPosition	: BOOL;
 	o_eLiftPosition		: eLiftposition;
 END_VAR
 VAR
@@ -50,39 +50,50 @@ VAR
 	iHomePosition	: INT;
 	iConveyorHeight	: INT;	// Standard height for grabbing or releasing pallet
 	iImpaleHeight	: INT := iHomePosition + iConveyorHeight;
+	
+	
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Yvo
+IF i_iServoEncoder = o_iTargetPos THEN
+	// Idle
+	o_eLiftPosition := eLiftPosition.Idle;
+ELSIF i_iServoEncoder < o_iTargetPos THEN
+	// Going Up
+	o_eLiftPosition := eLiftPosition.GoingUp;
+ELSIF i_iServoEncoder > o_iTargetPos THEN
+	// Going Down
+	o_eLiftPosition := eLiftPosition.GoingDown;
+END_IF
+// THIS^.LiftStates();
 
-THIS^.LiftStates();
-
-CASE i_eLiftState OF
-	eLiftStates.Idle :
-		// Wait for command								// moet dit erin?
-		
-	eLiftStates.InitHome :
-		// Initialise Home
-		THIS^.InitHome();
-		
-	eLiftStates.MoveToHome :
-		// Go to Home Position
-		THIS^.MoveHome();
-
-	eLiftStates.Impale :
-		// Impale op de manier van welke lift het is
-		THIS^.Impale();
-		IF i_xPin1HallSensorOut 
-		AND i_xPin2HallSensorOut 
-		AND i_xPin3HallSensorOut 
-		AND i_xPin4HallSensorOut THEN
-			// Everything is alright
-		ELSE
-			// Not alright, try again and add error count
-			iErrorCounter := iErrorCounter +1;
-			THIS^.Impale();
-		END_IF
-
-END_CASE
+// CASE i_eLiftState OF
+// 	eLiftStates.Idle :
+// 		// Wait for command								// moet dit erin?
+// 		
+// 	eLiftStates.InitHome :
+// 		// Initialise Home
+// 		THIS^.InitHome();
+// 		
+// 	eLiftStates.MoveToHome :
+// 		// Go to Home Position
+// 		THIS^.MoveHome();
+// 
+// 	eLiftStates.Impale :
+// 		// Impale op de manier van welke lift het is
+// 		THIS^.Impale();
+// 		IF i_xPin1HallSensorOut 
+// 		AND i_xPin2HallSensorOut 
+// 		AND i_xPin3HallSensorOut 
+// 		AND i_xPin4HallSensorOut THEN
+// 			// Everything is alright
+// 		ELSE
+// 			// Not alright, try again and add error count
+// 			iErrorCounter := iErrorCounter +1;
+// 			THIS^.Impale();
+// 		END_IF
+// 
+// END_CASE
 
 
 THIS^.Simulation();
@@ -111,11 +122,11 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF NOT i_xEndSwitch THEN
-	o_xTargetPos := iConveyorHeight;
+	o_iTargetPos := iConveyorHeight;
 	o_xMotor := TRUE;
 	
 	// Release pallet before going down.
-	IF i_iServoEncoder = o_xTargetPos THEN
+	IF i_iServoEncoder = o_iTargetPos THEN
 		o_xMagnetValve := FALSE;
 		o_xMotor := FALSE;
 	END_IF
@@ -125,13 +136,12 @@ END_VAR
 	AND i_xPin2HallSensorIn 
 	AND i_xPin3HallSensorIn 
 	AND i_xPin4HallSensorIn 
-	AND i_iServoEncoder = o_xTargetPos THEN
+	AND i_iServoEncoder = o_iTargetPos THEN
 		o_xMotor := TRUE;
 		
 		IF i_xEndSwitch THEN
 			o_xMotor := FALSE;
 			iHomePosition := i_iServoEncoder;
-			o_eLiftPosition := eLiftPosition.Home;
 		END_IF;
 	END_IF;
 END_IF
@@ -144,13 +154,13 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF i_iServoEncoder = o_xTargetPos THEN
+        <ST><![CDATA[IF i_iServoEncoder = o_iTargetPos THEN
 	// Idle
 	o_eLiftPosition := eLiftPosition.Idle;
-ELSIF i_iServoEncoder < o_xTargetPos THEN
+ELSIF i_iServoEncoder < o_iTargetPos THEN
 	// Going Up
 	o_eLiftPosition := eLiftPosition.GoingUp;
-ELSIF i_iServoEncoder > o_xTargetPos THEN
+ELSIF i_iServoEncoder > o_iTargetPos THEN
 	// Going Down
 	o_eLiftPosition := eLiftPosition.GoingDown;
 END_IF]]></ST>
@@ -163,7 +173,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[o_xMotor := TRUE;
-o_xTargetPos := iHomePosition;
+o_iTargetPos := iHomePosition;
 
 IF i_iServoEncoder = iHomePosition THEN
 	o_xMotor := FALSE;

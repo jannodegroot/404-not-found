@@ -37,7 +37,6 @@ CASE i_eMode OF
 								i_xPin1HallSensorIn AND
 								i_xPin1HallSensorIn THEN
 								// Ga naar HOME
-								FB_Lift(i_eLiftState := eLiftStates.MoveToHome);
 							ELSE
 								// Error: Kan niet naar home, pins niet in
 							END_IF
@@ -72,7 +71,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[o_xMotor := TRUE;
-o_xTargetPos := iConveyorHeight;
+o_iTargetPos := iConveyorHeight;
 
 IF i_iServoEncoder = iConveyorHeight THEN
 	o_xMotor := FALSE;
@@ -86,7 +85,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[o_xMotor := TRUE;
-o_xTargetPos := iHighestHeight;
+o_iTargetPos := iHighestHeight;
 
 IF i_iServoEncoder = iHighestHeight THEN
 	o_xMotor := FALSE;
@@ -100,7 +99,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[o_xMotor := TRUE;
-o_xTargetPos := iPalletizeHeight;
+o_iTargetPos := iPalletizeHeight;
 
 IF i_iServoEncoder = iPalletizeHeight THEN
 	o_xMotor := FALSE;

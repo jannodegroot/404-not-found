@@ -3,15 +3,13 @@
   <POU Name="FB_Depalletizer" Id="{20c004ff-8016-4b71-ac39-37f47934d231}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Depalletizer
 VAR_INPUT
-	i_xAbort		 	: BOOL;
-	i_eStartStop 		: eStartStop;
-	i_PreviousEmptying	: BOOL;
+	i_xAbort		 	: BOOL;														// MOET NOG IETS MEE
+	i_eStartStop 		: eStartStop;												// MOET NOG IETS MEE
+	i_PreviousEmptying	: BOOL;														// MOET NOG IETS MEE
 	i_NextEmpty			: BOOL;
-	i_eNextState		: eSingleState;
+	i_eNextState		: eSingleState;												// MOET NOG IETS MEE
 	
-	// Light Sensors
-	i_xLightSensor1		: BOOL; // De eerste sensor die de pallet detecteerd
-	i_xLightSensor2		: BOOL; // De tweede sensor die de pallet detecteerd
+
 	
 	// HMI
 	i_iCanTypeHMI			: INT;	// Type of can loaded on pallet
@@ -30,7 +28,7 @@ VAR
 	fbSchuif		: FB_Schuif;
 	fbZuiger		: FB_Zuiger;
 	fbKlep			: FB_Klep;
-	fbLiftA			: FB_LiftA_Extended;
+	fbLiftA: FB_LiftA_Extended;
 	
 	xLiftIsDone		: BOOL;
 	xReleasePallet	: BOOL;
@@ -49,6 +47,12 @@ VAR
 	
 	xMoveUpSafe		: BOOL;
 	xMoveDownSafe	: BOOL;
+	
+		// Light Sensors
+	xLightSensor1		: BOOL; // De eerste sensor die de pallet detecteerd
+	xLightSensor2		: BOOL; // De tweede sensor die de pallet detecteerd
+	
+	xPalletInPosition	: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -169,21 +173,21 @@ fbLiftA(
 	i_xPin3HallSensorOut:= , 
 	i_xPin4HallSensorIn:= , 
 	i_xPin4HallSensorOut:= , 
+	i_xLightSensor1:= xLightSensor1,
+	i_xLightSensor2:= xLightSensor2,
 	i_xEndSwitch:= , 
 	i_iServoEncoder:= , 
 	i_iDistanceSensor:= , 
 	i_iLayerHeight:= iLayerHeight, 				// Layerheight
 	i_iNumberOfLayers:= i_iNumberOfLayersHMI, 		// Number of layers
+	i_xPalletInPosition:= xPalletInPosition,
 	o_xMotor=> , 
-	o_xTargetPos=> , 
+	o_iTargetPos=> , 
 	o_xErrorLift=> , 
 	o_xAlarmLift=> , 
 	o_xMagnetValve=> , 
 	o_xErrorImpaler=> , 
 	o_xAlarmImpaler=> , 
-	o_xNewPalletPossible=> , 
-	o_xPalletInPosition=> , 
-	o_eLiftPosition=> ,
 	o_xTaskDone=> xLiftIsDone);]]></ST>
     </Implementation>
     <Method Name="CalculateLayerHeights" Id="{4681791a-85d1-4fce-987f-2c5c95bae363}">
@@ -244,14 +248,18 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF i_xLightSensor1 THEN
+        <ST><![CDATA[IF xLightSensor1 THEN
 	// Move klep up
 	eMoveKlepUp := eValvePosition.Up;
-	IF i_xLightSensor2 THEN
+	xHoldPallet := FALSE;
+	xPalletInPosition := FALSE;
+	IF xLightSensor2 THEN
 		eMoveKlepUp := eValvePosition.Down;
+		xPalletInPosition := TRUE;
 		xHoldPallet := TRUE;
 	ELSE
 		xHoldPallet := FALSE;
+		xPalletInPosition := FALSE;
 	END_IF
 END_IF]]></ST>
       </Implementation>
@@ -277,7 +285,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF i_xLightSensor1 = FALSE AND i_xLightSensor2 = FALSE THEN
+        <ST><![CDATA[IF xLightSensor1 = FALSE AND xLightSensor2 = FALSE THEN
 	o_xEmpty := TRUE;
 ELSE 
 	o_xEmpty := FALSE;
