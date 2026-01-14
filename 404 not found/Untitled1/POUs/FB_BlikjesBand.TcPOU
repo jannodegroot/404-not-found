@@ -50,6 +50,8 @@ END_CASE
 
 IF i_xLightSensor THEN
 	TimerStartButton := TRUE;
+ELSE
+	TimerStartButton := FALSE;
 END_IF
 
 Timer(IN:=TimerStartButton, PT := TimerValue);
@@ -62,6 +64,7 @@ END_IF
 
 IF i_xAlarmReset = TRUE THEN
 	TimerStartButton := FALSE;
+	o_xWarningFull := FALSE;
 END_IF
 
 //state enum to string for HMI
