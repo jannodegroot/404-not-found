@@ -14,6 +14,7 @@ VAR
 	fbBandDepalletizerPalletizer	: FB_BufferMetKlep;
 	fbBlikjesBand					: FB_BlikjesBand;
 	fbDepalletizer					: FB_Depalletizer;
+	fbPalletizer					: FB_Palletizer;
 	
 	//safety
 	xAbortGeneral				: BOOL;
@@ -241,7 +242,17 @@ fbDepalletizer(	i_xAbort:= ,
 
 
 
-
+//----Palletizer------------------
+fbPalletizer(
+	i_xAbort:= , 
+	i_eStartStop:= , 
+	i_PreviousEmptying:= , 
+	i_xDoorOpenButton:= , 
+	i_xWarningReset:= , 
+	o_eState=> , 
+	o_iStorageCount=> , 
+	o_xWarningFull=> , 
+	o_xExpectingPallet=> );
 
 
 
