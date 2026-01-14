@@ -17,6 +17,8 @@ VAR_OUTPUT
 	o_xGivingToNext	: BOOL;
 END_VAR
 VAR
+	fbBlinking : FB_Blinking;
+	xError : Bool;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -47,23 +49,36 @@ END_CASE
 
 
 IF i_xGoEmpty = FALSE AND o_xMotor = TRUE THEN
-	o_xErrorMotor := TRUE;	
+	xError := TRUE;	
 	o_xAlarmMotor := TRUE;
 ELSE
-	o_xErrorMotor := FALSE;	
+	xError := FALSE;	
 END_IF
 
 IF i_xGoHold = TRUE AND o_xMotor = TRUE THEN
-	o_xErrorMotor := TRUE;	
+	xError := TRUE;	
 	o_xAlarmMotor := TRUE;
 ELSE
-	o_xErrorMotor := FALSE;	
+	xError := FALSE;	
 END_IF 
 
 IF i_xAlarmReset THEN
 	o_xAlarmMotor := FALSE;
 END_IF
-]]></ST>
+
+//blinking error
+IF xError THEN
+	fbBlinking(io_xBlinking:= o_xErrorMotor);
+ELSIF NOT xError AND o_xAlarmMotor THEN
+	o_xErrorMotor := TRUE;
+ELSE
+	o_xErrorMotor := FALSE;
+END_IF;
+
+//reset alarm
+IF i_xAlarmReset AND NOT xError THEN
+	o_xAlarmMotor := FALSE;
+END_IF]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

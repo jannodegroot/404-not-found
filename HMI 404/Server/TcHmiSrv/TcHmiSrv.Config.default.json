@@ -2445,6 +2445,23 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xErrorMotor": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbBand::o_xErrorMotor",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 8
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xGivingToNext": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -6090,6 +6107,7 @@
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_xManualCmdMotor": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_xManualMotor": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xAlarmMotor": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xErrorMotor": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xGivingToNext": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xMotor": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.o_eState": 3,

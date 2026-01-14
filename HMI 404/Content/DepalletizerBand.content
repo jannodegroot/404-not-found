@@ -307,7 +307,7 @@
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
-    "event": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xAlarmMotor%/s%",
+    "event": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xErrorMotor%/s%",
     "actions": [
       {
         "objectType": "Condition",
@@ -319,7 +319,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xAlarmMotor%/s%"
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xErrorMotor%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
