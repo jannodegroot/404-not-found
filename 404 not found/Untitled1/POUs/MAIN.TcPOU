@@ -65,6 +65,7 @@ VAR
 	eGeneralState						: eGeneralState;
 	
 	fbDepalletizer: FB_Depalletizer;
+	fbLift2: FB_Lift2;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -238,7 +239,10 @@ fbDepalletizer(
 	o_eState=> , 
 	o_xEmpty=> , 
 	o_xWarningNoProduct=> , 
-	o_aLayerHeights=> );]]></ST>
+	o_aLayerHeights=> );
+	
+	
+fbLift2(o_xMagnetValve => _REFACTOR_o_xMotor, i_xPin1HallSensorIn := _REFACTOR_, i_xPin2HallSensorIn := _REFACTOR_, i_xPin3HallSensorIn := _REFACTOR_, i_xPin4HallSensorIn := _REFACTOR_ => , i_iServoEncoder:= , o_iTargetPos=> , o_eLiftPosition=> );]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

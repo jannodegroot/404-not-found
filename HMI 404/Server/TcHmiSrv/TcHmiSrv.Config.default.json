@@ -2204,6 +2204,42 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbDepalletizer.i_iCanTypeHMI": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbDepalletizer::i_iCanTypeHMI",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/INT"
+                    },
+                    {
+                        "comment": "Type of can loaded on pallet",
+                        "propertyOrder": 6
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbDepalletizer.i_iNumberOfLayersHMI": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbDepalletizer::i_iNumberOfLayersHMI",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/INT"
+                    },
+                    {
+                        "comment": "Number of layers on the pallet",
+                        "propertyOrder": 7
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_eManualWantedPosition": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -5699,6 +5735,8 @@
                 "ADS.PLC1.MAIN.fbControlSystem.o_xErrorEmergencyButton": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.o_xErrorPressureGeneral": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.o_xWarningSafetyMat": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.i_iCanTypeHMI": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.i_iNumberOfLayersHMI": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_eManualWantedPosition": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_eModus": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_eState": 3,

@@ -66,6 +66,9 @@
     <Compile Include="POUs\FB_ControlSystem.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\FB_Lift2.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\FB_LiftA_Extended.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -100,9 +103,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_Klep.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\FB_Lift.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_Schuif.TcPOU">
