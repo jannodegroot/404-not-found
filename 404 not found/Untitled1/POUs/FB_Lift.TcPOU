@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Lift" Id="{eb5995ad-c3ba-4ee2-a111-5aef13576138}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Lift
+VAR_INPUT
+	i_eLiftState		: eLiftStates;
+	
+	i_iServoEncoder 	: INT;
+	
+	i_xEndSwitch		: BOOL;
+	
+	i_xPin1HallSensorIn	: BOOL;
+	i_xPin2HallSensorIn	: BOOL;
+	i_xPin3HallSensorIn	: BOOL;
+	i_xPin4HallSensorIn	: BOOL;
+	
+	i_xPin1HallSensorOut	: BOOL;
+	i_xPin2HallSensorOut	: BOOL;
+	i_xPin3HallSensorOut	: BOOL;
+	i_xPin4HallSensorOut	: BOOL;
+END_VAR
+VAR_OUTPUT
+	o_iTargetPos		: INT;
+	o_eLiftPosition		: ELIFTPOSITION;
+	o_xMotor: BOOL;
+	o_xMagnetValve: BOOL;
+	o_ePinsPositions	: eLiftPins;
+END_VAR
+VAR
+	iConveyorHeight: INT;
+	iHomePosition: INT;
+	iImpaleErrorCounter: INT;
+	InitHomeStates: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[THIS^.CheckPins();
+THIS^.LiftPosition();
+THIS^.Simulation();
+THIS^.InitHome();]]></ST>
+    </Implementation>
+    <Method Name="CheckPins" Id="{6e5cd012-7ea2-457b-9034-0e741c55e71a}">
+      <Declaration><![CDATA[METHOD CheckPins : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF i_xPin1HallSensorIn
+AND i_xPin2HallSensorIn
+AND i_xPin3HallSensorIn
+AND i_xPin4HallSensorIn THEN
+	o_ePinsPositions := eLiftPins.In;
+
+ELSIF i_xPin1HallSensorOut
+AND i_xPin2HallSensorOut
+AND i_xPin3HallSensorOut
+AND i_xPin4HallSensorOut THEN
+	o_ePinsPositions := eLiftPins.Out;
+	
+ELSE
+	o_ePinsPositions := eLiftPins.Unknown;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Impale" Id="{14b0e947-b105-42b6-ab08-b4cf3a8c35bb}">
+      <Declaration><![CDATA[METHOD Impale : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[o_xMagnetValve := TRUE;
+
+THIS^.CheckPins();
+
+IF o_ePinsPositions = eLiftPins.In OR o_ePinsPositions = eLiftPins.Unknown THEN
+	iImpaleErrorCounter := iImpaleErrorCounter + 1;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="InitHome" Id="{ebdade00-a45f-4a0e-b27e-a89bfba00530}">
+      <Declaration><![CDATA[METHOD InitHome : BOOL
+VAR_INPUT
+END_VAR
+
+VAR
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE InitHomeStates OF
+	0 :	// Start Homing if the endswitch isnt active.
+		IF NOT i_xEndSwitch THEN
+        	o_iTargetPos := iConveyorHeight;     // go down to conveyor
+        	o_xMotor := TRUE;
+        	InitHomeStates := 1;
+		ELSE 
+			// Already at home position
+			o_xMotor := FALSE;
+			iHomePosition := i_iServoEncoder;
+			InitHomeStates := 4;
+    	END_IF
+	
+	1 :	// Go to conveyorheight
+		o_xMotor := TRUE;
+		o_iTargetPos := iConveyorHeight;
+		
+		IF i_iServoEncoder = o_iTargetPos THEN
+			o_xMotor := FALSE;                  // stop motion
+			InitHomeStates := 2;
+		END_IF
+		
+	2 : // Release Pallet
+		o_xMagnetValve := FALSE;
+		
+		IF o_ePinsPositions = eLiftPins.In THEN
+        	InitHomeStates := 3;
+    	END_IF
+	
+	3 :	// Go down until the endswitch is reached.
+		o_xMotor := TRUE;
+		o_eLiftPosition := eLiftPosition.GoingDown;
+		
+		IF i_xEndSwitch THEN
+			o_xMotor := FALSE;
+			iHomePosition := i_iServoEncoder;
+			InitHomeStates := 4;
+		END_IF
+	
+	4 :
+		// Home Done
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="LiftPosition" Id="{35aabdc4-2ade-4f6e-873b-679866916b28}">
+      <Declaration><![CDATA[METHOD LiftPosition : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF i_iServoEncoder = o_iTargetPos THEN
+	// Idle
+	o_eLiftPosition := eLiftPosition.Idle;
+ELSIF i_iServoEncoder < o_iTargetPos THEN
+	// Going Up
+	o_eLiftPosition := eLiftPosition.GoingUp;
+ELSIF i_iServoEncoder > o_iTargetPos THEN
+	// Going Down
+	o_eLiftPosition := eLiftPosition.GoingDown;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Simulation" Id="{1c1952ab-b550-49ed-b384-726cb21cff76}">
+      <Declaration><![CDATA[METHOD Simulation : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF o_eLiftPosition = eLiftPosition.GoingUp AND o_xMotor = TRUE THEN
+	i_iServoEncoder := i_iServoEncoder + 1;
+ELSIF o_eLiftPosition = eLiftPosition.GoingDown AND o_xMotor = TRUE THEN
+	i_iServoEncoder := i_iServoEncoder - 1;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

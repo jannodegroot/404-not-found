@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="eLiftPins" Id="{05009a03-b1df-401d-a2cc-ba95cac8a0d3}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+{attribute 'to_string'}
+TYPE eLiftPins :
+(
+	In := 0,
+	Out	:= 1,
+	Unknown := 2
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

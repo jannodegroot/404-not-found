@@ -24,11 +24,9 @@ VAR_OUTPUT
 END_VAR
 VAR
 	fbBand			: FB_Band;
-	fbLift			: FB_Lift;
 	fbSchuif		: FB_Schuif;
 	fbZuiger		: FB_Zuiger;
 	fbKlep			: FB_Klep;
-	fbLiftA: FB_LiftA_Extended;
 	
 	xLiftIsDone		: BOOL;
 	xReleasePallet	: BOOL;
@@ -158,37 +156,37 @@ fbBand(
 	o_xGivingToNext=> );
 	
 // Functionblock Lift
-fbLiftA(
-	i_eState:= , 
-	i_eMode:= , 
-	i_eLiftState:= , 
-	i_xAllowedToMoveUp:= xMoveUpSafe, 		// Schuif & Zuiger check
-	i_xAllowedToMoveDown:= xMoveDownSafe, 	// Klep check
-	i_xAlarmReset:= , 
-	i_xPin1HallSensorIn:= , 
-	i_xPin1HallSensorOut:= , 
-	i_xPin2HallSensorIn:= , 
-	i_xPin2HallSensorOut:= , 
-	i_xPin3HallSensorIn:= , 
-	i_xPin3HallSensorOut:= , 
-	i_xPin4HallSensorIn:= , 
-	i_xPin4HallSensorOut:= , 
-	i_xLightSensor1:= xLightSensor1,
-	i_xLightSensor2:= xLightSensor2,
-	i_xEndSwitch:= , 
-	i_iServoEncoder:= , 
-	i_iDistanceSensor:= , 
-	i_iLayerHeight:= iLayerHeight, 				// Layerheight
-	i_iNumberOfLayers:= i_iNumberOfLayersHMI, 		// Number of layers
-	i_xPalletInPosition:= xPalletInPosition,
-	o_xMotor=> , 
-	o_iTargetPos=> , 
-	o_xErrorLift=> , 
-	o_xAlarmLift=> , 
-	o_xMagnetValve=> , 
-	o_xErrorImpaler=> , 
-	o_xAlarmImpaler=> , 
-	o_xTaskDone=> xLiftIsDone);]]></ST>
+// fbLiftA(
+// 	i_eState:= , 
+// 	i_eMode:= , 
+// 	i_eLiftState:= , 
+// 	i_xAllowedToMoveUp:= xMoveUpSafe, 		// Schuif & Zuiger check
+// 	i_xAllowedToMoveDown:= xMoveDownSafe, 	// Klep check
+// 	i_xAlarmReset:= , 
+// 	i_xPin1HallSensorIn:= , 
+// 	i_xPin1HallSensorOut:= , 
+// 	i_xPin2HallSensorIn:= , 
+// 	i_xPin2HallSensorOut:= , 
+// 	i_xPin3HallSensorIn:= , 
+// 	i_xPin3HallSensorOut:= , 
+// 	i_xPin4HallSensorIn:= , 
+// 	i_xPin4HallSensorOut:= , 
+// 	i_xLightSensor1:= xLightSensor1,
+// 	i_xLightSensor2:= xLightSensor2,
+// 	i_xEndSwitch:= , 
+// 	i_iServoEncoder:= , 
+// 	i_iDistanceSensor:= , 
+// 	i_iLayerHeight:= iLayerHeight, 				// Layerheight
+// 	i_iNumberOfLayers:= i_iNumberOfLayersHMI, 		// Number of layers
+// 	i_xPalletInPosition:= xPalletInPosition,
+// 	o_xMotor=> , 
+// 	o_iTargetPos=> , 
+// 	o_xErrorLift=> , 
+// 	o_xAlarmLift=> , 
+// 	o_xMagnetValve=> , 
+// 	o_xErrorImpaler=> , 
+// 	o_xAlarmImpaler=> , 
+// 	o_xTaskDone=> xLiftIsDone);]]></ST>
     </Implementation>
     <Method Name="CalculateLayerHeights" Id="{4681791a-85d1-4fce-987f-2c5c95bae363}">
       <Declaration><![CDATA[METHOD CalculateLayerHeights : BOOL
