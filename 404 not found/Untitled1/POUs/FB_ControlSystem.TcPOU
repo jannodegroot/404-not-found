@@ -13,7 +13,7 @@ VAR_INPUT
 	i_xWarningResetSafetyDoor			: BOOL;
 	i_xAlarmResetPressureGeneral			: BOOL;
 	i_xAlarmResetEmergencyButton			: BOOL;
-	i_iPressureSensorGeneral: INT;
+	i_iPressureSensorGeneral: INT := 4000;
 	
 END_VAR
 VAR_OUTPUT
