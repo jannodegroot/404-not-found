@@ -38,7 +38,7 @@ END_VAR
     <Implementation>
       <ST><![CDATA[//timmer
 TimerLift(IN:=xTimerLiftRunning, PT := timTimerValue);
-TimerEmtying(IN:=xTimerEmtyingRunning, PT:=timTimerValueemtying);
+//TimerEmtying(IN:=xTimerEmtyingRunning, PT:=timTimerValueemtying);
 
 //aansturen band
 fbBand(
@@ -260,16 +260,11 @@ CASE o_eState OF
 		// Machine is safe, waiting
 		o_xExpectingPallet:=0;
 		IF NOT i_xDoorOpenButton THEN
-			xTimerEmtyingRunning:=1;
-			IF i_xPalletsEmptyed THEN
-				o_iStorageCount:=0;
+			//xTimerEmtyingRunning:=1;
+			IF o_iStorageCount<8 THEN
 				istep := 0;
 				o_eState := eSingleState.Execute;
-				xTimerEmtyingRunning:=0;
-			ELSIF TimerEmtying.Q THEN
-				istep := 0;
-				o_eState := eSingleState.Execute;
-				xTimerEmtyingRunning:=0;
+				//xTimerEmtyingRunning:=0;
 			END_IF
 
 		END_IF
@@ -312,6 +307,7 @@ IF o_iStorageCount = 8 THEN
 	o_xWarningFull:=TRUE;
 ELSIF i_xWarningReset THEN
 	o_xWarningFull:=FALSE;
+	o_iStorageCount:=0;
 END_IF
 
 //warnings
