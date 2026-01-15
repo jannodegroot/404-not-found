@@ -289,7 +289,7 @@
 }
 </script>
 </div>
-<div id="TcHmiRectangle_27" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiRectangle" data-tchmi-height="144" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-top="646" data-tchmi-top-unit="px" data-tchmi-width="730" data-tchmi-width-unit="px" data-tchmi-zindex="2">
+<div id="TcHmiRectangle_27" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiRectangle" data-tchmi-height="144" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-top="643" data-tchmi-top-unit="px" data-tchmi-width="730" data-tchmi-width-unit="px" data-tchmi-zindex="2">
 <script data-tchmi-target-attribute="data-tchmi-border-color" type="application/json">
 {
   "color": "rgba(0, 0, 0, 1)"
@@ -521,7 +521,7 @@
     ]
   },
   {
-    "event": "%s%ADS.PLC1.MAIN.fbPalletizer.o_iStorageCount%/s%",
+    "event": "%f%%s%ADS.PLC1.MAIN.fbPalletizer.o_xWarningFull%/s%%/f%",
     "actions": [
       {
         "objectType": "Condition",
@@ -626,7 +626,7 @@
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
-    "event": "%s%ADS.PLC1.MAIN.fbPalletizer.o_xWarningFull%/s%",
+    "event": "%s%ADS.PLC1.GVL.Timerhmi.Q%/s%",
     "actions": [
       {
         "objectType": "Condition",

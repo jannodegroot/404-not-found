@@ -102,7 +102,7 @@ CASE o_eState OF
 			o_eState := eSingleState.Suspending;
 
 		// Stop button pressed
-		ELSIF i_eStartStop = eStartStop.Stop THEN
+		ELSIF i_eStartStop = eStartStop.Stop  AND o_eState = eSingleState.Execute THEN
 			o_eState := eSingleState.Stopping;
 		END_IF
 		IF xAuto THEN

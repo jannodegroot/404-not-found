@@ -6,6 +6,7 @@ VAR_GLOBAL
 	g_xSimulationActive :BOOL :=TRUE;
 	Timerlong : TON;
 	TimerShort : TON;
+	Timerhmi: TON;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

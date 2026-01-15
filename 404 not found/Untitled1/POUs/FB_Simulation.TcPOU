@@ -133,6 +133,8 @@ VAR
 
 	timTimerValueShort : TIME := T#2S;
 	xTimerShortRunning: BOOL;
+	xTimerhmiRunning: BOOL;
+	timTimerValuehmi: TIME := T#20MS;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -151,8 +153,12 @@ ELSE
 	xTimerShortRunning:=TRUE;
 END_IF
 
-deplelitizerzuiger();
-]]></ST>
+GVL.Timerhmi(IN:=xTimerhmiRunning, PT:=timTimerValuehmi);
+IF GVL.Timerhmi.Q THEN
+	xTimerhmiRunning:=FALSE;
+ELSE
+	xTimerhmiRunning:=TRUE;
+END_IF]]></ST>
     </Implementation>
     <Method Name="deplelitizerzuiger" Id="{8051e9b7-c22e-4778-aa38-5be337bf3f0e}">
       <Declaration><![CDATA[METHOD deplelitizerzuiger
