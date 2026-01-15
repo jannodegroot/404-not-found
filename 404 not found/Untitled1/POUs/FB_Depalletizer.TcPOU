@@ -97,7 +97,7 @@ fbKlep(
 );
 
 // Functionblock Schuif
-fbSchuif(
+fbSchuif(i_xHMIMoveIn := , i_xHMIMoveOut := , i_xHMIStopMoving := ,
 	i_eState:= , 
 	i_eMode:= , 
 	i_xMove:= , 

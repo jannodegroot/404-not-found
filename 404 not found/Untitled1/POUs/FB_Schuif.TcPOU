@@ -14,6 +14,9 @@ VAR_INPUT
 	i_xEndSwitchOut			: BOOL;
 	
 	i_xAlarmReset			: BOOL;
+	i_xHMIMoveIn: BOOL;
+	i_xHMIMoveOut: BOOL;
+	i_xHMIStopMoving: BOOL;
 END_VAR
 VAR_OUTPUT
 	o_xMotor 			: BOOL := FALSE;
@@ -37,6 +40,7 @@ END_VAR
 TimerUnknownPos(IN := (o_eSlidePosition = eSlideposition.Unknown), PT := timTimerValue);
 
 THIS^.SlidePosition();
+THIS^.Simulation();
 
 CASE i_eMode OF
 	eModus.Auto :
@@ -107,7 +111,7 @@ CASE i_eMode OF
 	
 	eModus.Manual :
 		// Doe effe zelf																			// TOEVOEGEN MET HMI
-		
+		THIS^.ManualControl();
 		
 	eModus.Off :
 		// Doe niks
@@ -143,6 +147,26 @@ fbBlikjesBand(
 	o_xWarningFull=> , 
 	o_xAcceptingCans=> i_xMovePossible);]]></ST>
     </Implementation>
+    <Method Name="ManualControl" Id="{68a0c9d8-0d94-467f-86e7-2829434f2f35}">
+      <Declaration><![CDATA[METHOD ManualControl : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF i_xHMIMoveIn THEN
+	THIS^.MoveHome();
+ELSIF i_xHMIMoveOut THEN
+	o_xMotor := TRUE;
+	o_xMotorDirection := 1;
+	IF i_xEndSwitchOut THEN
+		o_xMotor := FALSE;
+		eSchuifState := eSchuifStates.Idle;
+	END_IF
+ELSIF i_xHMIStopMoving THEN
+	o_xMotor := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="MoveHome" Id="{05ab75b9-d799-460f-ac3e-a4e03268ea9b}">
       <Declaration><![CDATA[METHOD MoveHome : BOOL
 VAR_INPUT
@@ -174,6 +198,29 @@ END_VAR
 ELSE
 	eSchuifState := eSchuifStates.WaitingForConveyor;
 END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Simulation" Id="{793ad4b1-15ec-4943-9dd9-fbb2f89ce04f}">
+      <Declaration><![CDATA[METHOD Simulation : BOOL
+VAR_INPUT
+END_VAR
+
+VAR
+	TimerSlideMovement: TON;
+	timSlideTimerValue: TIME := T#5S;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//TimerSlideMovement(IN := o_xMotor, PT := timSlideTimerValue);
+
+//IF TimerSlideMovement.Q THEN
+	IF o_xMotorDirection = 0 AND o_xMotor THEN
+		i_xEndSwitchIn := TRUE;
+		i_xEndSwitchOut := FALSE;
+	ELSIF o_xMotorDirection = 1 AND o_xMotor THEN
+		i_xEndSwitchOut := TRUE;
+		i_xEndSwitchIn := FALSE;
+	END_IF
+//END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="SlidePosition" Id="{181314aa-723a-45d1-9306-af588052a5a2}">
