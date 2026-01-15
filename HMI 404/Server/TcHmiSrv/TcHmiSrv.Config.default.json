@@ -2975,6 +2975,23 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbPalletizer.fbBand.o_xErrorMotor": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbPalletizer::fbBand::o_xErrorMotor",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 8
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbPalletizer.fbBand.o_xMotor": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -6138,6 +6155,7 @@
                 "ADS.PLC1.MAIN.fbPalletizer.fbBand.i_xAlarmReset": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.fbBand.i_xManualMotor": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.fbBand.o_xAlarmMotor": 3,
+                "ADS.PLC1.MAIN.fbPalletizer.fbBand.o_xErrorMotor": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.fbBand.o_xMotor": 3,
                 "ADS.PLC1.MAIN.fbStateManager.o_sGeneralStateString": 3,
                 "ChangeUserSettings": 3,
