@@ -36,15 +36,7 @@ END_VAR
       <ST><![CDATA[// Yvo
 TimerUnknownPos(IN := (o_eSlidePosition = eSlideposition.Unknown), PT := timTimerValue);
 
-IF i_xEndSwitchIn AND i_xEndSwitchOut THEN
-	o_eSlidePosition := eSlideposition.Unknown;
-ELSIF i_xEndSwitchIn THEN
-	o_eSlidePosition := eSlideposition.In;
-ELSIF i_xEndSwitchOut THEN
-	o_eSlidePosition := eSlideposition.Out;
-ELSE
-	o_eSlidePosition := eSlideposition.Unknown;
-END_IF
+THIS^.SlidePosition();
 
 CASE i_eMode OF
 	eModus.Auto :
@@ -64,22 +56,10 @@ CASE i_eMode OF
 					THIS^.MoveHome();
 					
 				eSchuifStates.MoveOut : // Move out
-					IF i_xMovePossible THEN
-						o_xMotor := TRUE;
-						o_xMotorDirection := 1;
-						IF i_xEndSwitchOut THEN
-							o_xMoveDone := TRUE;
-							eSchuifState := eSchuifStates.MovingHome;
-						END_IF
-					ELSE
-						eSchuifState := eSchuifStates.WaitingForConveyor;
-					END_IF
+					THIS^.MoveOut();
 					
 				eSchuifStates.WaitingForConveyor : // Wait for conveyor
-					o_xMotor := FALSE;
-					IF i_xMovePossible THEN
-						eSchuifState := eSchuifStates.MoveOut;
-					END_IF
+					THIS^.WaitForConveyor();
 					
 			END_CASE
 			
@@ -175,6 +155,53 @@ IF i_xEndSwitchIn THEN
 	o_xMotor := FALSE;
 	o_xMoveDone := FALSE;
 	eSchuifState := eSchuifStates.Idle;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="MoveOut" Id="{d077100a-2328-42e1-8ad4-cf974836fdb5}">
+      <Declaration><![CDATA[METHOD MoveOut : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF i_xMovePossible THEN
+	o_xMotor := TRUE;
+	o_xMotorDirection := 1;
+	IF i_xEndSwitchOut THEN
+		o_xMoveDone := TRUE;
+		eSchuifState := eSchuifStates.MovingHome;
+	END_IF
+ELSE
+	eSchuifState := eSchuifStates.WaitingForConveyor;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SlidePosition" Id="{181314aa-723a-45d1-9306-af588052a5a2}">
+      <Declaration><![CDATA[METHOD SlidePosition : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF i_xEndSwitchIn AND i_xEndSwitchOut THEN
+	o_eSlidePosition := eSlideposition.Unknown;
+ELSIF i_xEndSwitchIn THEN
+	o_eSlidePosition := eSlideposition.In;
+ELSIF i_xEndSwitchOut THEN
+	o_eSlidePosition := eSlideposition.Out;
+ELSE
+	o_eSlidePosition := eSlideposition.Unknown;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WaitForConveyor" Id="{6d5bd04a-21a0-4931-9ec2-7c1fdc7d46a8}">
+      <Declaration><![CDATA[METHOD WaitForConveyor : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[o_xMotor := FALSE;
+IF i_xMovePossible THEN
+	eSchuifState := eSchuifStates.MoveOut;
 END_IF]]></ST>
       </Implementation>
     </Method>

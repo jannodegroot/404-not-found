@@ -6,6 +6,7 @@ VAR_INPUT
 	i_iMoveToLayer : INT;
 END_VAR
 VAR_OUTPUT
+	o_xAskNewPallet : BOOL;
 END_VAR
 VAR
 	iConveyorHeight : INT := iHomePosition + 1000;
@@ -15,16 +16,21 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Janno geeft door naar welke laag hij moet. Laag 0 = home, laag 1 = band, laag 2 = pallet op pallet, laag 3 = pallets hoog
-FB_Lift();
+SUPER^();
 
-CASE i_eMode OF
-	eModus.Auto :
+// CASE i_eMode OF
+// 	eModus.Auto :
 	CASE i_eState OF
 		eSingleState.Execute :
 			CASE i_eLiftState OF
 				eLiftStates.WaitForPallet :														// Niet af
 					// Wanneer in Normal Height positie, laat pallet door.
-					
+					IF i_iServoEncoder = iHighestHeight THEN
+						// Let pallet through
+						o_xAskNewPallet := TRUE;
+					ELSE
+						o_xAskNewPallet := FALSE;
+					END_IF
 					
 					
 				eLiftStates.MoveUpToLayer :														// Testen
@@ -55,14 +61,14 @@ CASE i_eMode OF
 			END_CASE
 	END_CASE
 	
-	eModus.Manual :
-		// Doe effe zelf																			// TOEVOEGEN MET HMI
-		// Lift handmatig bedienen door INT invoer?
-		// Pins handmatig in en uit, met beveiliging zodat pallet niet naar beneden dondert
-	eModus.Off :
-		// Doe niks
-		// Stop
-END_CASE]]></ST>
+// 	eModus.Manual :
+// 		// Doe effe zelf																			// TOEVOEGEN MET HMI
+// 		// Lift handmatig bedienen door INT invoer?
+// 		// Pins handmatig in en uit, met beveiliging zodat pallet niet naar beneden dondert
+// 	eModus.Off :
+// 		// Doe niks
+// 		// Stop
+// END_CASE]]></ST>
     </Implementation>
     <Method Name="GoToConveyorHeight" Id="{7cad701c-9196-42fa-8f7e-e699c93a2475}">
       <Declaration><![CDATA[METHOD GoToConveyorHeight : BOOL

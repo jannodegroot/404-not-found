@@ -2291,6 +2291,23 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbDepalletizer.i_HeightSensor": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbDepalletizer::i_HeightSensor",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 6
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbDepalletizer.i_iCanTypeHMI": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -5827,6 +5844,7 @@
                 "ADS.PLC1.MAIN.fbDepalletizer.fbKlep.o_eCurrentPosition": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbKlep.o_xErrorPositionUpOrUnknow": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbKlep.o_xWarningPositionDown": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.i_HeightSensor": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.i_iCanTypeHMI": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.i_iNumberOfLayersHMI": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_eManualWantedPosition": 3,

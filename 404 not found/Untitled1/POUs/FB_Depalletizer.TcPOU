@@ -9,16 +9,17 @@ VAR_INPUT
 	i_NextEmpty			: BOOL;
 	i_eNextState		: eSingleState;												// MOET NOG IETS MEE
 	
-
+	i_HeightSensor		: BOOL;
 	
 	// HMI
-	i_iCanTypeHMI			: INT;	// Type of can loaded on pallet
+	i_iCanTypeHMI		: INT;	// Type of can loaded on pallet
 	i_iNumberOfLayersHMI: INT;	// Number of layers on the pallet
 END_VAR
 VAR_OUTPUT
 	o_eState 			: eSingleState;
 	o_xEmpty			: BOOL;	// Depalletizer is empty
 	o_xWarningNoProduct	: BOOL; // Warning after ...  time no products detected.
+	o_xGivingToNext		: BOOL; // Let the next conveyor know it is getting a new pallet.
 	
 	o_aLayerHeights	: ARRAY[1..10] OF INT;
 END_VAR
@@ -37,7 +38,7 @@ VAR
 	i				: INT := 0;
 	iSlideHeight	: INT := 2500;
 	
-	eMoveKlepUp		: eValvePosition;
+	eMoveKlep		: eValvePosition;
 	
 	eZuigerSafe		: eZuigerCilinderPosition;
 	eSchuifSafe		: eSlideposition;
@@ -82,7 +83,7 @@ THIS^.ReleaseOrHoldPallet();
 fbKlep(
 	i_eState:= , 
 	i_eModus:= , 
-	i_eAutoWantedPosition:= eMoveKlepUp, 
+	i_eAutoWantedPosition:= eMoveKlep, 
 	i_eManualWantedPosition:= , 
 	i_xHallSensorIn:= , 
 	i_xHallSensorOut:= , 
@@ -248,11 +249,11 @@ END_VAR
       <Implementation>
         <ST><![CDATA[IF xLightSensor1 THEN
 	// Move klep up
-	eMoveKlepUp := eValvePosition.Up;
+	eMoveKlep := eValvePosition.Up;
 	xHoldPallet := FALSE;
 	xPalletInPosition := FALSE;
 	IF xLightSensor2 THEN
-		eMoveKlepUp := eValvePosition.Down;
+		eMoveKlep := eValvePosition.Down;
 		xPalletInPosition := TRUE;
 		xHoldPallet := TRUE;
 	ELSE
