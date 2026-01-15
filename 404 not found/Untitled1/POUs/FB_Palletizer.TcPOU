@@ -167,6 +167,7 @@ CASE o_eState OF
 							fbLiftB.i_iMoveToLayer:=2;
 							//move to holding
 							IF NOT fbLiftB.o_xMotor AND fbLiftB.i_iMoveToLayer=2 THEN
+								o_iStorageCount:=o_iStorageCount+1;
 								istep:=1;
 							END_IF
 						END_IF

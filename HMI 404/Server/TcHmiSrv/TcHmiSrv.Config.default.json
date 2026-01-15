@@ -2908,6 +2908,57 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbPalletizer.fbBand.o_xAlarmMotor": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbPalletizer::fbBand::o_xAlarmMotor",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 7
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbPalletizer.fbBand.o_xMotor": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbPalletizer::fbBand::o_xMotor",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 5
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbPalletizer.i_PreviousEmptying": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbPalletizer::i_PreviousEmptying",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 3
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbPalletizer.i_eModus": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -2925,6 +2976,23 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbPalletizer.i_xDoorOpenButton": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbPalletizer::i_xDoorOpenButton",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 4
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbPalletizer.i_xWarningReset": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -2937,6 +3005,23 @@
                     },
                     {
                         "propertyOrder": 5
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbPalletizer.istep": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbPalletizer::istep",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/INT"
+                    },
+                    {
+                        "propertyOrder": 18
                     }
                 ]
             },
@@ -6135,8 +6220,13 @@
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.o_xErrorGeneralLight": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.o_xGivingToNext": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.o_xMotor": 3,
+                "ADS.PLC1.MAIN.fbPalletizer.fbBand.o_xAlarmMotor": 3,
+                "ADS.PLC1.MAIN.fbPalletizer.fbBand.o_xMotor": 3,
+                "ADS.PLC1.MAIN.fbPalletizer.i_PreviousEmptying": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.i_eModus": 3,
+                "ADS.PLC1.MAIN.fbPalletizer.i_xDoorOpenButton": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.i_xWarningReset": 3,
+                "ADS.PLC1.MAIN.fbPalletizer.istep": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.o_iStorageCount": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.o_sStateString": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.o_xWarningFull": 3,
