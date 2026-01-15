@@ -49,6 +49,7 @@ VAR
 	
 	
 	SIMFUNCTIONING : BOOL := 1;
+	o_sStateString: STRING(30);
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -198,7 +199,8 @@ ELSIF NOT (eWistedHorizotalPosition = o_eHorizotalPosition) THEN
 	o_xMotor:=1;
 END_IF
 
-SIM();]]></ST>
+SIM();
+o_sStateString := F_StateEnumToStringSingleState(i_eState);]]></ST>
     </Implementation>
     <Method Name="CiliderUP" Id="{2152594d-2447-4cf4-aa5e-fc79df202b7a}">
       <Declaration><![CDATA[METHOD PRIVATE CiliderUP
