@@ -86,9 +86,9 @@ END_IF
 //aansturen zichzelf
 CASE o_eState OF
 	eSingleState.Idle:
-		IF i_eStartStop = eStartStop.Start THEN
+		//IF i_eStartStop = eStartStop.Start THEN
 			o_eState := eSingleState.Execute;
-		END_IF
+		//END_IF
 	
 	eSingleState.Execute:
 		// Normal palletizing operation
@@ -199,14 +199,14 @@ CASE o_eState OF
 		o_xExpectingPallet:=0;
 		xGoHoldBand := TRUE;
 		xGoEmptyBand := FALSE;
-		IF  ximpaled AND NOT (fbLiftB.i_iMoveToLayer=0) THEN
+		IF NOT (fbLiftB.i_iMoveToLayer=1) THEN
 			fbLiftB.i_iMoveToLayer:=1;
 			IF  NOT fbLiftB.o_xMotor AND fbLiftB.i_iMoveToLayer=1 THEN//and lift
 				fbLiftB.i_eLiftState:= eLiftStates.Impale;//moet deimpale zijn maar bestaat niet
 			END_IF
 		END_IF
 		
-		IF NOT ximpaled AND fbLiftB.i_iMoveToLayer=1 THEN
+		IF NOT ximpaled AND (fbLiftB.i_iMoveToLayer=1 OR fbLiftB.i_iMoveToLayer=0) THEN
 			fbLiftB.i_iMoveToLayer:=0;
 			IF  NOT fbLiftB.o_xMotor AND fbLiftB.i_iMoveToLayer=0 THEN//and lift
 				istep:=0;
