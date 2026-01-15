@@ -80,19 +80,19 @@ THIS^.ReleaseOrHoldPallet();
 
 
 fbKlep(
-// 	i_eState:= , 
-// 	i_eModus:= , 
+	i_eState:= , 
+	i_eModus:= , 
 	i_eAutoWantedPosition:= eMoveKlepUp, 
-// 	i_eManualWantedPosition:= , 
-// 	i_xHallSensorIn:= , 
-// 	i_xHallSensorOut:= , 
-// 	i_xWarningReset:= , 
-// 	i_xAlarmReset:= , 
-// 	o_eCurrentPosition=> , 
-// 	o_xMagnetValve=> , 
-// 	o_xWarningPositionDown=> , 
-// 	o_xErrorPositionUpOrUnknow=> , 
-// 	o_xAlarmPositionUpOrUnknow=> 
+	i_eManualWantedPosition:= , 
+	i_xHallSensorIn:= , 
+	i_xHallSensorOut:= , 
+	i_xWarningReset:= , 
+	i_xAlarmReset:= , 
+	o_eCurrentPosition=> , 
+	o_xMagnetValve=> , 
+	o_xWarningPositionDown=> , 
+	o_xErrorPositionUpOrUnknow=> , 
+	o_xAlarmPositionUpOrUnknow=> 
 );
 
 // Functionblock Schuif

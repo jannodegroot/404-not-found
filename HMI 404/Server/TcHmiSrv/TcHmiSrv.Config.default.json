@@ -2204,6 +2204,93 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xMotor": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbBand::o_xMotor",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 5
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbDepalletizer.fbKlep.i_eState": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbKlep::i_eState",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:server#/definitions/ADS-PLC1.eSingleState"
+                    },
+                    {
+                        "propertyOrder": 1
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbDepalletizer.fbKlep.o_eCurrentPosition": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbKlep::o_eCurrentPosition",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:server#/definitions/ADS-PLC1.eValvePosition"
+                    },
+                    {
+                        "propertyOrder": 9
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbDepalletizer.fbKlep.o_xErrorPositionUpOrUnknow": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbKlep::o_xErrorPositionUpOrUnknow",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Error when valve is up or unknow beceause it stopped te flow of the machine",
+                        "propertyOrder": 12
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbDepalletizer.fbKlep.o_xWarningPositionDown": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbKlep::o_xWarningPositionDown",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Warning when position is down becease it not stopped the machineflow",
+                        "propertyOrder": 11
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbDepalletizer.i_iCanTypeHMI": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -5735,6 +5822,11 @@
                 "ADS.PLC1.MAIN.fbControlSystem.o_xErrorEmergencyButton": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.o_xErrorPressureGeneral": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.o_xWarningSafetyMat": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xMotor": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.fbKlep.i_eState": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.fbKlep.o_eCurrentPosition": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.fbKlep.o_xErrorPositionUpOrUnknow": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.fbKlep.o_xWarningPositionDown": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.i_iCanTypeHMI": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.i_iNumberOfLayersHMI": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_eManualWantedPosition": 3,
