@@ -136,6 +136,7 @@
     <Folder Include="Images\Doorlock" />
     <Folder Include="Images\Lichtsensor" />
     <Folder Include="Images\Eindschakelaar" />
+    <Folder Include="Images\Hoofdpagina" />
     <Folder Include="Images\Safetymat" />
     <Folder Include="Imports" />
     <Folder Include="Imports\Images" />
@@ -155,6 +156,9 @@
       <Visible>false</Visible>
     </Content>
     <Content Include="Content\BandDepalletizerPalletizer.content">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\BlikjeBand.content">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Content\Buffer2.content">
@@ -229,6 +233,9 @@
     <Content Include="Images\Eindschakelaar\End switch open .png">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Images\Hoofdpagina\Buffer.png">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Images\Klep\Klep omhoog (actief).png">
       <SubType>Content</SubType>
     </Content>
@@ -266,6 +273,9 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="Images\Safetymat\Safetymat (niet actief).png">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\ADS\ADS.Config.default.json">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Server\TcHmiLua\TcHmiLua.Config.default.json">

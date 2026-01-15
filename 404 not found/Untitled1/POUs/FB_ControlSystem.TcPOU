@@ -36,10 +36,13 @@ VAR_OUTPUT
 	o_eMachineStateLamp2 	: eMachineStateLamp; // Lamp Depalletizer
 END_VAR
 VAR
+	xErrorEmergency			: BOOL := FALSE;
+	xErrorPressure			: BOOL := FALSE;
+	fbBlinking 				: FB_Blinking;
 	
 	rlowpressure			: REAL := 4;
-	rPressure_bar: REAL;
-	rMaxbarsensor: REAL :=6;
+	rPressure_bar			: REAL;
+	rMaxbarsensor			: REAL :=6;
 END_VAR
 
 ]]></Declaration>
@@ -60,9 +63,9 @@ END_VAR
 END_CASE
 
 //safty aborting of machine and parts
-IF i_xEmergencyButton OR o_xErrorPressureGeneral THEN 		 //if emergencybutten or no air pressure then complete machine go's into Aborted
+IF xErrorEmergency OR xErrorPressure THEN 		 //if emergencybutten or no air pressure then complete machine go's into Aborted
 	o_xAbortGeneral := 1;
-ELSIF NOT i_xEmergencyButton AND NOT o_xErrorPressureGeneral THEN
+ELSIF NOT xErrorEmergency AND NOT xErrorPressure THEN
 	o_xAbortGeneral := 0;
 END_IF
 o_xAbortInvoerBuffer1 := i_xSafetyMat; //only for InvoerBuffer 1 Aborted
@@ -79,22 +82,39 @@ END_IF
 //pressuresensor error
 rPressure_bar := (i_iPressureSensorGeneral / 4095.0) * rMaxbarsensor;// 4095 form analog and 6 from 6 bar max from the sensor
 IF rPressure_bar<rlowpressure THEN
-	o_xErrorPressureGeneral:=1;
+	xErrorPressure := TRUE;
 ELSE
-	o_xErrorPressureGeneral:=0;
+	xErrorPressure := FALSE;
 END_IF
 
+IF xErrorPressure THEN
+	fbBlinking(io_xBlinking:= o_xErrorPressureGeneral);
+ELSIF NOT xErrorPressure AND o_xAlarmPressureGeneral THEN
+	o_xErrorPressureGeneral := TRUE;
+ELSE
+	o_xErrorPressureGeneral := FALSE;
+END_IF;
+
 //Errors
-o_xErrorEmergencyButton := i_xEmergencyButton;
+xErrorEmergency := i_xEmergencyButton;
 
 //ALARM
-IF o_xErrorPressureGeneral THEN
+IF xErrorPressure THEN
 	o_xAlarmPressureGeneral:=1;
 END_IF
 
-IF o_xErrorEmergencyButton THEN
+IF xErrorEmergency THEN
 	o_xAlarmEmergencyButton:=1;
 END_IF
+
+//blinking error
+IF xErrorEmergency THEN
+	fbBlinking(io_xBlinking:= o_xErrorEmergencyButton);
+ELSIF NOT xErrorEmergency AND o_xAlarmEmergencyButton THEN
+	o_xErrorEmergencyButton := TRUE;
+ELSE
+	o_xErrorEmergencyButton := FALSE;
+END_IF;
 
 //Warning
 IF o_xAbortInvoerBuffer1 THEN
@@ -110,10 +130,10 @@ ELSIF i_xWarningResetSafetyDoor THEN
 END_IF
 
 //ERROR reset
-IF NOT o_xErrorPressureGeneral AND i_xAlarmResetPressureGeneral THEN
+IF NOT xErrorPressure AND i_xAlarmResetPressureGeneral THEN
 	o_xAlarmPressureGeneral:=0;
 END_IF
-IF NOT o_xErrorEmergencyButton AND i_xAlarmResetEmergencyButton THEN
+IF NOT xErrorEmergency AND i_xAlarmResetEmergencyButton THEN
 	o_xAlarmEmergencyButton:=0;
 END_IF
 
