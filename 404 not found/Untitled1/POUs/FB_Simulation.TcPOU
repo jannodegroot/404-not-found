@@ -42,44 +42,5 @@ ELSE
 	xTimerhmiRunning:=TRUE;
 END_IF]]></ST>
     </Implementation>
-    <Method Name="deplelitizerzuiger" Id="{8051e9b7-c22e-4778-aa38-5be337bf3f0e}">
-      <Declaration><![CDATA[METHOD deplelitizerzuiger
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[//als ciliderwerkt
-IF i_xCilinderdepalitizerwerkt THEN
-	//cilinder to wishsed positon
-	main.fbDepalletizer.fbzuiger.eWistedHorizotalPosition;
-END_IF
-
-IF i_xHorizontalmovementWorking THEN
-	//logica
-END_IF
-//als horizontaal werkt
-
-
-
-// main.fbDepalletizer.fbZuiger.i_xEndSwitchIn := TRUE;
-// main.fbDepalletizer.fbZuiger.i_xEndSwitchOut := TRUE;
-// main.fbDepalletizer.fbZuiger.i_xHallSensorIn := TRUE;
-// main.fbDepalletizer.fbZuiger.i_xHallSensorOut := TRUE;
-// main.fbDepalletizer.fbZuiger.i_rPressureSensor := 4000;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="InvoerBuffer1" Id="{2d9eb01e-8bfe-4d6d-bd0b-e4acfc4bf527}">
-      <Declaration><![CDATA[METHOD InvoerBuffer1
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[//simulatie voor invoer buffer1
-
-//klep
-
-//sensor]]></ST>
-      </Implementation>
-    </Method>
   </POU>
 </TcPlcObject>

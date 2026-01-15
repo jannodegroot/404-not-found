@@ -25,15 +25,6 @@ VAR
 	//start stop
 	eStartStopGeneral			: eStartStop;
 	
-	//lichtsensors
-	xLightSensorInvoerBuffer1			: BOOL;
-	xLightSensorBuffer2					: BOOL;
-	xLightSensorBuffer3					: BOOL;
-	xLightSensorBuffer4					: BOOL;
-	xLightSensorBuffer5					: BOOL;
-	xLightSensorDepalletizerPalletizer	: BOOL;
-	xLightSensorBlikjesBand				: BOOL;
-	
 	//empty buffers/banden
 	xBuffer2Empty						: BOOL;
 	xBuffer3Empty						: BOOL;
@@ -114,7 +105,7 @@ fbControlSystem(i_eGeneralState					:= eGeneralState,
 fbInvoerBuffer1(i_xAbort			:= xAbortGeneral OR xAbortInvoerBuffer1, 
 				i_eStartStop		:= eStartStopGeneral, 
 				i_xPalletPlaced		:= (*Used in HMI*), 
-				i_xLightSensor		:= xLightSensorInvoerBuffer1, 
+				i_xLightSensor		:= , 
 				i_xNextEmpty		:= xBuffer2Empty, 
 				i_xAlarmReset		:= (*Used in HMI*), 
 				i_eNextState		:= eStateBuffer2,
@@ -131,7 +122,7 @@ fbInvoerBuffer1(i_xAbort			:= xAbortGeneral OR xAbortInvoerBuffer1,
 //----buffer 2------------------------------------------------------------------------------------------------------------							
  fbBuffer2( i_xAbort				:= xAbortGeneral, 
 			i_eStartStop			:= eStartStopGeneral,  
-			i_xLightSensor			:= xLightSensorBuffer2,
+			i_xLightSensor			:= ,
 			i_xPreviousEmptying	 	:= xInvoerBuffer1Emptying, 
 			i_xNextEmpty			:= xBuffer3Empty, 
 			i_xAlarmReset			:= (*Used in HMI*), 
@@ -149,7 +140,7 @@ fbInvoerBuffer1(i_xAbort			:= xAbortGeneral OR xAbortInvoerBuffer1,
 //----buffer 3------------------------------------------------------------------------------------------------------------							 
 fbBuffer3(  i_xAbort				:= xAbortGeneral, 
 			i_eStartStop			:= eStartStopGeneral,  
-			i_xLightSensor			:= xLightSensorBuffer3,
+			i_xLightSensor			:= ,
 			i_xPreviousEmptying 	:= xBuffer2Emptying, 
 			i_xNextEmpty			:= xBuffer4Empty, 
 			i_xAlarmReset			:= (*Used in HMI*), 
@@ -167,7 +158,7 @@ fbBuffer3(  i_xAbort				:= xAbortGeneral,
 //----buffer 4------------------------------------------------------------------------------------------------------------							
  fbBuffer4(  i_xAbort				:= xAbortGeneral, 
 			i_eStartStop			:= eStartStopGeneral,  
-			i_xLightSensor			:= xLightSensorBuffer4,
+			i_xLightSensor			:= ,
 			i_xPreviousEmptying 	:= xBuffer3Emptying, 
 			i_xNextEmpty			:= xBuffer5Empty, 
 			i_xAlarmReset			:= (*Used in HMI*), 
@@ -185,7 +176,7 @@ fbBuffer3(  i_xAbort				:= xAbortGeneral,
 //----buffer 5------------------------------------------------------------------------------------------------------------					
 fbBuffer5(	i_xAbort				:= xAbortGeneral, 
 			i_eStartStop			:= eStartStopGeneral,  
-			i_xLightSensor			:= xLightSensorBuffer5, 
+			i_xLightSensor			:= , 
 			i_xPreviousEmptying 	:= xBuffer4Emptying,
 			i_xNextEmpty			:= xDepalletizerEmpty, 
 			i_xAlarmReset			:= (*Used in HMI*), 
@@ -216,7 +207,7 @@ fbDepalletizer( i_xAbort			:= xAbortGeneral,
 //----band depalletizer/palletizer------------------------------------------------------------------------------------------------------------					
 fbBandDepalletizerPalletizer(	i_xAbort				:= xAbortGeneral, 
 								i_eStartStop			:= eStartStopGeneral,  
-								i_xLightSensor			:= xLightSensorDepalletizerPalletizer, 
+								i_xLightSensor			:= , 
 								i_xPreviousEmptying 	:= xDepalletizerEmptying,
 								i_xNextEmpty			:= xPalletizerEmpty, 
 								i_xAlarmReset			:= (*Used in HMI*), 
@@ -247,7 +238,7 @@ fbPalletizer(	i_xAbort			:= xAbortGeneral,
 fbBlikjesBand( 	i_xAbort		 		:= xAbortGeneral,
 				i_eStartStop 			:= eStartStopGeneral,
 				i_eModus				:= (*Used in HMI*), 
-				i_xLightSensor 			:= xLightSensorBlikjesBand, 
+				i_xLightSensor 			:= , 
 				i_xAlarmReset			:= (*Used in HMI*), 
 				i_xManualMotor			:= (*Used in HMI*), 
 				o_eState 				=> eStateBlikjesBand,
