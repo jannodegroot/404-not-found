@@ -74,8 +74,11 @@ o_xAbortPalletizer := i_xSafetyDoor; //only of palletizer aborted
 //Start Stop
 IF i_xStopButton OR  i_eGeneralState=eGeneralState.Aborted THEN //if stopbutton or the machine is aborted the startstop wil become Stop
 	o_eStartStopGeneral :=eStartStop.Stop;
-ELSIF i_xStartButton THEN
+	i_xStartButton := FALSE;
+END_IF
+IF i_xStartButton THEN
 	o_eStartStopGeneral :=eStartStop.Start;
+	i_xStopButton := FALSE;
 END_IF
 
 
