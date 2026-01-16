@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_LiftA_Extended" Id="{ae4ed0eb-eafe-4c35-b8eb-4223fd698d69}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_LiftA_Extended EXTENDS FB_Lift
+VAR_INPUT
+	i_aLayerHeights	: ARRAY[1..10] OF INT;
+	i_nLayerCount: INT;
+	i_xMoveUpSafe: BOOL;
+END_VAR
+VAR_OUTPUT
+	o_xGoSchuif: BOOL;
+	o_xGoZuiger: BOOL;
+END_VAR
+VAR
+	LayerState: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();]]></ST>
+    </Implementation>
+    <Method Name="MoveUpToLayer" Id="{a3b1756c-3dc2-4e81-9a1c-b2a3ad14fbe2}">
+      <Declaration><![CDATA[METHOD MoveUpToLayer : BOOL
+VAR_INPUT
+END_VAR
+
+VAR
+	CurrentLayer: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE LayerState OF
+	0: // Idle / Start
+		CurrentLayer := 1;
+	
+		IF i_nLayerCount > 0 THEN
+			LayerState := 1;
+		END_IF
+	
+	
+	1: // Move to current layer
+		o_iTargetPos := i_aLayerHeights[CurrentLayer];
+		o_xMotor := TRUE;
+	
+		IF i_iServoEncoder = o_iTargetPos THEN
+			o_xMotor := FALSE;
+			LayerState := 2;
+		END_IF
+	
+	
+	2: // Do action at layer
+		o_xGoZuiger := TRUE;	// Use Zuiger to remove any layer cartons
+		
+		o_xGoSchuif := TRUE;	// Push cans onto conveyor
+		
+		IF i_xMoveUpSafe THEN
+			LayerState := 3;
+		END_IF
+	
+// 		IF xActionDone THEN
+// 			LayerState := 3;
+// 		END_IF
+	
+	
+	3: // Advance to next layer
+		CurrentLayer := CurrentLayer + 1;
+	
+		IF CurrentLayer > i_nLayerCount THEN
+			LayerState := 4;   // all layers done
+		ELSE
+			LayerState := 1;   // go to next layer
+		END_IF
+	
+	
+	4: // Finished
+		o_xMotor := FALSE;
+		// wait here
+
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

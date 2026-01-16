@@ -66,16 +66,19 @@
     <Compile Include="POUs\FB_ControlSystem.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FB_LiftA_Extended.TcPOU">
+    <Compile Include="POUs\FB_Depalletizer.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FB_LiftB_Extended.TcPOU">
+    <Compile Include="POUs\FB_Lift.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_LiftJanno.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_Palletizer.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FB_Schuif.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_Zuiger.TcPOU">
@@ -96,19 +99,10 @@
     <Compile Include="POUs\FB_BufferZonderKlep.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FB_Depalletizer.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\FB_Invoer.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_Klep.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\FB_Lift.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\FB_Schuif.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_Simulation.TcPOU">
@@ -127,10 +121,17 @@
     <Compile Include="POUs\F_StateEnumToStringGeneralState.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\Lift_Extentions\FB_LiftA_Extended.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Lift_Extentions\FB_LiftB_Extended.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
+    <Folder Include="POUs\Lift_Extentions" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
