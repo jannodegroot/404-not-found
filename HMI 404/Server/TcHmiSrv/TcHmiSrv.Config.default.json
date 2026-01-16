@@ -2746,6 +2746,23 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_sStateString": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbZuiger::o_sStateString",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:server#/definitions/ADS-PLC1.STRING-30"
+                    },
+                    {
+                        "propertyOrder": 40
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_xAlarmCilinder": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -6527,6 +6544,7 @@
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xGivingToNext": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xMotor": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.i_eModes": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_sStateString": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_xAlarmCilinder": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_xAlarmHorizontalMovement": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_xAlarmPressure": 3,
