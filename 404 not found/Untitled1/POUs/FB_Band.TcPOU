@@ -80,6 +80,8 @@ END_IF;
 //reset alarm
 IF i_xAlarmReset AND NOT xError THEN
 	o_xAlarmMotor := FALSE;
+END_IF
+
 ]]></ST>
     </Implementation>
   </POU>
