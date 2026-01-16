@@ -15,7 +15,8 @@ VAR
 	fbBlikjesBand					: FB_BlikjesBand;
 	fbsim							: FB_Simulation;
 	fbDepalletizer					: FB_Depalletizer;
-	fbSimulation: FB_Simulation;
+	fbPalletizer					: FB_Palletizer;
+	fbSimulation					: FB_Simulation;
 	
 	//safety
 	xAbortGeneral				: BOOL;
@@ -42,7 +43,6 @@ VAR
 	xBuffer5Emptying					: BOOL;
 	xDepalletizerEmptying				: BOOL;
 	xBandDepalletizerPalletizerEmptying	: BOOL;
-	xPalletizerEmptying					: BOOL;
 	xBlikjesBandAccepting				: BOOL;
 	
 	// current and next state
@@ -58,7 +58,6 @@ VAR
 	
 	//genaral state
 	eGeneralState						: eGeneralState;
-	fbPalletizer: FB_Palletizer;
 
 END_VAR
 ]]></Declaration>
