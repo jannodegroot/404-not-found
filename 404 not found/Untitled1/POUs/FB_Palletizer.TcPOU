@@ -97,22 +97,22 @@ CASE o_eState OF
 		IF i_eStartStop = eStartStop.Stop  AND o_eState = eSingleState.Execute THEN
 			o_eState := eSingleState.Stopping;
 		END_IF
-		IF xAuto THEN
+		IF xAuto THEN //if auto function auto
 			CASE istep OF
 						0:
 						//start position
 							xGoHoldBand := TRUE;
-							xGoEmptyBand := FALSE;
-							o_xExpectingPallet := 0;
+							xGoEmptyBand := FALSE;//stop band
+							o_xExpectingPallet := 0;//not expecting
 							//lift in start
 							fbLiftB.i_iMoveToLayer:=1;
-							IF NOT fbBand.o_xMotor AND NOT fbLiftB.o_xMotor THEN//and lift
+							IF NOT fbBand.o_xMotor AND NOT fbLiftB.o_xMotor THEN //if band and lift stopted
 								istep:=1;
 							END_IF
 						1:
 						//accepting pallet
 							o_xExpectingPallet := 1;
-							IF i_PreviousEmptying THEN
+							IF i_PreviousEmptying THEN //start band if pervious emtying
 								xGoHoldBand := FALSE;
 								xGoEmptyBand := TRUE;
 								istep:=2;
@@ -121,7 +121,7 @@ CASE o_eState OF
 						//position witch pallet
 						
 							
-								
+								//from position to impaling
 								IF NOT ximpaled AND NOT (fbLiftB.i_iMoveToLayer=1) AND o_xExpectingPallet THEN
 									o_xExpectingPallet := 1;
 									IF  NOT fbLiftB.o_xMotor THEN//and lift
@@ -186,7 +186,7 @@ CASE o_eState OF
 		
 		
 
-	eSingleState.Stopping:
+	eSingleState.Stopping: //
 		// Stop band movement
 		o_xExpectingPallet:=0;
 		xGoHoldBand := TRUE;
@@ -194,7 +194,7 @@ CASE o_eState OF
 		IF NOT (fbLiftB.i_iMoveToLayer=1) THEN
 			fbLiftB.i_iMoveToLayer:=1;
 			IF  NOT fbLiftB.o_xMotor AND fbLiftB.i_iMoveToLayer=1 THEN//and lift
-				fbLiftB.i_eLiftState:= eLiftStates.Impale;//moet deimpale zijn maar bestaat niet
+				fbLiftB.i_eLiftState:= eLiftStates.Impale;//has to be deinmpale but does not yet eqzist
 			END_IF
 		END_IF
 		
