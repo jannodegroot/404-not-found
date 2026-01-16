@@ -7,7 +7,7 @@ VAR_INPUT
 	i_xGoHold 		: BOOL; //keep pallet on band wachten
 	i_xGoEmpty		: BOOL; //move pallet to other segment go
 	i_xAlarmReset	: BOOL;
-	i_eModus		: eModus;
+	i_eModus		: eModus := eModus.Auto;
 	i_xManualMotor  : BOOL;
 END_VAR
 VAR_OUTPUT

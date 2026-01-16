@@ -1025,6 +1025,23 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.SIMFUNCTIONING": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbBandDepalletizerPalletizer::SIMFUNCTIONING",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 22
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.fbKlep.i_eManualWantedPosition": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -6717,6 +6734,7 @@
                 "ADS.PLC1": 3,
                 "ADS.PLC1.GVL.Timerhmi.Q": 3,
                 "ADS.PLC1.GVL.g_xSimulationActive": 3,
+                "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.SIMFUNCTIONING": 3,
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.fbKlep.i_eManualWantedPosition": 3,
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.fbKlep.i_eState": 3,
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.fbKlep.i_xAlarmReset": 3,
