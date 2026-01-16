@@ -35,7 +35,7 @@ VAR
 	fbKlep 							: FB_Klep;
 	eValveCurrentPosition			: eValvePosition;
 	
-	SIMFUNCTIONING: BOOL;
+	SIMFUNCTIONING: BOOL :=1;
 END_VAR
 ]]></Declaration>
     <Implementation>

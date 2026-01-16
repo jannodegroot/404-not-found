@@ -26,7 +26,7 @@ VAR
 	xError				: BOOL;
 	tonError			: TON;
 	fbBlinking 			: FB_Blinking;
-	SIMFUNCTIONING: BOOL;
+	SIMFUNCTIONING: BOOL :=1;
 END_VAR
 ]]></Declaration>
     <Implementation>

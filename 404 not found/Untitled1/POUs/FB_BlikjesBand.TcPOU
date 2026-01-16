@@ -73,6 +73,8 @@ IF gvl.g_xSimulationActive THEN
 		IF GVL.TimerShort.Q THEN
 			i_xLightSensor :=FALSE;
 		END_IF
+	ELSE
+		i_xLightSensor :=TRUE;
 	END_IF
 END_IF]]></ST>
     </Implementation>
