@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_LiftJanno" Id="{fce90b60-d239-44ae-a222-806e484b434c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_LiftJanno
+VAR_INPUT
+	i_iMoveToLayer : INT;
+	i_eState 			: eSingleState;
+	i_eMode				: eModus;
+	i_eLiftState 		: eLiftStates;
+	
+	i_xAllowedToMoveUp	: BOOL;
+	i_xAllowedToMoveDown: BOOL;
+	i_xAlarmReset		: BOOL;
+	
+	// Hall Sensors
+	i_xPin1HallSensorIn	: BOOL;
+	i_xPin1HallSensorOut: BOOL;
+	i_xPin2HallSensorIn	: BOOL;
+	i_xPin2HallSensorOut: BOOL;	
+	i_xPin3HallSensorIn	: BOOL;
+	i_xPin3HallSensorOut: BOOL;	
+	i_xPin4HallSensorIn	: BOOL;
+	i_xPin4HallSensorOut: BOOL;
+	
+	i_xLightSensor1		: BOOL; // De eerste sensor die de pallet detecteerd
+	i_xLightSensor2		: BOOL; // De tweede sensor die de pallet detecteerd
+	
+	i_xEndSwitch		: BOOL; // Check if the lift is down
+	
+	i_iServoEncoder		: INT;
+	i_iDistanceSensor	: INT;
+	i_iLayerHeight		: INT;	// Height of each layer
+	i_iNumberOfLayers   : INT;  // Total number of layers
+END_VAR
+VAR_OUTPUT
+	o_xMotor 			: BOOL; // Motor Lift
+	o_xTargetPos		: INT;
+	o_xErrorLift 		: BOOL;
+	o_xAlarmLift 		: BOOL;
+	
+	o_xMagnetValve		: BOOL;
+	o_xErrorImpaler 	: BOOL;
+	o_xAlarmImpaler		: BOOL;
+	
+	o_xNewPalletPossible: BOOL;
+	o_xPalletInPosition	: BOOL;
+	o_eLiftPosition		: eLiftposition;
+END_VAR
+VAR
+	iErrorCounter	: INT := 0; // Counts retries, after a few times errors will appear
+	iHomePosition	: INT;
+	iConveyorHeight	: INT;	// Standard height for grabbing or releasing pallet
+	iImpaleHeight	: INT := iHomePosition + iConveyorHeight;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Janno geeft door naar welke laag hij moet. Laag 0 = home, laag 1 = band, laag 2 = pallet op pallet, laag 3 = pallets hoog
+CASE i_eMode OF
+	eModus.Auto :
+	CASE i_eState OF
+		eSingleState.Execute :
+			CASE i_eLiftState OF
+				eLiftStates.WaitForPallet :														// Niet af
+					// Wanneer in Normal Height positie, laat pallet door.
+					
+					
+					
+				eLiftStates.MoveUpToLayer :														// Testen
+				 	// Ga naar de positie van de volgende laag.
+					CASE i_iMoveToLayer OF
+						0 :
+							// Ga naar home
+							IF i_xPin1HallSensorIn AND
+								i_xPin1HallSensorIn AND
+								i_xPin1HallSensorIn AND
+								i_xPin1HallSensorIn THEN
+								// Ga naar HOME
+								i_eLiftState := eLiftStates.MoveToHome;
+							ELSE
+								// Error: Kan niet naar home, pins niet in
+							END_IF
+						1 :
+							// Ga naar band hoogte
+							THIS^.GoToConveyorHeight();
+						2 : 
+							// Ga naar stapelhoogte
+							THIS^.GoToHighestHeight();
+						3 :
+							// Ga hoog
+							THIS^.GoToPalletizeHeight();
+					END_CASE
+					
+				
+			END_CASE
+	END_CASE
+	
+	eModus.Manual :
+		// Doe effe zelf																			// TOEVOEGEN MET HMI
+		// Lift handmatig bedienen door INT invoer?
+		// Pins handmatig in en uit, met beveiliging zodat pallet niet naar beneden dondert
+	eModus.Off :
+		// Doe niks
+		// Stop
+END_CASE]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
