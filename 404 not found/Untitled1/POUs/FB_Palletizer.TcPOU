@@ -27,12 +27,13 @@ VAR
 	xGoEmptyBand : BOOL;
 	istep		: INT;
 	ximpaled : BOOL;
-	fbLiftB : FB_LiftB_Extended;
+	fbLiftB : FB_LiftJanno;
 	xAuto : BOOL;
 	TimerEmtying : ton;
 	xTimerEmtyingRunning: BOOL;
 	timTimerValueemtying: TIME;
 	o_sStateString: STRING(30);
+	xpreviuosEmtyed: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -53,6 +54,7 @@ fbBand(
 	
 
 fbLiftB();
+fbLiftB.i_eState:=o_eState;
 //calling lift
 
 IF	fbLiftB.i_xPin1HallSensorIn AND NOT //when inpaled and when not
@@ -116,14 +118,18 @@ CASE o_eState OF
 							IF i_PreviousEmptying THEN //start band if pervious emtying
 								xGoHoldBand := FALSE;
 								xGoEmptyBand := TRUE;
-								IF fbLiftB.i_xLightSensor2 THEN
-									istep:=2;
-									xGoHoldBand := TRUE;
-									xGoEmptyBand := FALSE;
-									o_xExpectingPallet:=0;
-								END_IF
-								
+								xpreviuosEmtyed:=1; 
+								o_xExpectingPallet:=0;
 							END_IF
+							IF xpreviuosEmtyed AND NOT i_PreviousEmptying THEN
+								istep:=2;
+								xGoHoldBand := TRUE;
+								xGoEmptyBand := FALSE;
+								o_xExpectingPallet:=0;
+								xpreviuosEmtyed:=0;
+							END_IF
+								
+							
 						2:
 						//position witch pallet
 						
@@ -310,7 +316,21 @@ END_IF
 
 //warnings
 
-o_sStateString := F_StateEnumToStringSingleState(o_eState);]]></ST>
+o_sStateString := F_StateEnumToStringSingleState(o_eState);
+
+//sim sensor lift location
+IF i_eModus = eModus.auto OR i_eModus = eModus.Off THEN	
+	IF ximpaled THEN
+		fbLiftB.i_xLightSensor2:=FALSE;
+		fbLiftB.i_xLightSensor2:=TRUE;
+	ELSIF i_PreviousEmptying AND istep=1  THEN
+		fbLiftB.i_xLightSensor2:=TRUE;
+		fbLiftB.i_xLightSensor2:=FALSE;
+	ELSIF istep=2 THEN
+		fbLiftB.i_xLightSensor2:=FALSE;
+		fbLiftB.i_xLightSensor2:=TRUE;
+	END_IF
+END_IF]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

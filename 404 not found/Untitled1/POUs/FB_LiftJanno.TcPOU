@@ -59,19 +59,24 @@ END_VAR
 
 IF i_xEndSwitch THEN
 	i_iServoEncoder:=0;
+//sim
 ELSIF i_iServoEncoder > o_xTargetPos AND o_xMotor  AND GVL.TimerShort.Q THEN
 	i_iServoEncoder:=i_iServoEncoder-1;
 ELSIF i_iServoEncoder < o_xTargetPos AND o_xMotor  AND GVL.TimerShort.Q THEN
 	i_iServoEncoder:=i_iServoEncoder+1;
 END_IF
-
-
-
-CASE i_eMode OF
-	eModus.Auto :
-	CASE i_eState OF
-		eSingleState.Execute :
-			IF  i_iServoEncoder > o_xTargetPos OR i_iServoEncoder<o_xTargetPos THEN
+IF o_xMagnetValve AND 
+//end sim
+IF i_eLiftState:= eLiftStates.Impale THEN
+	o_xMagnetValve:=1;
+ELSIF i_eLiftState:= eLiftStates.Deimpale THEN
+	o_xMagnetValve:=0;
+ELSE
+	o_xMagnetValve:=0;
+END_IF
+			IF i_eState=eSingleState.Aborted OR i_eState=eSingleState.Aborting THEN
+				o_xMotor:=FALSE;
+			ELSIF  i_iServoEncoder > o_xTargetPos OR i_iServoEncoder<o_xTargetPos  THEN
 				o_xMotor:=TRUE;
 			ELSIF i_iServoEncoder = o_xTargetPos THEN
 				o_xMotor:=FALSE;
@@ -95,9 +100,7 @@ CASE i_eMode OF
 							o_xTargetPos:=8;
 
 					END_CASE
-				
-	END_CASE
-END_CASE]]></ST>
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
