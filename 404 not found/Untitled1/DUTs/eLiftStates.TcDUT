@@ -8,11 +8,8 @@ TYPE eLiftStates :
 (
 	InitHome := 0,
     MoveToHome := 1,
-    WaitForPallet := 2,
-    Impale := 3,
-    MoveUpToLayer := 4,
-	CheckNextLayer := 5,
-	Idle := 6
+    Impale := 2,
+    MoveUpToLayer := 3
 );
 END_TYPE
 ]]></Declaration>

@@ -20,32 +20,15 @@ SUPER^();
 
 // CASE i_eMode OF
 // 	eModus.Auto :
-	CASE i_eState OF
-		eSingleState.Execute :
-			CASE i_eLiftState OF
-				eLiftStates.WaitForPallet :														// Niet af
-					// Wanneer in Normal Height positie, laat pallet door.
-					IF i_iServoEncoder = iHighestHeight THEN
-						// Let pallet through
-						o_xAskNewPallet := TRUE;
-					ELSE
-						o_xAskNewPallet := FALSE;
-					END_IF
-					
-					
+// 	CASE i_eState OF
+// 		eSingleState.Execute :
+			CASE i_eLiftState OF		
 				eLiftStates.MoveUpToLayer :														// Testen
 				 	// Ga naar de positie van de volgende laag.
 					CASE i_iMoveToLayer OF
 						0 :
 							// Ga naar home
-							IF i_xPin1HallSensorIn AND
-								i_xPin1HallSensorIn AND
-								i_xPin1HallSensorIn AND
-								i_xPin1HallSensorIn THEN
-								// Ga naar HOME
-							ELSE
-								// Error: Kan niet naar home, pins niet in
-							END_IF
+							THIS^.MoveHome();
 						1 :
 							// Ga naar band hoogte
 							THIS^.GoToConveyorHeight();
@@ -59,7 +42,7 @@ SUPER^();
 					
 				
 			END_CASE
-	END_CASE
+// 	END_CASE
 	
 // 	eModus.Manual :
 // 		// Doe effe zelf																			// TOEVOEGEN MET HMI
@@ -110,6 +93,15 @@ o_iTargetPos := iPalletizeHeight;
 IF i_iServoEncoder = iPalletizeHeight THEN
 	o_xMotor := FALSE;
 END_IF;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="MoveHome" Id="{455127d8-e954-4b9b-b97b-e0b8c80f8deb}">
+      <Declaration><![CDATA[METHOD MoveHome : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
     <Method Name="WaitForPallet" Id="{9e1f5748-783f-41ae-a152-4ce137f7d7ea}">

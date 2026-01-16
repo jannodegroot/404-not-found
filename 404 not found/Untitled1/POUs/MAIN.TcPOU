@@ -239,24 +239,7 @@ fbDepalletizer(
 	o_eState=> , 
 	o_xEmpty=> , 
 	o_xWarningNoProduct=> , 
-	o_aLayerHeights=> );
-	
-fbLift(
-	i_eLiftState:= , 
-	i_iServoEncoder:= , 
-	i_xEndSwitch:= , 
-	i_xPin1HallSensorIn:= , 
-	i_xPin2HallSensorIn:= , 
-	i_xPin3HallSensorIn:= , 
-	i_xPin4HallSensorIn:= , 
-	i_xPin1HallSensorOut:= , 
-	i_xPin2HallSensorOut:= , 
-	i_xPin3HallSensorOut:= , 
-	i_xPin4HallSensorOut:= , 
-	o_iTargetPos=> , 
-	o_eLiftPosition=> , 
-	o_xMotor=> , 
-	o_xMagnetValve=> );]]></ST>
+	o_aLayerHeights=> );]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
