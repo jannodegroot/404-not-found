@@ -147,62 +147,6 @@
                     }
                 ],
                 "type": "integer"
-            },
-            "ADS-PLC1.eZuigerCilinderposition": {
-                "attributes": {
-                    "generate_implicit_init_function": "",
-                    "qualified_only": "",
-                    "strict": "",
-                    "to_string": ""
-                },
-                "enum": [
-                    0,
-                    1,
-                    2
-                ],
-                "options": [
-                    {
-                        "label": "Up",
-                        "value": 0
-                    },
-                    {
-                        "label": "Down",
-                        "value": 1
-                    },
-                    {
-                        "label": "Unkown",
-                        "value": 2
-                    }
-                ],
-                "type": "integer"
-            },
-            "ADS-PLC1.eZuigerHorizontaal": {
-                "attributes": {
-                    "generate_implicit_init_function": "",
-                    "qualified_only": "",
-                    "strict": "",
-                    "to_string": ""
-                },
-                "enum": [
-                    0,
-                    1,
-                    2
-                ],
-                "options": [
-                    {
-                        "label": "In",
-                        "value": 0
-                    },
-                    {
-                        "label": "Out",
-                        "value": 1
-                    },
-                    {
-                        "label": "Unkown",
-                        "value": 2
-                    }
-                ],
-                "type": "integer"
             }
         }
     },
@@ -426,7 +370,7 @@
     "RECORDING_MESSAGE_MAX_LENGTH": 5120,
     "REMOTESERVERS": {},
     "REMOTESERVERS_CERTIFICATES": [],
-    "REQUIREAUTH": 0,
+    "REQUIREAUTH": 1,
     "REQUIRE_CLIENT_CERTIFICATE": false,
     "SAMESITE_ATTRIBUTE": 2,
     "SELFSIGNEDROOTCA": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURzVENDQXBtZ0F3SUJBZ0lKQUp6UFBOaG9KVFdtTUEwR0NTcUdTSWIzRFFFQkN3VUFNRWt4Q3pBSkJnTlYKQkFZVEFrUkZNUnN3R1FZRFZRUUtEQkpVZDJsdVEwRlVJRWhOU1NCVFpYSjJaWEl4SFRBYkJnTlZCQU1NRkVSRgpVMHRVVDFBdFJWSkxRVEEyVFY5eWIyOTBNQjRYRFRJMU1URXhNVEV6TXpBeU1Gb1hEVEk0TVRFeE1UQTNNekF5Ck1Gb3dTVEVMTUFrR0ExVUVCaE1DUkVVeEd6QVpCZ05WQkFvTUVsUjNhVzVEUVZRZ1NFMUpJRk5sY25abGNqRWQKTUJzR0ExVUVBd3dVUkVWVFMxUlBVQzFGVWt0Qk1EWk5YM0p2YjNRd2dnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQQpBNElCRHdBd2dnRUtBb0lCQVFDaHBCZmVDOWhqODdGT2dLR1NhazBUMWlpVEI3MTNmMGRLY1lKZk1rdmhUZGRKCkYzNUh0MHFFa1NZOGt5Y0pFdHJjSlp0aFNLbjN6MEljdnpmblVDWEdQRFVyRjB2YUJDSGllZWZoZ3cxYWdpd3QKUVI3bnhuVHBmemI0dlViUHpWcnJWWE82ZVlTWmgvMnhEUTUza2ppUzk0Y3N5d0g1MTV2WS9RclRtWFdVMGVnVAp2VmZDRnF1M1NBbWs4U25XZXJNSmg3TW54QUdkUEhNWWI0NUtkeWFhblZtbXlKdkRmcnVJcmdwTHJvQnNDMkpHCmhZSFpaV3F0OUlBS0lIZ1paZFRMRldCSjhpcWQ1RDNCY0xjQ0FqWTRjNUtNaStJL3I1djZya0Z6QU9LSVRNNlcKSWJUbkVFeEMwSVR6bGxyNmJ2ekVwc3ZNNmhoRDVOS1RCWWhFVW1RM0FnTUJBQUdqZ1pzd2daZ3daZ1lEVlIwUgpCRjh3WFlJSmJHOWpZV3hvYjNOMGh3Ui9BQUFCaHhBQUFBQUFBQUFBQUFBQUFBQUFBQUFCZ2c5RVJWTkxWRTlRCkxVVlNTMEV3TmsyQ0QwUkZVMHRVVDFBdFJWSkxRVEEyVFljRWtWbHJxNGNRL29BQUFBQUFBQUFUVzFBMkk2S0EKMnpBZEJnTlZIUTRFRmdRVXdRT3NaaFVqeDNFRk5aZjUreGEzMXNUTjUzY3dEd1lEVlIwVEFRSC9CQVV3QXdFQgovekFOQmdrcWhraUc5dzBCQVFzRkFBT0NBUUVBVUc5WDl3WGs2eWJ0ODNNMFpKbmgwdldGWjIzMHVKN0RwalEzClNCT01MYjlsWndBQ3lQaU5rbm1LNTcyNjd0aDRpR2ZQUGFBRTUyN2puQXdJekdYeGRFOENtOVI2ejR0aEU5ZHYKMEhOUXpkVTFOS0V1Y0lNY0JUUTZYYzQ1YUJHSVVvN0FnemdXTDc2Um10VEhBVk8ycG9PQWlDd3FpZHpLQlNpVQpJMzE4bFNOMlJxb2RmdVBlVm04YU51Z0hObEN2WWRvcDNCbXdSOTB2SkMrdnp5TU5Zd2tQR1lOSkFqNWpwdm96Cmc3YUtBN0NiUEs0V0VPbjVCRFFoUFJuZlcreXVMK0xKN2pwMC9qNHNVdDd6K1RYbFJEYnZNV2pXOWkyUVlqV00Kc1p3Nnc5dnpNaWUzRDZFUHRIa0dmQWZ0Tk9lNW43S2RNS3BIME5qakYxYlU3Nm5FNHc9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==",
@@ -2393,6 +2337,40 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbControlSystem.i_xStartButton": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbControlSystem::i_xStartButton",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 5
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbControlSystem.i_xStopButton": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbControlSystem::i_xStopButton",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 6
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbControlSystem.i_xWarningResetSafetyMat": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -2648,159 +2626,6 @@
             },
             "USEMAPPING": true
         },
-        "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.eManCiliderPosition": {
-            "ACCESS": 3,
-            "DOMAIN": "ADS",
-            "DYNAMIC": true,
-            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbZuiger::eManCiliderPosition",
-            "SCHEMA": {
-                "allOf": [
-                    {
-                        "$ref": "tchmi:server#/definitions/ADS-PLC1.eZuigerCilinderposition"
-                    },
-                    {
-                        "propertyOrder": 13
-                    }
-                ]
-            },
-            "USEMAPPING": true
-        },
-        "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.eManHorizotalPosition": {
-            "ACCESS": 3,
-            "DOMAIN": "ADS",
-            "DYNAMIC": true,
-            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbZuiger::eManHorizotalPosition",
-            "SCHEMA": {
-                "allOf": [
-                    {
-                        "$ref": "tchmi:server#/definitions/ADS-PLC1.eZuigerHorizontaal"
-                    },
-                    {
-                        "propertyOrder": 14
-                    }
-                ]
-            },
-            "USEMAPPING": true
-        },
-        "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.i_eModes": {
-            "ACCESS": 3,
-            "DOMAIN": "ADS",
-            "DYNAMIC": true,
-            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbZuiger::i_eModes",
-            "SCHEMA": {
-                "allOf": [
-                    {
-                        "$ref": "tchmi:server#/definitions/ADS-PLC1.eModus"
-                    },
-                    {
-                        "propertyOrder": 2
-                    }
-                ]
-            },
-            "USEMAPPING": true
-        },
-        "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.i_xAlarmResetAlarmHorizontalMovement": {
-            "ACCESS": 3,
-            "DOMAIN": "ADS",
-            "DYNAMIC": true,
-            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbZuiger::i_xAlarmResetAlarmHorizontalMovement",
-            "SCHEMA": {
-                "allOf": [
-                    {
-                        "$ref": "tchmi:general#/definitions/BOOL"
-                    },
-                    {
-                        "propertyOrder": 10
-                    }
-                ]
-            },
-            "USEMAPPING": true
-        },
-        "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.i_xAlarmResetCilinder": {
-            "ACCESS": 3,
-            "DOMAIN": "ADS",
-            "DYNAMIC": true,
-            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbZuiger::i_xAlarmResetCilinder",
-            "SCHEMA": {
-                "allOf": [
-                    {
-                        "$ref": "tchmi:general#/definitions/BOOL"
-                    },
-                    {
-                        "propertyOrder": 9
-                    }
-                ]
-            },
-            "USEMAPPING": true
-        },
-        "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.i_xAlarmResetPressure": {
-            "ACCESS": 3,
-            "DOMAIN": "ADS",
-            "DYNAMIC": true,
-            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbZuiger::i_xAlarmResetPressure",
-            "SCHEMA": {
-                "allOf": [
-                    {
-                        "$ref": "tchmi:general#/definitions/BOOL"
-                    },
-                    {
-                        "propertyOrder": 11
-                    }
-                ]
-            },
-            "USEMAPPING": true
-        },
-        "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.i_xButtonManVacumOn": {
-            "ACCESS": 3,
-            "DOMAIN": "ADS",
-            "DYNAMIC": true,
-            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbZuiger::i_xButtonManVacumOn",
-            "SCHEMA": {
-                "allOf": [
-                    {
-                        "$ref": "tchmi:general#/definitions/BOOL"
-                    },
-                    {
-                        "propertyOrder": 15
-                    }
-                ]
-            },
-            "USEMAPPING": true
-        },
-        "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_eCiliderPosition": {
-            "ACCESS": 3,
-            "DOMAIN": "ADS",
-            "DYNAMIC": true,
-            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbZuiger::o_eCiliderPosition",
-            "SCHEMA": {
-                "allOf": [
-                    {
-                        "$ref": "tchmi:server#/definitions/ADS-PLC1.eZuigerCilinderposition"
-                    },
-                    {
-                        "propertyOrder": 26
-                    }
-                ]
-            },
-            "USEMAPPING": true
-        },
-        "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_sStateString": {
-            "ACCESS": 3,
-            "DOMAIN": "ADS",
-            "DYNAMIC": true,
-            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbZuiger::o_sStateString",
-            "SCHEMA": {
-                "allOf": [
-                    {
-                        "$ref": "tchmi:server#/definitions/ADS-PLC1.STRING-30"
-                    },
-                    {
-                        "propertyOrder": 40
-                    }
-                ]
-            },
-            "USEMAPPING": true
-        },
         "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_xAlarmCilinder": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -2847,23 +2672,6 @@
                     },
                     {
                         "propertyOrder": 25
-                    }
-                ]
-            },
-            "USEMAPPING": true
-        },
-        "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_xMotor": {
-            "ACCESS": 3,
-            "DOMAIN": "ADS",
-            "DYNAMIC": true,
-            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbZuiger::o_xMotor",
-            "SCHEMA": {
-                "allOf": [
-                    {
-                        "$ref": "tchmi:general#/definitions/BOOL"
-                    },
-                    {
-                        "propertyOrder": 16
                     }
                 ]
             },
@@ -6576,6 +6384,8 @@
                 "ADS.PLC1.MAIN.fbControlSystem.i_xAlarmResetEmergencyButton": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.i_xAlarmResetPressureGeneral": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.i_xSafetyMat": 3,
+                "ADS.PLC1.MAIN.fbControlSystem.i_xStartButton": 3,
+                "ADS.PLC1.MAIN.fbControlSystem.i_xStopButton": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.i_xWarningResetSafetyMat": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.o_xAbortGeneral": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.o_xAbortInvoerBuffer1": 3,
@@ -6591,19 +6401,9 @@
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xAlarmMotor": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xGivingToNext": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xMotor": 3,
-                "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.eManCiliderPosition": 3,
-                "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.eManHorizotalPosition": 3,
-                "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.i_eModes": 3,
-                "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.i_xAlarmResetAlarmHorizontalMovement": 3,
-                "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.i_xAlarmResetCilinder": 3,
-                "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.i_xAlarmResetPressure": 3,
-                "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.i_xButtonManVacumOn": 3,
-                "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_eCiliderPosition": 3,
-                "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_sStateString": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_xAlarmCilinder": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_xAlarmHorizontalMovement": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_xAlarmPressure": 3,
-                "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_xMotor": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.o_eState": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.SIMFUNCTIONING": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_eManualWantedPosition": 3,

@@ -4780,7 +4780,7 @@
 
 
 </div>
-<div id="TcHmiButton_65" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="20" data-tchmi-height-unit="px" data-tchmi-left="921" data-tchmi-left-unit="px" data-tchmi-top="305" data-tchmi-top-unit="px" data-tchmi-width="75" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="15" data-tchmi-zindex="3">
+<div id="TcHmiButton_65" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="20" data-tchmi-height-unit="px" data-tchmi-left="921" data-tchmi-left-unit="px" data-tchmi-top="306" data-tchmi-top-unit="px" data-tchmi-width="75" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="15" data-tchmi-zindex="3">
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
@@ -4865,7 +4865,7 @@
 
 
 </div>
-<div id="TcHmiButton_66" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="20" data-tchmi-height-unit="px" data-tchmi-left="921" data-tchmi-left-unit="px" data-tchmi-top="285" data-tchmi-top-unit="px" data-tchmi-width="75" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="15" data-tchmi-zindex="3">
+<div id="TcHmiButton_66" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="20" data-tchmi-height-unit="px" data-tchmi-left="921" data-tchmi-left-unit="px" data-tchmi-top="286" data-tchmi-top-unit="px" data-tchmi-width="75" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="15" data-tchmi-zindex="3">
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
@@ -4950,7 +4950,7 @@
 
 
 </div>
-<div id="TcHmiButton_67" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="20" data-tchmi-height-unit="px" data-tchmi-left="921" data-tchmi-left-unit="px" data-tchmi-top="264" data-tchmi-top-unit="px" data-tchmi-width="75" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="15" data-tchmi-zindex="3">
+<div id="TcHmiButton_67" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="20" data-tchmi-height-unit="px" data-tchmi-left="921" data-tchmi-left-unit="px" data-tchmi-top="266" data-tchmi-top-unit="px" data-tchmi-width="75" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="15" data-tchmi-zindex="3">
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
@@ -5035,7 +5035,7 @@
 
 
 </div>
-<div id="TcHmiButton_68" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="20" data-tchmi-height-unit="px" data-tchmi-left="921" data-tchmi-left-unit="px" data-tchmi-top="242" data-tchmi-top-unit="px" data-tchmi-width="75" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="15" data-tchmi-zindex="3">
+<div id="TcHmiButton_68" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="20" data-tchmi-height-unit="px" data-tchmi-left="921" data-tchmi-left-unit="px" data-tchmi-top="246" data-tchmi-top-unit="px" data-tchmi-width="75" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="15" data-tchmi-zindex="3">
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
@@ -5289,5 +5289,49 @@
 </script>
 
 
+</div>
+<div id="TcHmiButton_71" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="28" data-tchmi-height-unit="px" data-tchmi-left="314" data-tchmi-left-unit="px" data-tchmi-top="177" data-tchmi-top-unit="px" data-tchmi-width="72" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-zindex="3">
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "%ctx%owner::Id|EventRegistrationMode=Resolve%/ctx%.onMouseDown",
+    "actions": [
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%s%ADS.PLC1.MAIN.fbControlSystem.i_xStartButton%/s%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/BOOL",
+          "value": true
+        },
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+</div>
+<div id="TcHmiButton_72" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="28" data-tchmi-height-unit="px" data-tchmi-left="427" data-tchmi-left-unit="px" data-tchmi-top="177" data-tchmi-top-unit="px" data-tchmi-width="72" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-zindex="3">
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "%ctx%owner::Id|EventRegistrationMode=Resolve%/ctx%.onMouseDown",
+    "actions": [
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%s%ADS.PLC1.MAIN.fbControlSystem.i_xStopButton%/s%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/BOOL",
+          "value": true
+        },
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
 </div>
 </div>
