@@ -156,7 +156,6 @@ fbBlikjesBand(
 	i_eModus:= , 
 	i_xLightSensor:= , 
 	i_xAlarmReset:= , 
-	i_eNextState:= , 
 	i_xManualMotor:= , 
 	o_eState=> , 
 	o_xMotor=> , 

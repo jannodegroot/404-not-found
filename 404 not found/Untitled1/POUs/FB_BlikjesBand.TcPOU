@@ -8,7 +8,6 @@ VAR_INPUT
 	i_eModus				: eModus; // 0= off 1= auto 2= manual
 	i_xLightSensor 			: BOOL; // checking for cans after 10 sec alarm
 	i_xAlarmReset			: BOOL;
-	i_eNextState			: eSingleState;
 	i_xManualMotor			: BOOL;
 END_VAR
 VAR_OUTPUT
@@ -97,10 +96,7 @@ IF o_eState = eSingleState.Stopping AND o_xMotor = FALSE THEN
 END_IF
 
 //suspening
-IF (NOT i_xAbort AND NOT (o_eState = eSingleState.Stopped))  AND 
-   (i_eNextState = eSingleState.Suspended OR
-    i_eNextState = eSingleState.Stopped   OR
-    i_eNextState = eSingleState.Aborted) THEN
+IF (NOT i_xAbort AND NOT (o_eState = eSingleState.Stopped)) THEN
 	o_eState := eSingleState.Suspending;
 END_IF
 
