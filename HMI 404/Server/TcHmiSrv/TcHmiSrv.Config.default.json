@@ -2319,6 +2319,40 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbControlSystem.MachineStateLamp1Blink": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbControlSystem::MachineStateLamp1Blink",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 30
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbControlSystem.MachineStateLamp2Blink": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbControlSystem::MachineStateLamp2Blink",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 31
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbControlSystem.i_xAlarmResetEmergencyButton": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -2434,6 +2468,24 @@
                     {
                         "comment": "Lamp Invoer",
                         "propertyOrder": 22
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbControlSystem.o_eMachineStateLamp2": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbControlSystem::o_eMachineStateLamp2",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:server#/definitions/ADS-PLC1.eMachineStateLamp"
+                    },
+                    {
+                        "comment": "Lamp Depalletizer",
+                        "propertyOrder": 23
                     }
                 ]
             },
@@ -6450,6 +6502,8 @@
                 "ADS.PLC1.MAIN.fbBuffer5.o_xErrorGeneral": 3,
                 "ADS.PLC1.MAIN.fbBuffer5.o_xGivingToNext": 3,
                 "ADS.PLC1.MAIN.fbBuffer5.o_xMotor": 3,
+                "ADS.PLC1.MAIN.fbControlSystem.MachineStateLamp1Blink": 3,
+                "ADS.PLC1.MAIN.fbControlSystem.MachineStateLamp2Blink": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.i_xAlarmResetEmergencyButton": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.i_xAlarmResetPressureGeneral": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.i_xSafetyMat": 3,
@@ -6457,6 +6511,7 @@
                 "ADS.PLC1.MAIN.fbControlSystem.i_xStopButton": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.i_xWarningResetSafetyMat": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.o_eMachineStateLamp1": 3,
+                "ADS.PLC1.MAIN.fbControlSystem.o_eMachineStateLamp2": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.o_xAbortGeneral": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.o_xAbortInvoerBuffer1": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.o_xAlarmEmergencyButton": 3,

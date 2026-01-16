@@ -43,6 +43,9 @@ VAR
 	rlowpressure			: REAL := 4;
 	rPressure_bar			: REAL;
 	rMaxbarsensor			: REAL :=6;
+	
+	MachineStateLamp1Blink	: BOOL;
+	MachineStateLamp2Blink	: BOOL;
 END_VAR
 
 ]]></Declaration>
@@ -61,6 +64,15 @@ END_VAR
 		o_eMachineStateLamp1 := eMachineStateLamp.Red;
 		o_eMachineStateLamp2 := eMachineStateLamp.Red;
 END_CASE
+
+//blink the machinestatelamps
+IF o_eMachineStateLamp1 = eMachineStateLamp.Red_Blink THEN
+	fbBlinking(io_xBlinking:= MachineStateLamp1Blink);
+END_IF
+
+IF o_eMachineStateLamp2 = eMachineStateLamp.Red_Blink THEN
+	fbBlinking(io_xBlinking:= MachineStateLamp2Blink);
+END_IF
 
 //safty aborting of machine and parts
 IF xErrorEmergency OR xErrorPressure THEN 		 //if emergencybutten or no air pressure then complete machine go's into Aborted
