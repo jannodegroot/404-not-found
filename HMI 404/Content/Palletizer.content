@@ -2076,4 +2076,6 @@
 </div>
 <div id="TcHmiToggleButton_10" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="37" data-tchmi-height-unit="px" data-tchmi-left="938" data-tchmi-left-unit="px" data-tchmi-text="sim deuropenknop" data-tchmi-top="745" data-tchmi-top-unit="px" data-tchmi-width="98" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-state-symbol="%s%ADS.PLC1.MAIN.fbPalletizer.i_xDoorOpenButton%/s%">
 </div>
+<div id="TcHmiButton_58" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="37" data-tchmi-height-unit="px" data-tchmi-left="836" data-tchmi-left-unit="px" data-tchmi-text="emtyed pallets" data-tchmi-top="745" data-tchmi-top-unit="px" data-tchmi-width="92" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-state-symbol="%s%ADS.PLC1.MAIN.fbPalletizer.i_xPalletsEmptyed%/s%">
+</div>
 </div>

@@ -3382,6 +3382,23 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbPalletizer.i_xPalletsEmptyed": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbPalletizer::i_xPalletsEmptyed",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 7
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbPalletizer.i_xWarningReset": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -6634,6 +6651,7 @@
                 "ADS.PLC1.MAIN.fbPalletizer.i_PreviousEmptying": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.i_eModus": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.i_xDoorOpenButton": 3,
+                "ADS.PLC1.MAIN.fbPalletizer.i_xPalletsEmptyed": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.i_xWarningReset": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.istep": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.o_iStorageCount": 3,

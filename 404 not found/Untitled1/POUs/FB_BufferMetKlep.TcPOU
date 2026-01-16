@@ -171,7 +171,7 @@ IF gvl.g_xSimulationActive THEN
 	IF SIMFUNCTIONING THEN 
 		IF i_xPreviousEmptying AND o_xMotor AND gvl.Timerlong.Q AND NOT i_xLightSensor THEN
 			i_xLightSensor:=1;
-		ELSIF i_xNextEmpty AND o_xMotor AND gvl.Timerlong.Q AND i_xLightSensor THEN
+		ELSIF o_xGivingToNext AND o_xMotor AND gvl.Timerlong.Q AND i_xLightSensor THEN
 			i_xLightSensor:=0;
 		END_IF
 	END_IF

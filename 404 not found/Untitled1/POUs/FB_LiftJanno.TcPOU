@@ -57,19 +57,43 @@ END_VAR
       <ST><![CDATA[// Janno geeft door naar welke laag hij moet. Laag 0 = home, laag 1 = band, laag 2 = pallet op pallet, laag 3 = pallets hoog
 
 
-IF i_xEndSwitch THEN
-	i_iServoEncoder:=0;
+
 //sim
-ELSIF i_iServoEncoder > o_xTargetPos AND o_xMotor  AND GVL.TimerShort.Q THEN
+IF i_iServoEncoder > o_xTargetPos AND o_xMotor  AND GVL.TimerShort.Q THEN
 	i_iServoEncoder:=i_iServoEncoder-1;
 ELSIF i_iServoEncoder < o_xTargetPos AND o_xMotor  AND GVL.TimerShort.Q THEN
 	i_iServoEncoder:=i_iServoEncoder+1;
 END_IF
-IF o_xMagnetValve AND 
+
+IF i_iServoEncoder=0 THEN
+	i_xEndSwitch:= TRUE;
+ELSE 
+	i_xEndSwitch:= FALSE;
+END_IF
+IF o_xMagnetValve AND GVL.TimerShort.Q THEN
+	i_xPin1HallSensorIn:=FALSE;
+	i_xPin2HallSensorIn:=FALSE;
+	i_xPin3HallSensorIn:=FALSE;
+	i_xPin4HallSensorIn:=FALSE;
+	i_xPin1HallSensorOut:=TRUE;
+	i_xPin2HallSensorOut:=TRUE;
+	i_xPin3HallSensorOut:=TRUE;
+	i_xPin4HallSensorOut:=TRUE;
+ELSIF NOT o_xMagnetValve AND GVL.TimerShort.Q THEN
+	i_xPin1HallSensorOut:=FALSE;
+	i_xPin2HallSensorOut:=FALSE;
+	i_xPin3HallSensorOut:=FALSE;
+	i_xPin4HallSensorOut:=FALSE;
+	i_xPin1HallSensorIn:=TRUE;
+	i_xPin2HallSensorIn:=TRUE;
+	i_xPin3HallSensorIn:=TRUE;
+	i_xPin4HallSensorIn:=TRUE;
+
+END_IF
 //end sim
-IF i_eLiftState:= eLiftStates.Impale THEN
+IF i_eLiftState= eLiftStates.Impale THEN
 	o_xMagnetValve:=1;
-ELSIF i_eLiftState:= eLiftStates.Deimpale THEN
+ELSIF i_eLiftState= eLiftStates.Deimpale THEN
 	o_xMagnetValve:=0;
 ELSE
 	o_xMagnetValve:=0;
@@ -84,11 +108,6 @@ END_IF
 					CASE i_iMoveToLayer OF
 						0 :
 							o_xTargetPos:=0;
-							IF NOT i_xEndSwitch THEN
-								o_xMotor:=TRUE;
-							ELSE
-								o_xMotor:=FALSE;
-							END_IF
 						1 :
 							// Ga naar band hoogte
 							o_xTargetPos:=4;
