@@ -7,7 +7,7 @@ VAR_INPUT
 	i_xEmergencyButton 		: BOOL;
 	i_xSafetyMat 			: BOOL;
 	i_xSafetyDoor 			: BOOL;
-	i_xStartButton 			: BOOL;
+	i_xStartButton 			: BOOL :=1;
 	i_xStopButton 			: BOOL;
 	i_xWarningResetSafetyMat			: BOOL;
 	i_xWarningResetSafetyDoor			: BOOL;
