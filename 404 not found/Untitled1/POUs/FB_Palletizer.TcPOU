@@ -337,7 +337,9 @@ IF i_eModus = eModus.auto OR i_eModus = eModus.Off THEN
 		fbLiftB.i_xLightSensor2:=FALSE;
 		fbLiftB.i_xLightSensor2:=TRUE;
 	END_IF
-END_IF]]></ST>
+END_IF
+//
+//help]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
