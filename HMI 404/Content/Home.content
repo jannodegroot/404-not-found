@@ -5490,7 +5490,7 @@
                   "objectType": "StaticValue",
                   "valueType": "tchmi:framework#/definitions/Color",
                   "value": {
-                    "color": "rgba(100, 118, 135, 1)"
+                    "color": "rgba(253, 9, 16, 1)"
                   }
                 },
                 "asyncWait": true
@@ -5552,7 +5552,7 @@
                   "objectType": "StaticValue",
                   "valueType": "tchmi:framework#/definitions/Color",
                   "value": {
-                    "color": "rgba(100, 118, 135, 1)"
+                    "color": "rgba(253, 9, 16, 1)"
                   }
                 },
                 "asyncWait": true
@@ -5628,7 +5628,7 @@
                   "objectType": "StaticValue",
                   "valueType": "tchmi:framework#/definitions/Color",
                   "value": {
-                    "color": "rgba(100, 118, 135, 1)"
+                    "color": "rgba(253, 9, 16, 1)"
                   }
                 },
                 "asyncWait": true
@@ -5690,7 +5690,7 @@
                   "objectType": "StaticValue",
                   "valueType": "tchmi:framework#/definitions/Color",
                   "value": {
-                    "color": "rgba(100, 118, 135, 1)"
+                    "color": "rgba(253, 9, 16, 1)"
                   }
                 },
                 "asyncWait": true
