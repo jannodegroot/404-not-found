@@ -16,6 +16,7 @@ VAR_OUTPUT
 	o_xMotor 				: BOOL := FALSE;
 	o_xWarningFull			: BOOL;
 	o_xAcceptingCans		: BOOL; //For other machines that this one is working and has space for cans
+	o_sStateString 			: STRING(30);
 END_VAR
 VAR
 	xError : BOOL;
@@ -63,6 +64,9 @@ END_IF
 IF i_xAlarmReset = TRUE THEN
 	TimerStartButton := FALSE;
 END_IF
+
+//state enum to string for HMI
+o_sStateString := F_StateEnumToStringSingleState(o_eState);
 
 //sim
 IF gvl.g_xSimulationActive THEN
