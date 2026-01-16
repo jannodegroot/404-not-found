@@ -55,52 +55,48 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Janno geeft door naar welke laag hij moet. Laag 0 = home, laag 1 = band, laag 2 = pallet op pallet, laag 3 = pallets hoog
+
+
+IF i_xEndSwitch THEN
+	i_iServoEncoder:=0;
+ELSIF i_iServoEncoder > o_xTargetPos AND o_xMotor  AND GVL.TimerShort.Q THEN
+	i_iServoEncoder:=i_iServoEncoder-1;
+ELSIF i_iServoEncoder < o_xTargetPos AND o_xMotor  AND GVL.TimerShort.Q THEN
+	i_iServoEncoder:=i_iServoEncoder+1;
+END_IF
+
+
+
 CASE i_eMode OF
 	eModus.Auto :
 	CASE i_eState OF
 		eSingleState.Execute :
-			CASE i_eLiftState OF
-				eLiftStates.WaitForPallet :														// Niet af
-					// Wanneer in Normal Height positie, laat pallet door.
-					
-					
-					
-				eLiftStates.MoveUpToLayer :														// Testen
-				 	// Ga naar de positie van de volgende laag.
+			IF  i_iServoEncoder > o_xTargetPos OR i_iServoEncoder<o_xTargetPos THEN
+				o_xMotor:=TRUE;
+			ELSIF i_iServoEncoder = o_xTargetPos THEN
+				o_xMotor:=FALSE;
+			END_IF
 					CASE i_iMoveToLayer OF
 						0 :
-							// Ga naar home
-							IF i_xPin1HallSensorIn AND
-								i_xPin1HallSensorIn AND
-								i_xPin1HallSensorIn AND
-								i_xPin1HallSensorIn THEN
-								// Ga naar HOME
-								i_eLiftState := eLiftStates.MoveToHome;
+							o_xTargetPos:=0;
+							IF NOT i_xEndSwitch THEN
+								o_xMotor:=TRUE;
 							ELSE
-								// Error: Kan niet naar home, pins niet in
+								o_xMotor:=FALSE;
 							END_IF
 						1 :
 							// Ga naar band hoogte
-							THIS^.GoToConveyorHeight();
+							o_xTargetPos:=4;
 						2 : 
 							// Ga naar stapelhoogte
-							THIS^.GoToHighestHeight();
+							o_xTargetPos:=12;
 						3 :
-							// Ga hoog
-							THIS^.GoToPalletizeHeight();
+							//hoogte om pallet neer te zetten
+							o_xTargetPos:=8;
+
 					END_CASE
-					
 				
-			END_CASE
 	END_CASE
-	
-	eModus.Manual :
-		// Doe effe zelf																			// TOEVOEGEN MET HMI
-		// Lift handmatig bedienen door INT invoer?
-		// Pins handmatig in en uit, met beveiliging zodat pallet niet naar beneden dondert
-	eModus.Off :
-		// Doe niks
-		// Stop
 END_CASE]]></ST>
     </Implementation>
   </POU>

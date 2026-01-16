@@ -12,7 +12,8 @@ TYPE eLiftStates :
     Impale := 3,
     MoveUpToLayer := 4,
 	CheckNextLayer := 5,
-	Idle := 6
+	Idle := 6,
+	Deimpale := 7
 );
 END_TYPE
 ]]></Declaration>
