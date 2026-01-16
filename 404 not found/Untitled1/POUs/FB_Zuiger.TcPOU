@@ -15,10 +15,8 @@ VAR_INPUT
 	i_xAlarmResetAlarmHorizontalMovement	: BOOL;
 	i_xAlarmResetPressure : BOOL;
 	i_xButtonManStopall : BOOL;
-	i_xButtonManCiliderUP : BOOL;
-	i_xButtonManCiliderDown : BOOL;
-	i_xButtonManHoriztalOUT : BOOL;
-	i_xButtonManHorizontalIN : BOOL;
+	eManCiliderPosition		: eZuigerCilinderposition;
+	eManHorizotalPosition	: eZuigerHorizontaal;
 	i_xButtonManVacumOn	: BOOL;
 END_VAR
 VAR_OUTPUT
@@ -48,6 +46,9 @@ VAR
 	rPressure_bar: REAL ;
 	rMaxbarsensor: REAL := 6;
 	rlowpressure: REAL := 4;
+	
+	
+	SIMFUNCTIONING : BOOL := 1;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -105,14 +106,14 @@ CASE i_eModes OF
 	eModus.Manual: //manual controll
 		IF i_xButtonManStopall THEN
 			StopALL(); //stopall
-		ELSIF i_xButtonManStopall THEN
+		ELSIF eManCiliderPosition =  eZuigerCilinderposition.up THEN
 			CiliderUP(); //to startingpostion
-		ELSIF i_xButtonManCiliderDown THEN
+		ELSIF eManCiliderPosition =  eZuigerCilinderposition.Down THEN
 			CilinderDOwn();
 		END_IF
-		IF NOT i_xButtonManStopall AND i_xButtonManHorizontalIN THEN
+		IF NOT i_xButtonManStopall AND eManHorizotalPosition	= eZuigerHorizontaal.In THEN
 			HorizontalIN();
-		ELSIF NOT i_xButtonManStopall AND i_xButtonManHoriztalOUT THEN
+		ELSIF NOT i_xButtonManStopall AND eManHorizotalPosition	= eZuigerHorizontaal.Out THEN
 			HoriztalOUT();
 		END_IF
 		IF NOT i_xButtonManStopall AND NOT i_xButtonManVacumOn THEN
@@ -185,21 +186,19 @@ IF	i_xEndSwitchIn AND i_xEndSwitchOut THEN
 	o_eHorizotalPosition := eZuigerHorizontaal.Unkown;
 ELSIF i_xEndSwitchIn	THEN
 	o_eHorizotalPosition := eZuigerHorizontaal.In;
-	IF eWistedHorizotalPosition = eZuigerHorizontaal.In THEN
-		o_xMotor:=0;
-	ELSIF eWistedHorizotalPosition = eZuigerHorizontaal.OUT THEN
-		o_xMotor:=1;
-	END_IF
 ELSIF i_xEndSwitchOut THEN
 	o_eHorizotalPosition := eZuigerHorizontaal.Out;
-	IF eWistedHorizotalPosition = eZuigerHorizontaal.In THEN
-		o_xMotor:=1;
-	ELSIF eWistedHorizotalPosition = eZuigerHorizontaal.OUT THEN
-		o_xMotor:=0;
-	END_IF
 ELSE
 	o_eHorizotalPosition := eZuigerHorizontaal.Unkown;
-END_IF]]></ST>
+END_IF
+
+IF eWistedHorizotalPosition = o_eHorizotalPosition THEN
+	o_xMotor:=0;
+ELSIF NOT (eWistedHorizotalPosition = o_eHorizotalPosition) THEN
+	o_xMotor:=1;
+END_IF
+
+SIM();]]></ST>
     </Implementation>
     <Method Name="CiliderUP" Id="{2152594d-2447-4cf4-aa5e-fc79df202b7a}">
       <Declaration><![CDATA[METHOD PRIVATE CiliderUP
@@ -305,6 +304,44 @@ eWistedHorizotalPosition := eZuigerHorizontaal.Out;
 ]]></ST>
       </Implementation>
     </Method>
+    <Method Name="SIM" Id="{bd495253-70b8-4bb0-8434-9bfdfc38d540}">
+      <Declaration><![CDATA[METHOD SIM
+VAR
+
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//simulatie
+IF gvl.g_xSimulationActive THEN
+	IF SIMFUNCTIONING THEN
+		
+
+		IF GVL.TimerShort.Q THEN
+			i_rPressureSensor := 4000;
+			IF o_xMagnetValveCilinder THEN //simulation
+				i_xHallSensorIn := FALSE;
+				i_xHallSensorOut := TRUE;
+			ELSIF NOT o_xMagnetValveCilinder THEN
+				i_xHallSensorIn := TRUE;
+				i_xHallSensorOut := FALSE;
+			END_IF
+		END_IF
+		
+		IF GVL.Timerlong.Q THEN		
+			IF o_xMotor AND o_xMotorDirectionOut THEN
+				i_xEndSwitchIn := FALSE;
+				i_xEndSwitchOut := TRUE;
+			ELSIF o_xMotor AND NOT o_xMotorDirectionOut THEN
+				i_xEndSwitchIn := TRUE;
+				i_xEndSwitchOut := FALSE;
+			END_IF
+		END_IF
+		
+	END_IF
+	
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="StopALL" Id="{a7b526ea-bf90-4b58-9c21-d53d1f796b35}">
       <Declaration><![CDATA[METHOD PRIVATE StopALL : BOOL
 VAR_INPUT
@@ -312,7 +349,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[o_xMagnetValveCilinder:=0;
-o_xMotor:=0;
+eWistedHorizotalPosition := o_eHorizotalPosition;
 
 IF	i_xHallSensorIn AND i_xHallSensorOut THEN
 	o_eCiliderPosition := eZuigerCilinderposition.Unkown;
@@ -323,6 +360,8 @@ ELSIF i_xHallSensorOut THEN
 ELSE
 	o_eCiliderPosition := eZuigerCilinderposition.Unkown;
 END_IF
+//i want to dont like this
+//eWistedHorizotalPosition = o_eHorizotalPosition;
 
 IF	i_xEndSwitchIn AND i_xEndSwitchOut THEN
 	o_eHorizotalPosition := eZuigerHorizontaal.Unkown;

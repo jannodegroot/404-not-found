@@ -8,6 +8,8 @@ VAR_INPUT
 	i_PreviousEmptying	: BOOL;
 	i_xDoorOpenButton	: BOOL;	
 	i_xWarningReset		: BOOL;
+	i_eModus			: eModus := eModus.Auto;
+	i_xPalletsEmptyed: BOOL;
 END_VAR
 VAR_OUTPUT
 	o_eState 			: eSingleState;
@@ -16,39 +18,301 @@ VAR_OUTPUT
 	o_xExpectingPallet	: BOOL;
 END_VAR
 VAR
-	fbLift	: FB_Lift;
-	fbBand: FB_Band;
+	
+	fbBand	: FB_Band;
 	TimerLift: TON;
 	xTimerLiftRunning: BOOL;
 	timTimerValue: TIME;
+	xGoHoldBand : BOOL;
+	xGoEmptyBand : BOOL;
+	istep		: INT;
+	ximpaled : BOOL;
+	fbLiftB : FB_LiftB_Extended;
+	xAuto : BOOL;
+	TimerEmtying : ton;
+	xTimerEmtyingRunning: BOOL;
+	timTimerValueemtying: TIME;
+	o_sStateString: STRING(30);
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//timmer
 TimerLift(IN:=xTimerLiftRunning, PT := timTimerValue);
-
+//TimerEmtying(IN:=xTimerEmtyingRunning, PT:=timTimerValueemtying);
 
 //aansturen band
 fbBand(
-	i_eState:= , 
-	i_xGoHold:= , 
-	i_xGoEmpty:= , 
+	i_eState:= o_eState, 
+	i_xGoHold:= xGoHoldBand, 
+	i_xGoEmpty:= xGoEmptyBand, 
 	i_xAlarmReset:= , 
-	i_eModus:= , 
-	i_xManualMotor:= , 
 	o_xMotor=> , 
 	o_xErrorMotor=> , 
 	o_xAlarmMotor=> , 
 	o_xGivingToNext=> );
+	
+
+fbLiftB();
 //aansturen lift
+
+IF	fbLiftB.i_xPin1HallSensorIn AND NOT
+	fbLiftB.i_xPin1HallSensorOut AND
+	fbLiftB.i_xPin2HallSensorIn AND NOT
+	fbLiftB.i_xPin2HallSensorOut AND
+	fbLiftB.i_xPin3HallSensorIn AND NOT
+	fbLiftB.i_xPin3HallSensorOut AND
+	fbLiftB.i_xPin4HallSensorIn AND NOT
+	fbLiftB.i_xPin4HallSensorOut AND NOT
+	ximpaled THEN
+	ximpaled:=1;
+ELSIF fbLiftB.i_xPin1HallSensorIn AND 
+	fbLiftB.i_xPin1HallSensorOut AND NOT
+	fbLiftB.i_xPin2HallSensorIn AND 
+	fbLiftB.i_xPin2HallSensorOut AND NOT
+	fbLiftB.i_xPin3HallSensorIn AND 
+	fbLiftB.i_xPin3HallSensorOut AND NOT
+	fbLiftB.i_xPin4HallSensorIn AND 
+	fbLiftB.i_xPin4HallSensorOut AND
+	ximpaled THEN
+	ximpaled:=0;
+END_IF
+IF i_eModus<2 THEN
+	IF  o_eState<7 AND (i_xAbort OR fbBand.o_xErrorMotor OR fbLiftB.o_xErrorLift OR fbLiftB.o_xErrorImpaler) THEN 
+		o_eState := eSingleState.Aborting;
+	ELSIF o_eState = eSingleState.Execute AND o_xWarningFull THEN
+		o_eState := eSingleState.Suspending;
+	END_IF
+END_IF
 //aansturen zichzelf
+CASE o_eState OF
+	eSingleState.Idle:
+		//IF i_eStartStop = eStartStop.Start THEN
+			o_eState := eSingleState.Execute;
+		//END_IF
+	
+	eSingleState.Execute:
+		// Normal palletizing operation
+		
+		// Abort has highest priority
+		IF i_xAbort THEN
+			o_eState := eSingleState.Aborting;
+
+		// Door opened -> suspend machine
+		ELSIF i_xDoorOpenButton THEN
+			o_eState := eSingleState.Suspending;
+
+		// Stop button pressed
+		ELSIF i_eStartStop = eStartStop.Stop  AND o_eState = eSingleState.Execute THEN
+			o_eState := eSingleState.Stopping;
+		END_IF
+		IF xAuto THEN
+			CASE istep OF
+						0:
+						//start position
+							xGoHoldBand := TRUE;
+							xGoEmptyBand := FALSE;
+							o_xExpectingPallet := 0;
+							//lift in start
+							fbLiftB.i_iMoveToLayer:=1;
+							IF NOT fbBand.o_xMotor AND NOT fbLiftB.o_xMotor THEN//and lift
+								istep:=1;
+							END_IF
+						1:
+						//accepting pallet
+							o_xExpectingPallet := 1;
+							IF i_PreviousEmptying THEN
+								xGoHoldBand := FALSE;
+								xGoEmptyBand := TRUE;
+								istep:=2;
+							END_IF
+						2:
+						//position witch pallet
+						
+							
+								
+								IF NOT ximpaled AND NOT (fbLiftB.i_iMoveToLayer=1) AND o_xExpectingPallet THEN
+									o_xExpectingPallet := 1;
+									IF  NOT fbLiftB.o_xMotor THEN//and lift
+									fbLiftB.i_eLiftState:= eLiftStates.Impale;
+									o_xExpectingPallet:=0;
+									END_IF
+	
+								end_if
+	
+								IF NOT ximpaled AND (fbLiftB.i_iMoveToLayer=1) AND o_xExpectingPallet THEN
+									IF  NOT fbLiftB.o_xMotor THEN//and lift
+										fbLiftB.i_eLiftState:= eLiftStates.Impale;
+										o_xExpectingPallet:=0;
+									END_IF
+								end_if
+	
+								IF  ximpaled AND NOT (fbLiftB.i_iMoveToLayer=1) AND o_xExpectingPallet THEN
+									fbLiftB.i_iMoveToLayer:=3;
+									IF  NOT fbLiftB.o_xMotor AND fbLiftB.i_iMoveToLayer=3 THEN//and lift
+										fbLiftB.i_eLiftState:= eLiftStates.Impale;//moet deimpale zijn maar bestaat niet
+									END_IF
+								END_IF
+	
+							IF NOT o_xExpectingPallet THEN
+								xGoHoldBand := TRUE;
+								xGoEmptyBand := FALSE;
+								istep:=3;
+							END_IF
+						
+						3:
+						//holding and accepting pallets
+						IF ximpaled THEN //is holding pallet
+							xGoHoldBand := TRUE;
+							xGoEmptyBand := FALSE;
+							fbLiftB.i_iMoveToLayer:=2;
+							//move to holding
+							IF NOT fbLiftB.o_xMotor AND fbLiftB.i_iMoveToLayer=2 THEN
+								o_iStorageCount:=o_iStorageCount+1;
+								istep:=1;
+							END_IF
+						END_IF
+				END_CASE
+			END_IF
+		//normal opperation
+		CASE i_eModus OF
+			eModus.Auto:
+				xAuto:=1;
+				//
+			eModus.Manual:
+				xAuto:=0;
+				istep:=0;
+			eModus.Off:
+			IF istep=1 THEN
+				xAuto:=0;
+				IF o_eState=eSingleState.Execute THEN
+					o_eState := eSingleState.Stopping;
+				END_IF
+			END_IF
+
+		END_CASE
+		
+		
+		
+
+	eSingleState.Stopping:
+		// Stop band movement
+		o_xExpectingPallet:=0;
+		xGoHoldBand := TRUE;
+		xGoEmptyBand := FALSE;
+		IF NOT (fbLiftB.i_iMoveToLayer=1) THEN
+			fbLiftB.i_iMoveToLayer:=1;
+			IF  NOT fbLiftB.o_xMotor AND fbLiftB.i_iMoveToLayer=1 THEN//and lift
+				fbLiftB.i_eLiftState:= eLiftStates.Impale;//moet deimpale zijn maar bestaat niet
+			END_IF
+		END_IF
+		
+		IF NOT ximpaled AND (fbLiftB.i_iMoveToLayer=1 OR fbLiftB.i_iMoveToLayer=0) THEN
+			fbLiftB.i_iMoveToLayer:=0;
+			IF  NOT fbLiftB.o_xMotor AND fbLiftB.i_iMoveToLayer=0 THEN//and lift
+				istep:=0;
+				o_eState := eSingleState.Stopped;
+			END_IF
+		END_IF
+
+		IF i_xAbort THEN
+			o_eState := eSingleState.Aborting;
+		END_IF
+
+	eSingleState.Stopped:
+		// All movements stopped
+		o_xExpectingPallet:=0;
+		IF xAuto AND i_eStartStop = eStartStop.Start THEN
+			o_eState := eSingleState.Execute;
+		END_IF
+
+		IF i_xAbort THEN
+			o_eState := eSingleState.Aborting;
+		END_IF
+
+	eSingleState.Suspending:
+		o_xExpectingPallet:=0;
+		// Stop band movement
+		xGoHoldBand := TRUE;
+		xGoEmptyBand := FALSE;
+		IF  ximpaled AND NOT (fbLiftB.i_iMoveToLayer=0) THEN
+			fbLiftB.i_iMoveToLayer:=1;
+			IF  NOT fbLiftB.o_xMotor AND fbLiftB.i_iMoveToLayer=1 THEN//and lift
+				fbLiftB.i_eLiftState:= eLiftStates.Impale;//moet deimpale zijn maar bestaat niet
+			END_IF
+		END_IF
+		
+		IF NOT ximpaled AND fbLiftB.i_iMoveToLayer=1 THEN
+			fbLiftB.i_iMoveToLayer:=0;
+			IF  NOT fbLiftB.o_xMotor AND fbLiftB.i_iMoveToLayer=0 THEN//and lift
+				istep:=0;
+				o_eState := eSingleState.Suspended;
+			END_IF
+		END_IF
+
+
+		IF i_xAbort THEN
+			o_eState := eSingleState.Aborting;
+		END_IF
+
+
+
+	eSingleState.Suspended:
+		// Machine is safe, waiting
+		o_xExpectingPallet:=0;
+		IF NOT i_xDoorOpenButton THEN
+			//xTimerEmtyingRunning:=1;
+			IF o_iStorageCount<8 THEN
+				istep := 0;
+				o_eState := eSingleState.Execute;
+				//xTimerEmtyingRunning:=0;
+			END_IF
+
+		END_IF
+
+
+
+
+
+	eSingleState.Aborting:
+		o_xExpectingPallet:=0;
+		// Immediately stop band
+		xGoHoldBand := TRUE;
+		xGoEmptyBand := FALSE;
+
+		// Lift: immediately stop movement
+		// Lift stops immediately at current position
+
+		// When everything is stopped
+		IF NOT fbBand.o_xMotor AND NOT fbLiftB.o_xMotor THEN
+			o_eState := eSingleState.Aborted;
+		END_IF
+
+
+
+	eSingleState.Aborted:
+		o_xExpectingPallet:=0;
+		// Machine is halted due to abort or alarm
+
+		IF NOT i_xAbort AND NOT o_xWarningFull AND NOT fbBand.o_xErrorMotor AND NOT fbLiftB.o_xErrorLift AND NOT fbLiftB.o_xErrorImpaler THEN
+			// Reset abort condition
+			o_eState := eSingleState.Stopped;
+		END_IF
+
+
+END_CASE
 //errors
+
 //allarmen
+IF o_iStorageCount = 8 THEN
+	o_xWarningFull:=TRUE;
+ELSIF i_xWarningReset THEN
+	o_xWarningFull:=FALSE;
+	o_iStorageCount:=0;
+END_IF
+
 //warnings
 
-IF i_xDoorOpenButton THEN
-	//lift naar beneden
-END_IF]]></ST>
+o_sStateString := F_StateEnumToStringSingleState(o_eState);]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

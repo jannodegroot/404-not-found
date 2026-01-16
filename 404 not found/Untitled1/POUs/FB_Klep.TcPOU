@@ -29,6 +29,7 @@ VAR
 	TimerStartButton 			: BOOL;
 	fbBlinking 					: FB_Blinking;
 	xError						: BOOL;
+	SIMFUNCTIONING : BOOL := 1;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Van Emma
@@ -134,7 +135,21 @@ ELSIF NOT xError AND o_xAlarmPositionUpOrUnknow THEN
 ELSE
 	o_xErrorPositionUpOrUnknow := FALSE;
 END_IF;
-]]></ST>
+
+//sim
+IF gvl.g_xSimulationActive THEN
+	IF SIMFUNCTIONING THEN
+		IF GVL.TimerShort.Q THEN
+			IF o_xMagnetValve THEN
+				i_xHallSensorIn :=FALSE;
+				i_xHallSensorOut := TRUE;
+			ELSE 
+				i_xHallSensorOut := FALSE;
+				i_xHallSensorIn :=TRUE;
+			END_IF
+		END_IF
+	END_IF
+END_IF]]></ST>
     </Implementation>
     <Method Name="Errors" Id="{c01a7d59-0d58-4142-8c14-7eba332b4019}">
       <Declaration><![CDATA[METHOD Errors

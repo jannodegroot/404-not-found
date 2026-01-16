@@ -4,12 +4,14 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Lift
 VAR_INPUT
 	i_eState 			: eSingleState;
-	i_xMoveNextLayerUp	: BOOL;
+	i_eMode				: eModus;
+	i_eLiftState 		: eLiftStates;
+	
+	i_xAllowedToMoveUp	: BOOL;
 	i_xAllowedToMoveDown: BOOL;
 	i_xAlarmReset		: BOOL;
-	i_iServoEncoder		: INT;
-	i_xLightSensor1		: BOOL; // De eerste sensor die de pallet detecteerd
-	i_xLightSensor2		: BOOL; // De tweede sensor die de pallet detecteerd
+	
+	// Hall Sensors
 	i_xPin1HallSensorIn	: BOOL;
 	i_xPin1HallSensorOut: BOOL;
 	i_xPin2HallSensorIn	: BOOL;
@@ -18,11 +20,20 @@ VAR_INPUT
 	i_xPin3HallSensorOut: BOOL;	
 	i_xPin4HallSensorIn	: BOOL;
 	i_xPin4HallSensorOut: BOOL;
-	i_xEndSwitch		: BOOL;
+	
+	i_xLightSensor1		: BOOL; // De eerste sensor die de pallet detecteerd
+	i_xLightSensor2		: BOOL; // De tweede sensor die de pallet detecteerd
+	
+	i_xEndSwitch		: BOOL; // Check if the lift is down
+	
+	i_iServoEncoder		: INT;
 	i_iDistanceSensor	: INT;
+	i_iLayerHeight		: INT;	// Height of each layer
+	i_iNumberOfLayers   : INT;  // Total number of layers
 END_VAR
 VAR_OUTPUT
-	o_xMotor 			: BOOL;
+	o_xMotor 			: BOOL; // Motor Lift
+	o_xTargetPos		: INT;
 	o_xErrorLift 		: BOOL;
 	o_xAlarmLift 		: BOOL;
 	
@@ -30,14 +41,137 @@ VAR_OUTPUT
 	o_xErrorImpaler 	: BOOL;
 	o_xAlarmImpaler		: BOOL;
 	
+	o_xNewPalletPossible: BOOL;
 	o_xPalletInPosition	: BOOL;
-	o_eLiftPosition	: eLiftposition;
+	o_eLiftPosition		: eLiftposition;
 END_VAR
 VAR
+	iErrorCounter	: INT := 0; // Counts retries, after a few times errors will appear
+	iHomePosition	: INT;
+	iConveyorHeight	: INT;	// Standard height for grabbing or releasing pallet
+	iImpaleHeight	: INT := iHomePosition + iConveyorHeight;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Yvo
+IF i_iServoEncoder = o_xTargetPos THEN
+	// Idle
+	o_eLiftPosition := eLiftPosition.Idle;
+ELSIF i_iServoEncoder < o_xTargetPos THEN
+	// Going Up
+	o_eLiftPosition := eLiftPosition.GoingUp;
+ELSIF i_iServoEncoder > o_xTargetPos THEN
+	// Going Down
+	o_eLiftPosition := eLiftPosition.GoingDown;
+END_IF
+
+CASE i_eLiftState OF
+	eLiftStates.Idle :
+		// Wait for command								// moet dit erin?
+		
+	eLiftStates.InitHome :
+		// Initialise Home
+		THIS^.InitHome();
+		
+	eLiftStates.MoveToHome :
+		// Go to Home Position
+		THIS^.MoveHome();
+
+	eLiftStates.Impale :
+		// Impale op de manier van welke lift het is
+		THIS^.Impale();
+		IF i_xPin1HallSensorOut 
+		AND i_xPin2HallSensorOut 
+		AND i_xPin3HallSensorOut 
+		AND i_xPin4HallSensorOut THEN
+			// Everything is alright
+		ELSE
+			// Not alright, try again and add error count
+			iErrorCounter := iErrorCounter +1;
+			THIS^.Impale();
+		END_IF
+
+END_CASE
+
+
+THIS^.Simulation();
+
+/////////////////
+//ERRORHANDLING//
+/////////////////
+]]></ST>
+    </Implementation>
+    <Method Name="Impale" Id="{453b88bf-dc78-4993-b4a4-6ebb48f55463}">
+      <Declaration><![CDATA[METHOD Impale : BOOL
+VAR_INPUT
 END_VAR
 ]]></Declaration>
-    <Implementation>
-      <ST><![CDATA[]]></ST>
-    </Implementation>
+      <Implementation>
+        <ST><![CDATA[// Impale pallet
+o_xMagnetValve := TRUE;
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="InitHome" Id="{82471372-9ccc-4059-b0ab-808e2a70ad2a}">
+      <Declaration><![CDATA[METHOD InitHome : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT i_xEndSwitch THEN
+	o_xTargetPos := iConveyorHeight;
+	o_xMotor := TRUE;
+	
+	// Release pallet before going down.
+	IF i_iServoEncoder = o_xTargetPos THEN
+		o_xMagnetValve := FALSE;
+		o_xMotor := FALSE;
+	END_IF
+	
+	// Pins are in, possible to move home
+	IF i_xPin1HallSensorIn 
+	AND i_xPin2HallSensorIn 
+	AND i_xPin3HallSensorIn 
+	AND i_xPin4HallSensorIn 
+	AND i_iServoEncoder = o_xTargetPos THEN
+		o_xMotor := TRUE;
+		
+		IF i_xEndSwitch THEN
+			o_xMotor := FALSE;
+			iHomePosition := i_iServoEncoder;
+			o_eLiftPosition := eLiftPosition.Home;
+		END_IF;
+	END_IF;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="MoveHome" Id="{865b77f7-5c1a-48fc-b43f-da4cbe1c0d1f}">
+      <Declaration><![CDATA[METHOD MoveHome : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[o_xMotor := TRUE;
+o_xTargetPos := iHomePosition;
+
+IF i_iServoEncoder = iHomePosition THEN
+	o_xMotor := FALSE;
+END_IF;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Simulation" Id="{371d400a-5d82-4b6f-ace7-b0b500fd90fe}">
+      <Declaration><![CDATA[METHOD Simulation : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF o_eLiftPosition = eLiftPosition.GoingUp AND o_xMotor = TRUE THEN
+	i_iServoEncoder := i_iServoEncoder + 1;
+ELSIF o_eLiftPosition = eLiftPosition.GoingDown AND o_xMotor = TRUE THEN
+	i_iServoEncoder := i_iServoEncoder - 1;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
   </POU>
 </TcPlcObject>

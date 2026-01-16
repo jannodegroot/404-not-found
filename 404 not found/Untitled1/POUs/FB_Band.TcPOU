@@ -22,7 +22,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// Van Emma
+      <ST><![CDATA[// Van Emma :)
 
 CASE i_eModus OF
 	eModus.Off:
@@ -65,6 +65,9 @@ END_IF
 IF i_xAlarmReset THEN
 	o_xAlarmMotor := FALSE;
 END_IF
+
+//sim
+//niks]]></ST>
 
 //blinking error
 IF xError THEN
