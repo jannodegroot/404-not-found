@@ -28,6 +28,7 @@ VAR
 	fbSchuif		: FB_Schuif;
 	fbZuiger		: FB_Zuiger;
 	fbKlep			: FB_Klep;
+	fbLiftA: FB_LiftA_Extended;
 	
 	xLiftIsDone		: BOOL;
 	xReleasePallet	: BOOL;
@@ -52,6 +53,11 @@ VAR
 	xLightSensor2		: BOOL; // De tweede sensor die de pallet detecteerd
 	
 	xPalletInPosition	: BOOL;
+	
+	xConveyorMoving		: BOOL;
+	
+	xGoZuiger	: BOOL;
+	xGoSchuif	: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -78,8 +84,7 @@ THIS^.CheckMoveDown();
 // If Lift is done, release pallet. If not possible, hold pallet.
 THIS^.ReleaseOrHoldPallet();
 
-
-
+// Functionblock Klep
 fbKlep(
 	i_eState:= , 
 	i_eModus:= , 
@@ -97,10 +102,13 @@ fbKlep(
 );
 
 // Functionblock Schuif
-fbSchuif(i_xHMIMoveIn := , i_xHMIMoveOut := , i_xHMIStopMoving := ,
+fbSchuif(
+	i_xHMIMoveIn := , 
+	i_xHMIMoveOut := , 
+	i_xHMIStopMoving := ,
 	i_eState:= , 
 	i_eMode:= , 
-	i_xMove:= , 
+	i_xMove:= xGoSchuif, 
 	i_xMovePossible:= , 
 	i_xMoveHome:= , 
 	i_xEndSwitchIn:= , 
@@ -151,43 +159,41 @@ fbBand(
 	i_xGoHold:= xHoldPallet, // Als volgende band vol is
 	i_xGoEmpty:= xReleasePallet, // aansturen als de lift klaar is
 	i_xAlarmReset:= , 
-	o_xMotor=> , 
+	o_xMotor=> xConveyorMoving, 
 	o_xErrorMotor=> , 
 	o_xAlarmMotor=> , 
 	o_xGivingToNext=> );
 	
 // Functionblock Lift
-// fbLiftA(
-// 	i_eState:= , 
-// 	i_eMode:= , 
-// 	i_eLiftState:= , 
-// 	i_xAllowedToMoveUp:= xMoveUpSafe, 		// Schuif & Zuiger check
-// 	i_xAllowedToMoveDown:= xMoveDownSafe, 	// Klep check
-// 	i_xAlarmReset:= , 
-// 	i_xPin1HallSensorIn:= , 
-// 	i_xPin1HallSensorOut:= , 
-// 	i_xPin2HallSensorIn:= , 
-// 	i_xPin2HallSensorOut:= , 
-// 	i_xPin3HallSensorIn:= , 
-// 	i_xPin3HallSensorOut:= , 
-// 	i_xPin4HallSensorIn:= , 
-// 	i_xPin4HallSensorOut:= , 
-// 	i_xLightSensor1:= xLightSensor1,
-// 	i_xLightSensor2:= xLightSensor2,
-// 	i_xEndSwitch:= , 
-// 	i_iServoEncoder:= , 
-// 	i_iDistanceSensor:= , 
-// 	i_iLayerHeight:= iLayerHeight, 				// Layerheight
-// 	i_iNumberOfLayers:= i_iNumberOfLayersHMI, 		// Number of layers
-// 	i_xPalletInPosition:= xPalletInPosition,
-// 	o_xMotor=> , 
-// 	o_iTargetPos=> , 
-// 	o_xErrorLift=> , 
-// 	o_xAlarmLift=> , 
-// 	o_xMagnetValve=> , 
-// 	o_xErrorImpaler=> , 
-// 	o_xAlarmImpaler=> , 
-// 	o_xTaskDone=> xLiftIsDone);]]></ST>
+fbLiftA(
+	i_eLiftState:= , 
+	i_iServoEncoder:= , 
+	i_xEndSwitch:= , 
+	i_xPin1HallSensorIn:= , 
+	i_xPin2HallSensorIn:= , 
+	i_xPin3HallSensorIn:= , 
+	i_xPin4HallSensorIn:= , 
+	i_xPin1HallSensorOut:= , 
+	i_xPin2HallSensorOut:= , 
+	i_xPin3HallSensorOut:= , 
+	i_xPin4HallSensorOut:= , 
+	i_xLightSensor1:= xLightSensor1, 
+	i_xLightSensor2:= xLightSensor2, 
+	i_xMoveUpSafe:= xMoveUpSafe,
+	i_xMoveDownSafe:= xMoveDownSafe,
+	i_xPalletInPosition:= xPalletInPosition,
+	o_iTargetPos=> , 
+	o_eLiftPosition=> , 
+	o_xMotor=> , 
+	o_xMagnetValve=> , 
+	o_ePinsPositions=> , 
+	i_aLayerHeights:= o_aLayerHeights, 
+	i_iLayerCount:= i_iNumberOfLayersHMI, 
+	i_xMoveUpSafe:= xMoveUpSafe, 
+	i_eZuigerDone:= eZuigerSafe,
+	o_xGoSchuif=> xGoSchuif, 
+	o_xGoZuiger=> xGoZuiger,
+	o_xLiftDone=> xLiftIsDone);]]></ST>
     </Implementation>
     <Method Name="CalculateLayerHeights" Id="{4681791a-85d1-4fce-987f-2c5c95bae363}">
       <Declaration><![CDATA[METHOD CalculateLayerHeights : BOOL
@@ -243,6 +249,12 @@ END_IF]]></ST>
     </Method>
     <Method Name="DetectNewPallet" Id="{73a9bb72-da61-40b4-94bd-77c4d71e8ffa}">
       <Declaration><![CDATA[METHOD DetectNewPallet : BOOL
+(*
+	This Method detects a new pallet on the conveyor.
+	When the first sensor detects a pallet, Klep will be moved up to stop the pallet from going to far.
+	When Sensor 2 also detects the pallet, the conveyor will be told to stop moving.
+	When the conveyor stops moving, the klep will be moved down and the signal "pallet in position" will be send to the lift.
+*)
 VAR_INPUT
 END_VAR
 ]]></Declaration>
@@ -253,9 +265,13 @@ END_VAR
 	xHoldPallet := FALSE;
 	xPalletInPosition := FALSE;
 	IF xLightSensor2 THEN
-		eMoveKlep := eValvePosition.Down;
-		xPalletInPosition := TRUE;
 		xHoldPallet := TRUE;
+		IF xConveyorMoving = FALSE THEN
+			eMoveKlep := eValvePosition.Down;
+			IF eMoveKlep = eValvePosition.Down THEN
+				xPalletInPosition := TRUE;
+			END_IF
+		END_IF
 	ELSE
 		xHoldPallet := FALSE;
 		xPalletInPosition := FALSE;
@@ -272,6 +288,7 @@ END_VAR
         <ST><![CDATA[IF xLiftIsDone AND i_NextEmpty THEN
 	xReleasePallet := TRUE;
 	xHoldPallet := FALSE;
+	o_xGivingToNext := TRUE;
 ELSIF xLiftIsDone AND i_NextEmpty = FALSE THEN
 	xHoldPallet := TRUE;
 	xReleasePallet := FALSE;

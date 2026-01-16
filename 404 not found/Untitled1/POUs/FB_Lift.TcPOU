@@ -18,6 +18,13 @@ VAR_INPUT
 	i_xPin2HallSensorOut	: BOOL;
 	i_xPin3HallSensorOut	: BOOL;
 	i_xPin4HallSensorOut	: BOOL;
+	
+	i_xLightSensor1 : BOOL;
+	i_xLightSensor2 : BOOL;
+	
+	i_xMoveUpSafe: BOOL;
+	i_xMoveDownSafe: BOOL;
+	i_xPalletInPosition: BOOL;
 END_VAR
 VAR_OUTPUT
 	o_iTargetPos		: INT;
@@ -37,7 +44,19 @@ END_VAR
       <ST><![CDATA[THIS^.CheckPins();
 THIS^.LiftPosition();
 THIS^.Simulation();
-THIS^.InitHome();]]></ST>
+THIS^.InitHome();
+
+
+CASE i_eLiftState OF
+	eLiftStates.InitHome :
+		// Initialise Home
+		THIS^.InitHome();
+	
+	eLiftStates.Impale :
+		// Impale op de manier van welke lift het is
+		THIS^.Impale();
+
+END_CASE]]></ST>
     </Implementation>
     <Method Name="CheckPins" Id="{6e5cd012-7ea2-457b-9034-0e741c55e71a}">
       <Declaration><![CDATA[METHOD CheckPins : BOOL

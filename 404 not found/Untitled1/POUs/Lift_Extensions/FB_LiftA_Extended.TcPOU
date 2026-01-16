@@ -4,20 +4,34 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_LiftA_Extended EXTENDS FB_Lift
 VAR_INPUT
 	i_aLayerHeights	: ARRAY[1..10] OF INT;
-	i_nLayerCount: INT;
-	i_xMoveUpSafe: BOOL;
+	i_iLayerCount: INT;
+	i_eZuigerDone : eZuigerCilinderPosition;
 END_VAR
 VAR_OUTPUT
 	o_xGoSchuif: BOOL;
 	o_xGoZuiger: BOOL;
+	o_xLiftDone: BOOL;
 END_VAR
 VAR
 	LayerState: INT;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[SUPER^();]]></ST>
+      <ST><![CDATA[SUPER^();
+
+IF i_xPalletInPosition THEN
+	THIS^.MoveUpToLayer();
+END_IF]]></ST>
     </Implementation>
+    <Method Name="MoveHome" Id="{4513c6c0-0989-4c7f-b9dc-fd6793baeddd}">
+      <Declaration><![CDATA[METHOD MoveHome : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="MoveUpToLayer" Id="{a3b1756c-3dc2-4e81-9a1c-b2a3ad14fbe2}">
       <Declaration><![CDATA[METHOD MoveUpToLayer : BOOL
 VAR_INPUT
@@ -31,7 +45,7 @@ END_VAR]]></Declaration>
 	0: // Idle / Start
 		CurrentLayer := 1;
 	
-		IF i_nLayerCount > 0 THEN
+		IF i_iLayerCount > 0 THEN
 			LayerState := 1;
 		END_IF
 	
@@ -48,22 +62,18 @@ END_VAR]]></Declaration>
 	
 	2: // Do action at layer
 		o_xGoZuiger := TRUE;	// Use Zuiger to remove any layer cartons
-		
-		o_xGoSchuif := TRUE;	// Push cans onto conveyor
+		IF i_eZuigerDone = eZuigerCilinderPosition.Up THEN
+			o_xGoSchuif := TRUE;	// Push cans onto conveyor
+		END_IF
 		
 		IF i_xMoveUpSafe THEN
 			LayerState := 3;
 		END_IF
 	
-// 		IF xActionDone THEN
-// 			LayerState := 3;
-// 		END_IF
-	
-	
 	3: // Advance to next layer
 		CurrentLayer := CurrentLayer + 1;
 	
-		IF CurrentLayer > i_nLayerCount THEN
+		IF CurrentLayer > i_iLayerCount THEN
 			LayerState := 4;   // all layers done
 		ELSE
 			LayerState := 1;   // go to next layer
@@ -71,7 +81,7 @@ END_VAR]]></Declaration>
 	
 	
 	4: // Finished
-		o_xMotor := FALSE;
+		THIS^.MoveHome();
 		// wait here
 
 END_CASE]]></ST>

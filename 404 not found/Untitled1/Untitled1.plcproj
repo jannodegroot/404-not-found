@@ -121,17 +121,17 @@
     <Compile Include="POUs\F_StateEnumToStringGeneralState.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Lift_Extentions\FB_LiftA_Extended.TcPOU">
+    <Compile Include="POUs\Lift_Extensions\FB_LiftA_Extended.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Lift_Extentions\FB_LiftB_Extended.TcPOU">
+    <Compile Include="POUs\Lift_Extensions\FB_LiftB_Extended.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
-    <Folder Include="POUs\Lift_Extentions" />
+    <Folder Include="POUs\Lift_Extensions" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
