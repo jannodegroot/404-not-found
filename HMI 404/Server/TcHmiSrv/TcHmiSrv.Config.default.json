@@ -39,6 +39,39 @@
                     }
                 ]
             },
+            "ADS-PLC1.eMachineStateLamp": {
+                "attributes": {
+                    "generate_implicit_init_function": "",
+                    "qualified_only": "",
+                    "strict": "",
+                    "to_string": ""
+                },
+                "enum": [
+                    0,
+                    1,
+                    2,
+                    3
+                ],
+                "options": [
+                    {
+                        "label": "Green",
+                        "value": 0
+                    },
+                    {
+                        "label": "Orange",
+                        "value": 1
+                    },
+                    {
+                        "label": "Red",
+                        "value": 2
+                    },
+                    {
+                        "label": "Red_Blink",
+                        "value": 3
+                    }
+                ],
+                "type": "integer"
+            },
             "ADS-PLC1.eModus": {
                 "attributes": {
                     "generate_implicit_init_function": "",
@@ -2286,6 +2319,40 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbControlSystem.MachineStateLamp1Blink": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbControlSystem::MachineStateLamp1Blink",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 30
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbControlSystem.MachineStateLamp2Blink": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbControlSystem::MachineStateLamp2Blink",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 31
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbControlSystem.i_xAlarmResetEmergencyButton": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -2383,6 +2450,42 @@
                     },
                     {
                         "propertyOrder": 7
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbControlSystem.o_eMachineStateLamp1": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbControlSystem::o_eMachineStateLamp1",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:server#/definitions/ADS-PLC1.eMachineStateLamp"
+                    },
+                    {
+                        "comment": "Lamp Invoer",
+                        "propertyOrder": 22
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbControlSystem.o_eMachineStateLamp2": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbControlSystem::o_eMachineStateLamp2",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:server#/definitions/ADS-PLC1.eMachineStateLamp"
+                    },
+                    {
+                        "comment": "Lamp Depalletizer",
+                        "propertyOrder": 23
                     }
                 ]
             },
@@ -2621,6 +2724,40 @@
                     },
                     {
                         "propertyOrder": 7
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.i_eModes": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbZuiger::i_eModes",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:server#/definitions/ADS-PLC1.eModus"
+                    },
+                    {
+                        "propertyOrder": 2
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_sStateString": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbZuiger::o_sStateString",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:server#/definitions/ADS-PLC1.STRING-30"
+                    },
+                    {
+                        "propertyOrder": 40
                     }
                 ]
             },
@@ -6300,6 +6437,7 @@
                 "ADS.AdsSyncReadStateReq": 3,
                 "ADS.CheckLicense": 3,
                 "ADS.Diagnostics": 3,
+                "ADS.PLC1": 3,
                 "ADS.PLC1.GVL.Timerhmi.Q": 3,
                 "ADS.PLC1.GVL.g_xSimulationActive": 3,
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.fbKlep.i_eManualWantedPosition": 3,
@@ -6381,12 +6519,16 @@
                 "ADS.PLC1.MAIN.fbBuffer5.o_xErrorGeneral": 3,
                 "ADS.PLC1.MAIN.fbBuffer5.o_xGivingToNext": 3,
                 "ADS.PLC1.MAIN.fbBuffer5.o_xMotor": 3,
+                "ADS.PLC1.MAIN.fbControlSystem.MachineStateLamp1Blink": 3,
+                "ADS.PLC1.MAIN.fbControlSystem.MachineStateLamp2Blink": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.i_xAlarmResetEmergencyButton": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.i_xAlarmResetPressureGeneral": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.i_xSafetyMat": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.i_xStartButton": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.i_xStopButton": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.i_xWarningResetSafetyMat": 3,
+                "ADS.PLC1.MAIN.fbControlSystem.o_eMachineStateLamp1": 3,
+                "ADS.PLC1.MAIN.fbControlSystem.o_eMachineStateLamp2": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.o_xAbortGeneral": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.o_xAbortInvoerBuffer1": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.o_xAlarmEmergencyButton": 3,
@@ -6401,6 +6543,8 @@
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xAlarmMotor": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xGivingToNext": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xMotor": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.i_eModes": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_sStateString": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_xAlarmCilinder": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_xAlarmHorizontalMovement": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_xAlarmPressure": 3,

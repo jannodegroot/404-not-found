@@ -43,6 +43,9 @@ VAR
 	rlowpressure			: REAL := 4;
 	rPressure_bar			: REAL;
 	rMaxbarsensor			: REAL :=6;
+	
+	MachineStateLamp1Blink	: BOOL;
+	MachineStateLamp2Blink	: BOOL;
 END_VAR
 
 ]]></Declaration>
@@ -62,6 +65,15 @@ END_VAR
 		o_eMachineStateLamp2 := eMachineStateLamp.Red;
 END_CASE
 
+//blink the machinestatelamps
+IF o_eMachineStateLamp1 = eMachineStateLamp.Red_Blink THEN
+	fbBlinking(io_xBlinking:= MachineStateLamp1Blink);
+END_IF
+
+IF o_eMachineStateLamp2 = eMachineStateLamp.Red_Blink THEN
+	fbBlinking(io_xBlinking:= MachineStateLamp2Blink);
+END_IF
+
 //safty aborting of machine and parts
 IF xErrorEmergency OR xErrorPressure THEN 		 //if emergencybutten or no air pressure then complete machine go's into Aborted
 	o_xAbortGeneral := 1;
@@ -74,8 +86,11 @@ o_xAbortPalletizer := i_xSafetyDoor; //only of palletizer aborted
 //Start Stop
 IF i_xStopButton OR  i_eGeneralState=eGeneralState.Aborted THEN //if stopbutton or the machine is aborted the startstop wil become Stop
 	o_eStartStopGeneral :=eStartStop.Stop;
-ELSIF i_xStartButton THEN
+	i_xStartButton := FALSE;
+END_IF
+IF i_xStartButton THEN
 	o_eStartStopGeneral :=eStartStop.Start;
+	i_xStopButton := FALSE;
 END_IF
 
 
