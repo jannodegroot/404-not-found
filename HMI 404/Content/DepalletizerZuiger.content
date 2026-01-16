@@ -2032,4 +2032,106 @@
 ]
 </script>
 </div>
+<div id="TcHmiLinearGauge_2" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiLinearGauge" data-tchmi-base-animation-time="1000" data-tchmi-decimal-digits="3" data-tchmi-height="101" data-tchmi-height-unit="px" data-tchmi-label-range="20" data-tchmi-left="217" data-tchmi-left-unit="px" data-tchmi-show-labels="True" data-tchmi-show-ticks="False" data-tchmi-show-value-text="True" data-tchmi-start-from-zero="True" data-tchmi-top="96" data-tchmi-top-unit="px" data-tchmi-width="73" data-tchmi-width-unit="px" data-tchmi-max-value="6" data-tchmi-editable="False" data-tchmi-ignore-invalid-values="False" data-tchmi-value="%s%ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.rPressure_bar%/s%" data-tchmi-orientation="Vertical" data-tchmi-zindex="2" data-tchmi-label-font-size="10">
+<script data-tchmi-target-attribute="data-tchmi-tick-definition" type="application/json">
+{
+  "mainTickRange": 1.0,
+  "subTickRange": 1.0
+}
+</script>
+
+
+
+
+
+
+<script data-tchmi-target-attribute="data-tchmi-progress-foreground-color" type="application/json">
+{
+  "color": "rgba(188, 187, 187, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-range" type="application/json">
+[
+  {
+    "color": {
+      "color": "rgba(100, 118, 135, 1)"
+    },
+    "start": 4.0,
+    "end": 6.0
+  },
+  {
+    "color": {
+      "color": "rgba(231, 230, 57, 1)"
+    },
+    "start": 0.0,
+    "end": 4.0
+  }
+]
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-progress-background-color" type="application/json">
+{
+  "color": "rgba(223, 223, 223, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-background-color" type="application/json">
+{
+  "color": "rgba(223, 223, 223, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-border-color" type="application/json">
+{
+  "color": "rgba(223, 223, 223, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-value-color" type="application/json">
+{
+  "color": "rgba(0, 0, 0, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-label-color" type="application/json">
+{
+  "color": "rgba(0, 0, 0, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-unit-color" type="application/json">
+{
+  "color": "rgba(0, 0, 0, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-tick-color" type="application/json">
+{
+  "color": "rgba(0, 0, 0, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-knob-color" type="application/json">
+{
+  "color": "rgba(100, 118, 135, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-knob-arrows-color" type="application/json">
+{
+  "color": "rgba(0, 0, 0, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-set-point-marker-color" type="application/json">
+{
+  "color": "rgba(0, 0, 0, 1)"
+}
+</script>
+
+
+</div>
+<div id="text_state_95" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="28" data-tchmi-height-unit="px" data-tchmi-left="203" data-tchmi-left-unit="px" data-tchmi-text="Air pressure vacuum" data-tchmi-top="190" data-tchmi-top-unit="px" data-tchmi-width="105" data-tchmi-width-unit="px" data-tchmi-word-wrap="&quot;Tru" data-tchmi-text-font-size="12" data-tchmi-text-horizontal-alignment="Left" data-tchmi-text-vertical-alignment="Center" data-tchmi-zindex="6">
+</div>
 </div>

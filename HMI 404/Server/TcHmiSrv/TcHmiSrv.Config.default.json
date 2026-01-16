@@ -2666,6 +2666,23 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbControlSystem.rPressure_bar": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbControlSystem::rPressure_bar",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/REAL"
+                    },
+                    {
+                        "propertyOrder": 28
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_eModus": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -3120,6 +3137,23 @@
                     },
                     {
                         "propertyOrder": 16
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.rPressure_bar": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbZuiger::rPressure_bar",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/REAL"
+                    },
+                    {
+                        "propertyOrder": 36
                     }
                 ]
             },
@@ -6932,6 +6966,7 @@
                 "ADS.PLC1.MAIN.fbControlSystem.o_xErrorEmergencyButton": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.o_xErrorPressureGeneral": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.o_xWarningSafetyMat": 3,
+                "ADS.PLC1.MAIN.fbControlSystem.rPressure_bar": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_eModus": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_eState": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_xAlarmReset": 3,
@@ -6959,6 +6994,7 @@
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_xErrorHorizontalMovement": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_xErrorPressure": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_xMotor": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.rPressure_bar": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.o_eState": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.SIMFUNCTIONING": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_eManualWantedPosition": 3,
