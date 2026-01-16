@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_LiftJanno" Id="{fce90b60-d239-44ae-a222-806e484b434c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_LiftJanno
+VAR_INPUT
+	i_iMoveToLayer : INT;
+	i_eState 			: eSingleState;
+	i_eMode				: eModus;
+	i_eLiftState 		: eLiftStates;
+	
+	i_xAllowedToMoveUp	: BOOL;
+	i_xAllowedToMoveDown: BOOL;
+	i_xAlarmReset		: BOOL;
+	
+	// Hall Sensors
+	i_xPin1HallSensorIn	: BOOL;
+	i_xPin1HallSensorOut: BOOL;
+	i_xPin2HallSensorIn	: BOOL;
+	i_xPin2HallSensorOut: BOOL;	
+	i_xPin3HallSensorIn	: BOOL;
+	i_xPin3HallSensorOut: BOOL;	
+	i_xPin4HallSensorIn	: BOOL;
+	i_xPin4HallSensorOut: BOOL;
+	
+	i_xLightSensor1		: BOOL; // De eerste sensor die de pallet detecteerd
+	i_xLightSensor2		: BOOL; // De tweede sensor die de pallet detecteerd
+	
+	i_xEndSwitch		: BOOL; // Check if the lift is down
+	
+	i_iServoEncoder		: INT;
+	i_iDistanceSensor	: INT;
+	i_iLayerHeight		: INT;	// Height of each layer
+	i_iNumberOfLayers   : INT;  // Total number of layers
+END_VAR
+VAR_OUTPUT
+	o_xMotor 			: BOOL; // Motor Lift
+	o_xTargetPos		: INT;
+	o_xErrorLift 		: BOOL;
+	o_xAlarmLift 		: BOOL;
+	
+	o_xMagnetValve		: BOOL;
+	o_xErrorImpaler 	: BOOL;
+	o_xAlarmImpaler		: BOOL;
+	
+	o_xNewPalletPossible: BOOL;
+	o_xPalletInPosition	: BOOL;
+	o_eLiftPosition		: eLiftposition;
+END_VAR
+VAR
+	iErrorCounter	: INT := 0; // Counts retries, after a few times errors will appear
+	iHomePosition	: INT;
+	iConveyorHeight	: INT;	// Standard height for grabbing or releasing pallet
+	iImpaleHeight	: INT := iHomePosition + iConveyorHeight;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Janno geeft door naar welke laag hij moet. Laag 0 = home, laag 1 = band, laag 2 = pallet op pallet, laag 3 = pallets hoog
+
+
+
+//sim
+IF i_iServoEncoder > o_xTargetPos AND o_xMotor  AND GVL.TimerShort.Q THEN
+	i_iServoEncoder:=i_iServoEncoder-1;
+ELSIF i_iServoEncoder < o_xTargetPos AND o_xMotor  AND GVL.TimerShort.Q THEN
+	i_iServoEncoder:=i_iServoEncoder+1;
+END_IF
+
+IF i_iServoEncoder=0 THEN
+	i_xEndSwitch:= TRUE;
+ELSE 
+	i_xEndSwitch:= FALSE;
+END_IF
+IF o_xMagnetValve AND GVL.TimerShort.Q THEN
+	i_xPin1HallSensorIn:=FALSE;
+	i_xPin2HallSensorIn:=FALSE;
+	i_xPin3HallSensorIn:=FALSE;
+	i_xPin4HallSensorIn:=FALSE;
+	i_xPin1HallSensorOut:=TRUE;
+	i_xPin2HallSensorOut:=TRUE;
+	i_xPin3HallSensorOut:=TRUE;
+	i_xPin4HallSensorOut:=TRUE;
+ELSIF NOT o_xMagnetValve AND GVL.TimerShort.Q THEN
+	i_xPin1HallSensorOut:=FALSE;
+	i_xPin2HallSensorOut:=FALSE;
+	i_xPin3HallSensorOut:=FALSE;
+	i_xPin4HallSensorOut:=FALSE;
+	i_xPin1HallSensorIn:=TRUE;
+	i_xPin2HallSensorIn:=TRUE;
+	i_xPin3HallSensorIn:=TRUE;
+	i_xPin4HallSensorIn:=TRUE;
+
+END_IF
+//end sim
+IF i_eLiftState= eLiftStates.Impale THEN
+	o_xMagnetValve:=1;
+ELSIF i_eLiftState= eLiftStates.Deimpale THEN
+	o_xMagnetValve:=0;
+ELSE
+	o_xMagnetValve:=0;
+END_IF
+			IF i_eState=eSingleState.Aborted OR i_eState=eSingleState.Aborting THEN
+				o_xMotor:=FALSE;
+			ELSIF  i_iServoEncoder > o_xTargetPos OR i_iServoEncoder<o_xTargetPos  THEN
+				o_xMotor:=TRUE;
+			ELSIF i_iServoEncoder = o_xTargetPos THEN
+				o_xMotor:=FALSE;
+			END_IF
+					CASE i_iMoveToLayer OF
+						0 :
+							o_xTargetPos:=0;
+						1 :
+							// Ga naar band hoogte
+							o_xTargetPos:=4;
+						2 : 
+							// Ga naar stapelhoogte
+							o_xTargetPos:=12;
+						3 :
+							//hoogte om pallet neer te zetten
+							o_xTargetPos:=8;
+
+					END_CASE
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
