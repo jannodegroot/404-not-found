@@ -908,6 +908,34 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.GVL.Timerhmi.Q": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::GVL::Timerhmi::Q",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "gets TRUE, delay time (PT) after a rising edge at IN",
+                        "propertyOrder": 3
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.GVL.g_xSimulationActive": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::GVL::g_xSimulationActive",
+            "SCHEMA": {
+                "$ref": "tchmi:general#/definitions/BOOL"
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.fbKlep.i_eManualWantedPosition": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1355,6 +1383,26 @@
             },
             "USEMAPPING": true
         },
+<<<<<<< HEAD
+=======
+        "ADS.PLC1.MAIN.fbBuffer2.SIMFUNCTIONING": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbBuffer2::SIMFUNCTIONING",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 20
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+>>>>>>> master
         "ADS.PLC1.MAIN.fbBuffer2.i_eModus": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1520,6 +1568,23 @@
                     },
                     {
                         "propertyOrder": 11
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbBuffer3.SIMFUNCTIONING": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbBuffer3::SIMFUNCTIONING",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 20
                     }
                 ]
             },
@@ -1695,6 +1760,23 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbBuffer4.SIMFUNCTIONING": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbBuffer4::SIMFUNCTIONING",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 20
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbBuffer4.i_eModus": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1860,6 +1942,23 @@
                     },
                     {
                         "propertyOrder": 11
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbBuffer5.SIMFUNCTIONING": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbBuffer5::SIMFUNCTIONING",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 22
                     }
                 ]
             },
@@ -2224,6 +2323,23 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbControlSystem.i_xSafetyMat": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbControlSystem::i_xSafetyMat",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 3
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbControlSystem.i_xWarningResetSafetyMat": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -2445,6 +2561,7 @@
             },
             "USEMAPPING": true
         },
+<<<<<<< HEAD
         "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xErrorMotor": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -2462,6 +2579,8 @@
             },
             "USEMAPPING": true
         },
+=======
+>>>>>>> master
         "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xGivingToNext": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -2513,6 +2632,26 @@
             },
             "USEMAPPING": true
         },
+<<<<<<< HEAD
+=======
+        "ADS.PLC1.MAIN.fbInvoerBuffer1.SIMFUNCTIONING": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbInvoerBuffer1::SIMFUNCTIONING",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 26
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+>>>>>>> master
         "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_eManualWantedPosition": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -2907,6 +3046,7 @@
             },
             "USEMAPPING": true
         },
+<<<<<<< HEAD
         "ADS.PLC1.MAIN.fbPalletizer.fbBand.i_eModus": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -2958,6 +3098,8 @@
             },
             "USEMAPPING": true
         },
+=======
+>>>>>>> master
         "ADS.PLC1.MAIN.fbPalletizer.fbBand.o_xAlarmMotor": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -2969,6 +3111,7 @@
                         "$ref": "tchmi:general#/definitions/BOOL"
                     },
                     {
+<<<<<<< HEAD
                         "propertyOrder": 9
                     }
                 ]
@@ -2987,6 +3130,9 @@
                     },
                     {
                         "propertyOrder": 8
+=======
+                        "propertyOrder": 7
+>>>>>>> master
                     }
                 ]
             },
@@ -3003,7 +3149,147 @@
                         "$ref": "tchmi:general#/definitions/BOOL"
                     },
                     {
+<<<<<<< HEAD
                         "propertyOrder": 7
+=======
+                        "propertyOrder": 5
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbPalletizer.i_PreviousEmptying": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbPalletizer::i_PreviousEmptying",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 3
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbPalletizer.i_eModus": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbPalletizer::i_eModus",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:server#/definitions/ADS-PLC1.eModus"
+                    },
+                    {
+                        "propertyOrder": 6
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbPalletizer.i_xDoorOpenButton": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbPalletizer::i_xDoorOpenButton",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 4
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbPalletizer.i_xWarningReset": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbPalletizer::i_xWarningReset",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 5
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbPalletizer.istep": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbPalletizer::istep",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/INT"
+                    },
+                    {
+                        "propertyOrder": 18
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbPalletizer.o_iStorageCount": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbPalletizer::o_iStorageCount",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/INT"
+                    },
+                    {
+                        "propertyOrder": 9
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbPalletizer.o_sStateString": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbPalletizer::o_sStateString",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:server#/definitions/ADS-PLC1.STRING-30"
+                    },
+                    {
+                        "propertyOrder": 25
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbPalletizer.o_xWarningFull": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbPalletizer::o_xWarningFull",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 10
+>>>>>>> master
                     }
                 ]
             },
@@ -6034,6 +6320,8 @@
                 "ADS.AdsSyncReadStateReq": 3,
                 "ADS.CheckLicense": 3,
                 "ADS.Diagnostics": 3,
+                "ADS.PLC1.GVL.Timerhmi.Q": 3,
+                "ADS.PLC1.GVL.g_xSimulationActive": 3,
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.fbKlep.i_eManualWantedPosition": 3,
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.fbKlep.i_eState": 3,
                 "ADS.PLC1.MAIN.fbBandDepalletizerPalletizer.fbKlep.i_xAlarmReset": 3,
@@ -6060,6 +6348,10 @@
                 "ADS.PLC1.MAIN.fbBlikjesBand.o_xAcceptingCans": 3,
                 "ADS.PLC1.MAIN.fbBlikjesBand.o_xMotor": 3,
                 "ADS.PLC1.MAIN.fbBlikjesBand.o_xWarningFull": 3,
+<<<<<<< HEAD
+=======
+                "ADS.PLC1.MAIN.fbBuffer2.SIMFUNCTIONING": 3,
+>>>>>>> master
                 "ADS.PLC1.MAIN.fbBuffer2.i_eModus": 3,
                 "ADS.PLC1.MAIN.fbBuffer2.i_xAlarmReset": 3,
                 "ADS.PLC1.MAIN.fbBuffer2.i_xLightSensor": 3,
@@ -6070,6 +6362,7 @@
                 "ADS.PLC1.MAIN.fbBuffer2.o_xErrorGeneral": 3,
                 "ADS.PLC1.MAIN.fbBuffer2.o_xGivingToNext": 3,
                 "ADS.PLC1.MAIN.fbBuffer2.o_xMotor": 3,
+                "ADS.PLC1.MAIN.fbBuffer3.SIMFUNCTIONING": 3,
                 "ADS.PLC1.MAIN.fbBuffer3.i_eModus": 3,
                 "ADS.PLC1.MAIN.fbBuffer3.i_xAlarmReset": 3,
                 "ADS.PLC1.MAIN.fbBuffer3.i_xLightSensor": 3,
@@ -6080,6 +6373,7 @@
                 "ADS.PLC1.MAIN.fbBuffer3.o_xErrorGeneral": 3,
                 "ADS.PLC1.MAIN.fbBuffer3.o_xGivingToNext": 3,
                 "ADS.PLC1.MAIN.fbBuffer3.o_xMotor": 3,
+                "ADS.PLC1.MAIN.fbBuffer4.SIMFUNCTIONING": 3,
                 "ADS.PLC1.MAIN.fbBuffer4.i_eModus": 3,
                 "ADS.PLC1.MAIN.fbBuffer4.i_xAlarmReset": 3,
                 "ADS.PLC1.MAIN.fbBuffer4.i_xLightSensor": 3,
@@ -6090,6 +6384,7 @@
                 "ADS.PLC1.MAIN.fbBuffer4.o_xErrorGeneral": 3,
                 "ADS.PLC1.MAIN.fbBuffer4.o_xGivingToNext": 3,
                 "ADS.PLC1.MAIN.fbBuffer4.o_xMotor": 3,
+                "ADS.PLC1.MAIN.fbBuffer5.SIMFUNCTIONING": 3,
                 "ADS.PLC1.MAIN.fbBuffer5.fbKlep.i_eManualWantedPosition": 3,
                 "ADS.PLC1.MAIN.fbBuffer5.fbKlep.i_eModus": 3,
                 "ADS.PLC1.MAIN.fbBuffer5.fbKlep.i_eState": 3,
@@ -6111,6 +6406,7 @@
                 "ADS.PLC1.MAIN.fbBuffer5.o_xMotor": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.i_xAlarmResetEmergencyButton": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.i_xAlarmResetPressureGeneral": 3,
+                "ADS.PLC1.MAIN.fbControlSystem.i_xSafetyMat": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.i_xWarningResetSafetyMat": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.o_xAbortGeneral": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.o_xAbortInvoerBuffer1": 3,
@@ -6124,10 +6420,17 @@
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_xManualCmdMotor": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.i_xManualMotor": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xAlarmMotor": 3,
+<<<<<<< HEAD
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xErrorMotor": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xGivingToNext": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xMotor": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.o_eState": 3,
+=======
+                "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xGivingToNext": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xMotor": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.o_eState": 3,
+                "ADS.PLC1.MAIN.fbInvoerBuffer1.SIMFUNCTIONING": 3,
+>>>>>>> master
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_eManualWantedPosition": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_eModus": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_eState": 3,
@@ -6151,12 +6454,25 @@
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.o_xErrorGeneralLight": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.o_xGivingToNext": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.o_xMotor": 3,
+<<<<<<< HEAD
                 "ADS.PLC1.MAIN.fbPalletizer.fbBand.i_eModus": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.fbBand.i_xAlarmReset": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.fbBand.i_xManualMotor": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.fbBand.o_xAlarmMotor": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.fbBand.o_xErrorMotor": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.fbBand.o_xMotor": 3,
+=======
+                "ADS.PLC1.MAIN.fbPalletizer.fbBand.o_xAlarmMotor": 3,
+                "ADS.PLC1.MAIN.fbPalletizer.fbBand.o_xMotor": 3,
+                "ADS.PLC1.MAIN.fbPalletizer.i_PreviousEmptying": 3,
+                "ADS.PLC1.MAIN.fbPalletizer.i_eModus": 3,
+                "ADS.PLC1.MAIN.fbPalletizer.i_xDoorOpenButton": 3,
+                "ADS.PLC1.MAIN.fbPalletizer.i_xWarningReset": 3,
+                "ADS.PLC1.MAIN.fbPalletizer.istep": 3,
+                "ADS.PLC1.MAIN.fbPalletizer.o_iStorageCount": 3,
+                "ADS.PLC1.MAIN.fbPalletizer.o_sStateString": 3,
+                "ADS.PLC1.MAIN.fbPalletizer.o_xWarningFull": 3,
+>>>>>>> master
                 "ADS.PLC1.MAIN.fbStateManager.o_sGeneralStateString": 3,
                 "ChangeUserSettings": 3,
                 "ConfirmAlarm": 3,

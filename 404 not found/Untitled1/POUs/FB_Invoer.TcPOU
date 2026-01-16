@@ -35,6 +35,7 @@ VAR
 	fbKlep 							: FB_Klep;
 	eValveCurrentPosition			: eValvePosition;
 	
+	SIMFUNCTIONING: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -185,7 +186,23 @@ END_IF
 
 //state enum to string for HMI
 o_sStateString := F_StateEnumToStringSingleState(o_eState);
+<<<<<<< HEAD
 ]]></ST>
+=======
+
+
+//sim
+IF gvl.g_xSimulationActive THEN
+	IF SIMFUNCTIONING THEN  
+		//
+		IF xPalletPresent AND o_xMotor AND gvl.Timerlong.Q AND NOT i_xLightSensor THEN
+			i_xLightSensor:=1;
+		ELSIF i_xNextEmpty AND o_xMotor AND gvl.Timerlong.Q AND i_xLightSensor THEN
+			i_xLightSensor:=0;
+		END_IF
+	END_IF
+END_IF]]></ST>
+>>>>>>> master
     </Implementation>
   </POU>
 </TcPlcObject>

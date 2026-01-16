@@ -26,6 +26,7 @@ VAR
 	PT : TON;
 	TimerValue : TIME := T#20S;
 	TimerStartButton : BOOL;
+	SIMFUNCTIONING : BOOL := 1;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -67,6 +68,7 @@ IF i_xAlarmReset = TRUE THEN
 	o_xWarningFull := FALSE;
 END_IF
 
+<<<<<<< HEAD
 //state enum to string for HMI
 o_sStateString := F_StateEnumToStringSingleState(o_eState);
 
@@ -81,6 +83,16 @@ o_sStateString := F_StateEnumToStringSingleState(o_eState);
 
 
 ]]></ST>
+=======
+//sim
+IF gvl.g_xSimulationActive THEN
+	IF SIMFUNCTIONING THEN
+		IF GVL.TimerShort.Q THEN
+			i_xLightSensor :=FALSE;
+		END_IF
+	END_IF
+END_IF]]></ST>
+>>>>>>> master
     </Implementation>
     <Method Name="StateChange" Id="{3ee96072-e7a5-43fd-8628-c36b06173ae4}">
       <Declaration><![CDATA[METHOD StateChange

@@ -22,7 +22,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// Van Emma
+      <ST><![CDATA[// Van Emma :)
 
 CASE i_eModus OF
 	eModus.Off:

@@ -1322,7 +1322,7 @@
 ]
 </script>
 </div>
-<div id="Motor_10" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiImage" data-tchmi-height="19" data-tchmi-height-unit="px" data-tchmi-left="516" data-tchmi-left-unit="px" data-tchmi-top="431" data-tchmi-top-unit="px" data-tchmi-width="42" data-tchmi-width-unit="px" data-tchmi-zindex="3">
+<div id="Motor_10" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiImage" data-tchmi-height="19" data-tchmi-height-unit="px" data-tchmi-left="513" data-tchmi-left-unit="px" data-tchmi-top="429" data-tchmi-top-unit="px" data-tchmi-width="42" data-tchmi-width-unit="px" data-tchmi-zindex="3">
 <script data-tchmi-target-attribute="data-tchmi-border-color" type="application/json">
 {
   "color": "rgba(223, 223, 223, 1)"
@@ -4350,5 +4350,7 @@
 </script>
 
 
+</div>
+<div id="TcHmiToggleButton_16" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="44" data-tchmi-height-unit="px" data-tchmi-left="976" data-tchmi-left-unit="px" data-tchmi-text="enable all simulation" data-tchmi-top="732" data-tchmi-top-unit="px" data-tchmi-width="60" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-zindex="2" data-tchmi-state-symbol="%s%ADS.PLC1.GVL.g_xSimulationActive%/s%">
 </div>
 </div>
