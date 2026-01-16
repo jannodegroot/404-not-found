@@ -36,11 +36,11 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//timmer
+      <ST><![CDATA[//timer for error
 TimerLift(IN:=xTimerLiftRunning, PT := timTimerValue);
-//TimerEmtying(IN:=xTimerEmtyingRunning, PT:=timTimerValueemtying);
 
-//aansturen band
+
+//calling band and giving corect stuf
 fbBand(
 	i_eState:= o_eState, 
 	i_xGoHold:= xGoHoldBand, 
@@ -53,9 +53,9 @@ fbBand(
 	
 
 fbLiftB();
-//aansturen lift
+//calling lift
 
-IF	fbLiftB.i_xPin1HallSensorIn AND NOT
+IF	fbLiftB.i_xPin1HallSensorIn AND NOT //when inpaled and when not
 	fbLiftB.i_xPin1HallSensorOut AND
 	fbLiftB.i_xPin2HallSensorIn AND NOT
 	fbLiftB.i_xPin2HallSensorOut AND
@@ -76,33 +76,25 @@ ELSIF fbLiftB.i_xPin1HallSensorIn AND
 	ximpaled THEN
 	ximpaled:=0;
 END_IF
-IF i_eModus<2 THEN
+
+IF i_eModus<2 THEN//when to abort
 	IF  o_eState<7 AND (i_xAbort OR fbBand.o_xErrorMotor OR fbLiftB.o_xErrorLift OR fbLiftB.o_xErrorImpaler) THEN 
 		o_eState := eSingleState.Aborting;
-	ELSIF o_eState = eSingleState.Execute AND o_xWarningFull THEN
+	ELSIF o_eState = eSingleState.Execute AND o_xWarningFull THEN //when to suspend
 		o_eState := eSingleState.Suspending;
 	END_IF
 END_IF
-//aansturen zichzelf
+//state code
 CASE o_eState OF
-	eSingleState.Idle:
-		//IF i_eStartStop = eStartStop.Start THEN
+	eSingleState.Idle://start
+		
 			o_eState := eSingleState.Execute;
-		//END_IF
+		
 	
 	eSingleState.Execute:
-		// Normal palletizing operation
-		
-		// Abort has highest priority
-		IF i_xAbort THEN
-			o_eState := eSingleState.Aborting;
-
 		// Door opened -> suspend machine
-		ELSIF i_xDoorOpenButton THEN
-			o_eState := eSingleState.Suspending;
-
 		// Stop button pressed
-		ELSIF i_eStartStop = eStartStop.Stop  AND o_eState = eSingleState.Execute THEN
+		IF i_eStartStop = eStartStop.Stop  AND o_eState = eSingleState.Execute THEN
 			o_eState := eSingleState.Stopping;
 		END_IF
 		IF xAuto THEN
