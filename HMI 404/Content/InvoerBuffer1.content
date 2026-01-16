@@ -2609,4 +2609,6 @@
 </div>
 <div id="TcHmiToggleButton_15" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="44" data-tchmi-height-unit="px" data-tchmi-left="976" data-tchmi-left-unit="px" data-tchmi-text="enable simulation" data-tchmi-top="732" data-tchmi-top-unit="px" data-tchmi-width="60" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-zindex="2" data-tchmi-state-symbol="%s%ADS.PLC1.MAIN.fbInvoerBuffer1.SIMFUNCTIONING%/s%">
 </div>
+<div id="TcHmiToggleButton_17" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="44" data-tchmi-height-unit="px" data-tchmi-left="911" data-tchmi-left-unit="px" data-tchmi-text="sim safteymat" data-tchmi-top="732" data-tchmi-top-unit="px" data-tchmi-width="60" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-zindex="2" data-tchmi-state-symbol="%s%ADS.PLC1.MAIN.fbControlSystem.i_xSafetyMat%/s%">
+</div>
 </div>

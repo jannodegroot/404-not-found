@@ -187,7 +187,7 @@
 ]
 </script>
 </div>
-<div id="TcHmiRectangle_7" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiRectangle" data-tchmi-height="565" data-tchmi-height-unit="px" data-tchmi-left="20" data-tchmi-left-unit="px" data-tchmi-top="17" data-tchmi-top-unit="px" data-tchmi-width="730" data-tchmi-width-unit="px">
+<div id="TcHmiRectangle_7" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiRectangle" data-tchmi-height="565" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-top="70" data-tchmi-top-unit="px" data-tchmi-width="730" data-tchmi-width-unit="px">
 <script data-tchmi-target-attribute="data-tchmi-border-color" type="application/json">
 {
   "color": "rgba(0, 0, 0, 1)"

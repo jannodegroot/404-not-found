@@ -2376,6 +2376,23 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbControlSystem.i_xSafetyMat": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbControlSystem::i_xSafetyMat",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 3
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbControlSystem.i_xWarningResetSafetyMat": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -6558,6 +6575,7 @@
                 "ADS.PLC1.MAIN.fbBuffer5.o_xMotor": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.i_xAlarmResetEmergencyButton": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.i_xAlarmResetPressureGeneral": 3,
+                "ADS.PLC1.MAIN.fbControlSystem.i_xSafetyMat": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.i_xWarningResetSafetyMat": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.o_xAbortGeneral": 3,
                 "ADS.PLC1.MAIN.fbControlSystem.o_xAbortInvoerBuffer1": 3,
