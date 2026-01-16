@@ -5,10 +5,9 @@
 VAR_INPUT
 	i_xAbort		 		: BOOL;
 	i_eStartStop 			: eStartStop;
-	i_eModus				: eModus; // 0= off 1= auto 2= manual
+	i_eModus				: eModus := eModus.Auto; // 0= off 1= auto 2= manual
 	i_xLightSensor 			: BOOL; // checking for cans after 10 sec alarm
 	i_xAlarmReset			: BOOL;
-	i_eNextState			: eSingleState;
 	i_xManualMotor			: BOOL;
 END_VAR
 VAR_OUTPUT
@@ -16,6 +15,7 @@ VAR_OUTPUT
 	o_xMotor 				: BOOL := FALSE;
 	o_xWarningFull			: BOOL;
 	o_xAcceptingCans		: BOOL; //For other machines that this one is working and has space for cans
+	o_sStateString 			: STRING(30);
 END_VAR
 VAR
 	xError : BOOL;
@@ -25,6 +25,7 @@ VAR
 	PT : TON;
 	TimerValue : TIME := T#20S;
 	TimerStartButton : BOOL;
+	SIMFUNCTIONING : BOOL := 1;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -62,7 +63,20 @@ END_IF
 IF i_xAlarmReset = TRUE THEN
 	TimerStartButton := FALSE;
 END_IF
-]]></ST>
+
+//state enum to string for HMI
+o_sStateString := F_StateEnumToStringSingleState(o_eState);
+
+//sim
+IF gvl.g_xSimulationActive THEN
+	IF SIMFUNCTIONING THEN
+		IF GVL.TimerShort.Q THEN
+			i_xLightSensor :=FALSE;
+		END_IF
+	ELSE
+		i_xLightSensor :=TRUE;
+	END_IF
+END_IF]]></ST>
     </Implementation>
     <Method Name="StateChange" Id="{3ee96072-e7a5-43fd-8628-c36b06173ae4}">
       <Declaration><![CDATA[METHOD StateChange
@@ -84,10 +98,7 @@ IF o_eState = eSingleState.Stopping AND o_xMotor = FALSE THEN
 END_IF
 
 //suspening
-IF (NOT i_xAbort AND NOT (o_eState = eSingleState.Stopped))  AND 
-   (i_eNextState = eSingleState.Suspended OR
-    i_eNextState = eSingleState.Stopped   OR
-    i_eNextState = eSingleState.Aborted) THEN
+IF (NOT i_xAbort AND NOT (o_eState = eSingleState.Stopped)) THEN
 	o_eState := eSingleState.Suspending;
 END_IF
 
