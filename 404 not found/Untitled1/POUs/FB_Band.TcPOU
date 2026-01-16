@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="FB_Band" Id="{17428d00-3899-4c32-a33d-f4bdb5ab68f1}" SpecialFunc="None">
+  <POU Name="FB_Band" Id="{a9c6b8ec-eff5-4f64-8a80-6afd0f7c3d72}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Band
 VAR_INPUT
 	i_eState		: eSingleState;
@@ -20,11 +20,10 @@ VAR
 	fbBlinking : FB_Blinking;
 	xError : Bool;
 END_VAR
+
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// Van Emma :)
-
-CASE i_eModus OF
+      <ST><![CDATA[CASE i_eModus OF
 	eModus.Off:
 		o_xMotor := FALSE;
 		
@@ -67,7 +66,7 @@ IF i_xAlarmReset THEN
 END_IF
 
 //sim
-//niks]]></ST>
+//niks]]]]><![CDATA[></ST>
 
 //blinking error
 IF xError THEN
@@ -81,7 +80,7 @@ END_IF;
 //reset alarm
 IF i_xAlarmReset AND NOT xError THEN
 	o_xAlarmMotor := FALSE;
-END_IF]]></ST>
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

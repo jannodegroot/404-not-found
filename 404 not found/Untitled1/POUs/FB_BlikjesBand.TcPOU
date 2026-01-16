@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="FB_BlikjesBand" Id="{182b8fb4-4115-4a81-bbf7-a774704198aa}" SpecialFunc="None">
+  <POU Name="FB_BlikjesBand" Id="{03204988-2543-4568-be60-14fb330a895a}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_BlikjesBand
 VAR_INPUT
 	i_xAbort		 		: BOOL;
@@ -28,12 +28,10 @@ VAR
 	TimerStartButton : BOOL;
 	SIMFUNCTIONING : BOOL := 1;
 END_VAR
+
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// Van Emma
-StateChange();
-
-CASE i_eModus OF
+      <ST><![CDATA[CASE i_eModus OF
 	eModus.Off:
 		o_xMotor := FALSE;
 		
@@ -71,18 +69,6 @@ END_IF
 //state enum to string for HMI
 o_sStateString := F_StateEnumToStringSingleState(o_eState);
 
-
-
-
-
-
-
-
-
-
-
-]]></ST>
-
 //sim
 IF gvl.g_xSimulationActive THEN
 	IF SIMFUNCTIONING THEN
@@ -90,14 +76,16 @@ IF gvl.g_xSimulationActive THEN
 			i_xLightSensor :=FALSE;
 		END_IF
 	END_IF
-END_IF]]></ST>
+END_IF
+]]></ST>
     </Implementation>
-    <Method Name="StateChange" Id="{3ee96072-e7a5-43fd-8628-c36b06173ae4}">
+    <Method Name="StateChange" Id="{d8d3d67d-5618-410c-bb60-01a9370543ef}">
       <Declaration><![CDATA[METHOD StateChange
+VAR_INPUT
+END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//execute
-IF NOT (i_eModus = eModus.Off) AND (i_eStartStop = eStartStop.Start) AND NOT i_xAbort AND NOT xError THEN
+        <ST><![CDATA[IF NOT (i_eModus = eModus.Off) AND (i_eStartStop = eStartStop.Start) AND NOT i_xAbort AND NOT xError THEN
 	o_eState := eSingleState.Execute;
 END_IF
 
@@ -132,15 +120,6 @@ END_IF
 IF o_eState = eSingleState.Aborting AND o_xMotor = FALSE THEN
 	o_eState := eSingleState.aborted;
 END_IF
-
-
-
-
-
-
-
-
-
 ]]></ST>
       </Implementation>
     </Method>
