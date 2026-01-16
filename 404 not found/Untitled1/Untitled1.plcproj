@@ -24,16 +24,22 @@
     <Compile Include="DUTs\eLiftposition.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\eLiftStates.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\eMachineStateLamp.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\eModus.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\eSlideposition.TcDUT">
+    <Compile Include="DUTs\eSchuifStates.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\eSingleState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\eSlideposition.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\eStartStop.TcDUT">
@@ -60,13 +66,22 @@
     <Compile Include="POUs\FB_ControlSystem.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\FB_LiftA_Extended.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FB_LiftB_Extended.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\FB_Palletizer.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_Zuiger.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\F_StateEnumToString.TcPOU">
+    <Compile Include="POUs\FB_Blinking.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\F_StateEnumToStringSingleState.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_BlikjesBand.TcPOU">
@@ -99,7 +114,14 @@
     <Compile Include="POUs\FB_StateManager.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\GVL.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\F_StateEnumToStringGeneralState.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -132,8 +154,8 @@
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>
-        <Data>
-          <o xml:space="preserve" t="OptionKey">
+  <Data>
+    <o xml:space="preserve" t="OptionKey">
       <v n="Name">"&lt;ProjectRoot&gt;"</v>
       <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
         <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
@@ -197,14 +219,14 @@
       </d>
       <d n="Values" t="Hashtable" />
     </o>
-        </Data>
-        <TypeList>
-          <Type n="Boolean">System.Boolean</Type>
-          <Type n="Hashtable">System.Collections.Hashtable</Type>
-          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
-          <Type n="String">System.String</Type>
-        </TypeList>
-      </XmlArchive>
+  </Data>
+  <TypeList>
+    <Type n="Boolean">System.Boolean</Type>
+    <Type n="Hashtable">System.Collections.Hashtable</Type>
+    <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+    <Type n="String">System.String</Type>
+  </TypeList>
+</XmlArchive>
     </PlcProjectOptions>
   </ProjectExtensions>
 </Project>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="GVL" Id="{46730589-20a3-41d6-acda-4d560c7a530e}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	g_xSimulationActive :BOOL :=TRUE;
+	Timerlong : TON;
+	TimerShort : TON;
+	Timerhmi: TON;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
