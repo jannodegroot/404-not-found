@@ -41,6 +41,8 @@ VAR
 	iHomePosition: INT;
 	iImpaleErrorCounter: INT;
 	InitHomeStates: INT;
+	
+	rMoveUpSafe : R_TRIG;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -197,6 +199,28 @@ END_VAR
 	i_iServoEncoder := i_iServoEncoder + 1;
 ELSIF o_eLiftPosition = eLiftPosition.GoingDown AND o_xMotor = TRUE THEN
 	i_iServoEncoder := i_iServoEncoder - 1;
+END_IF
+
+IF o_xMagnetValve = TRUE THEN
+	i_xPin1HallSensorIn := FALSE;
+	i_xPin2HallSensorIn := FALSE;
+	i_xPin3HallSensorIn := FALSE;
+	i_xPin4HallSensorIn := FALSE;
+	
+	i_xPin1HallSensorOut := TRUE;
+	i_xPin2HallSensorOut := TRUE;
+	i_xPin3HallSensorOut := TRUE;
+	i_xPin4HallSensorOut := TRUE;
+ELSIF o_xMagnetValve = FALSE THEN
+	i_xPin1HallSensorIn := TRUE;
+	i_xPin2HallSensorIn := TRUE;
+	i_xPin3HallSensorIn := TRUE;
+	i_xPin4HallSensorIn := TRUE;
+	
+	i_xPin1HallSensorOut := FALSE;
+	i_xPin2HallSensorOut := FALSE;
+	i_xPin3HallSensorOut := FALSE;
+	i_xPin4HallSensorOut := FALSE;
 END_IF]]></ST>
       </Implementation>
     </Method>

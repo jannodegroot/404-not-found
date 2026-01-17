@@ -37,7 +37,7 @@ VAR
 	eSchuifState : eSchuifStates := eSchuifStates.Idle;
 	TimerUnknownPos : TON;
 	timTimerValue	: TIME := T#20S;
-	fbBlikjesBand: FB_BlikjesBand;
+	fbBlikjesband: FB_BlikjesBand;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -49,8 +49,10 @@ THIS^.Simulation();
 
 CASE i_eMode OF
 	eModus.Auto :
+	///////////////////////////////////////////////////////////////////////////
 	CASE i_eState OF
 		eSingleState.Execute :
+		///////////////////////////////////////////////////////////////////////////
 			CASE eSchuifState OF
 				eSchuifStates.Idle : // Wait for command
 					IF i_xMoveHome THEN
@@ -71,7 +73,7 @@ CASE i_eMode OF
 					THIS^.WaitForConveyor();
 					
 			END_CASE
-			
+		///////////////////////////////////////////////////////////////////////////
 		eSingleState.Suspending :
 			// Go to Home
 			o_xMotor := TRUE;
@@ -113,7 +115,7 @@ CASE i_eMode OF
 			o_xMotor := FALSE;
 			
 	END_CASE
-	
+	///////////////////////////////////////////////////////////////////////////
 	eModus.Manual :
 		// Doe effe zelf																			// TOEVOEGEN MET HMI
 		THIS^.ManualControl();
@@ -139,18 +141,19 @@ END_IF
 
 
 // FunctionBlock BlikjesBand
-fbBlikjesBand(
+fbBlikjesband(
 	i_xAbort:= , 
 	i_eStartStop:= , 
 	i_eModus:= , 
 	i_xLightSensor:= , 
 	i_xAlarmReset:= , 
-	i_eNextState:= , 
 	i_xManualMotor:= , 
 	o_eState=> , 
 	o_xMotor=> , 
 	o_xWarningFull=> , 
-	o_xAcceptingCans=> i_xMovePossible);]]></ST>
+	o_xAcceptingCans=> i_xMovePossible, 
+	o_sStateString=> );
+	]]></ST>
     </Implementation>
     <Method Name="ManualControl" Id="{68a0c9d8-0d94-467f-86e7-2829434f2f35}">
       <Declaration><![CDATA[METHOD ManualControl : BOOL

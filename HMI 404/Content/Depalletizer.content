@@ -8,21 +8,21 @@
 </script>
 <div id="TcHmiTextblock_6" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="350" data-tchmi-left-unit="px" data-tchmi-text="Depalletizer" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="360" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="30" data-tchmi-text-horizontal-alignment="Center">
 </div>
-<div id="TcHmiRectangle_35" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiRectangle" data-tchmi-height="565" data-tchmi-height-unit="px" data-tchmi-left="20" data-tchmi-left-unit="px" data-tchmi-top="80" data-tchmi-top-unit="px" data-tchmi-width="730" data-tchmi-width-unit="px">
+<div id="TcHmiRectangle_35" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiRectangle" data-tchmi-height="720" data-tchmi-height-unit="px" data-tchmi-left="750" data-tchmi-left-unit="px" data-tchmi-top="70" data-tchmi-top-unit="px" data-tchmi-width="300" data-tchmi-width-unit="px">
 <script data-tchmi-target-attribute="data-tchmi-border-color" type="application/json">
 {
   "color": "rgba(0, 0, 0, 1)"
 }
 </script>
 </div>
-<div id="TcHmiRectangle_36" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiRectangle" data-tchmi-height="720" data-tchmi-height-unit="px" data-tchmi-left="760" data-tchmi-left-unit="px" data-tchmi-top="80" data-tchmi-top-unit="px" data-tchmi-width="300" data-tchmi-width-unit="px">
+<div id="TcHmiRectangle_36" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiRectangle" data-tchmi-height="144" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-top="646" data-tchmi-top-unit="px" data-tchmi-width="730" data-tchmi-width-unit="px">
 <script data-tchmi-target-attribute="data-tchmi-border-color" type="application/json">
 {
   "color": "rgba(0, 0, 0, 1)"
 }
 </script>
 </div>
-<div id="TcHmiRectangle_37" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiRectangle" data-tchmi-height="144" data-tchmi-height-unit="px" data-tchmi-left="20" data-tchmi-left-unit="px" data-tchmi-top="658" data-tchmi-top-unit="px" data-tchmi-width="730" data-tchmi-width-unit="px">
+<div id="TcHmiRectangle_37" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiRectangle" data-tchmi-height="565" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-top="70" data-tchmi-top-unit="px" data-tchmi-width="730" data-tchmi-width-unit="px">
 <script data-tchmi-target-attribute="data-tchmi-border-color" type="application/json">
 {
   "color": "rgba(0, 0, 0, 1)"

@@ -17,6 +17,7 @@ END_VAR
 VAR
 	LayerState: INT;
 	LiftASteps:	INT;
+	CurrentLayer: INT;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -91,10 +92,12 @@ VAR_INPUT
 END_VAR
 
 VAR
-	CurrentLayer: INT;
+	
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[CASE LayerState OF
+        <ST><![CDATA[rMoveUpSafe(CLK := i_xMoveUpSafe);
+
+CASE LayerState OF
 	0: // Idle / Start
 		o_xLiftDone := FALSE;
 		CurrentLayer := 1;
@@ -119,8 +122,7 @@ END_VAR]]></Declaration>
 		IF i_eZuigerDone = eZuigerCilinderPosition.Up THEN
 			o_xGoSchuif := TRUE;	// Push cans onto conveyor
 		END_IF
-		
-		IF i_xMoveUpSafe THEN
+		IF rMoveUpSafe.Q THEN
 			o_xGoZuiger := FALSE;
 			o_xGoSchuif := FALSE;
 			LayerState := 3;
