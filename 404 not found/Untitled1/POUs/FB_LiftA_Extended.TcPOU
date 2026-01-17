@@ -2,27 +2,58 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="FB_LiftA_Extended" Id="{ae4ed0eb-eafe-4c35-b8eb-4223fd698d69}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_LiftA_Extended EXTENDS FB_Lift
+
 VAR_INPUT
 	i_aLayerHeights	: ARRAY[1..10] OF INT;
 	i_iLayerCount: INT;
 	i_eZuigerDone : eZuigerCilinderPosition;
 END_VAR
+
 VAR_OUTPUT
 	o_xGoSchuif: BOOL;
 	o_xGoZuiger: BOOL;
-	o_xLiftDone: BOOL;
 END_VAR
+
 VAR
 	LayerState: INT;
+	LiftASteps:	INT;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[SUPER^();
-// test
+iConveyorHeight := iHomePosition;
 
-IF i_xPalletInPosition THEN
-	THIS^.MoveUpToLayer();
-END_IF]]></ST>
+CASE i_eMode OF
+	eModus.Auto :
+	//////////////////////////////////////////////////////////////////////////
+		CASE i_eState OF
+			eSingleState.Execute :
+				IF i_xPalletInPosition THEN
+					CASE LiftASteps OF
+						1:
+							THIS^.Impale();
+							IF o_ePinsPositions = eLiftPins.Out THEN
+								LiftASteps := 2;
+							END_IF
+						2:
+							IF i_xMoveUpSafe THEN
+								LiftASteps := 3;
+							END_IF
+						3:
+							THIS^.MoveUpToLayer();
+					END_CASE
+				END_IF
+		END_CASE
+	//////////////////////////////////////////////////////////////////////////
+	eModus.Manual :
+		// Doe effe zelf																			// TOEVOEGEN MET HMI
+		// Lift handmatig bedienen door INT invoer?
+		// Pins handmatig in en uit, met beveiliging zodat pallet niet naar beneden dondert
+	eModus.Off :
+		// Doe niks
+		// Stop
+		o_xMotor := FALSE;
+END_CASE]]></ST>
     </Implementation>
     <Method Name="MoveHome" Id="{4513c6c0-0989-4c7f-b9dc-fd6793baeddd}">
       <Declaration><![CDATA[METHOD MoveHome : BOOL
@@ -30,7 +61,28 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[CASE InitHomeStates OF
+	0 :	// Start Homing if the endswitch isnt active.
+		IF NOT i_xEndSwitch THEN
+        	InitHomeStates := 1;
+		ELSE 
+			// Already at home position
+			o_xMotor := FALSE;
+			InitHomeStates := 4;
+    	END_IF
+	
+	1 :	// Go to conveyorheight
+		o_xMotor := TRUE;
+		o_iTargetPos := iHomePosition;
+		
+		IF i_iServoEncoder = o_iTargetPos THEN
+			o_xMotor := FALSE;                  // stop motion
+			InitHomeStates := 2;
+		END_IF
+		
+	2 : 
+		// Home
+END_CASE]]></ST>
       </Implementation>
     </Method>
     <Method Name="MoveUpToLayer" Id="{a3b1756c-3dc2-4e81-9a1c-b2a3ad14fbe2}">
@@ -44,6 +96,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[CASE LayerState OF
 	0: // Idle / Start
+		o_xLiftDone := FALSE;
 		CurrentLayer := 1;
 	
 		IF i_iLayerCount > 0 THEN
@@ -68,6 +121,8 @@ END_VAR]]></Declaration>
 		END_IF
 		
 		IF i_xMoveUpSafe THEN
+			o_xGoZuiger := FALSE;
+			o_xGoSchuif := FALSE;
 			LayerState := 3;
 		END_IF
 	
@@ -82,6 +137,7 @@ END_VAR]]></Declaration>
 	
 	
 	4: // Finished
+		o_xLiftDone := TRUE;
 		THIS^.MoveHome();
 		// wait here
 

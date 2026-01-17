@@ -24,10 +24,10 @@ VAR_OUTPUT
 	o_aLayerHeights	: ARRAY[1..10] OF INT;
 END_VAR
 VAR
-	fbBand			: FB_Band;
-	fbSchuif		: FB_Schuif;
-	fbZuiger		: FB_Zuiger;
-	fbKlep			: FB_Klep;
+	fbBand: FB_Band;
+	fbSchuif: FB_Schuif;
+	fbZuiger: FB_Zuiger;
+	fbKlep: FB_Klep;
 	fbLiftA: FB_LiftA_Extended;
 	
 	xLiftIsDone		: BOOL;
@@ -41,7 +41,7 @@ VAR
 	
 	eMoveKlep		: eValvePosition;
 	
-	eZuigerSafe		: eZuigerCilinderPosition;
+	eCheckZuigerSafe		: eZuigerCilinderPosition;
 	eSchuifSafe		: eSlideposition;
 	eConveyorSafe	: eValvePosition;
 	
@@ -98,14 +98,10 @@ fbKlep(
 	o_xMagnetValve=> , 
 	o_xWarningPositionDown=> , 
 	o_xErrorPositionUpOrUnknow=> , 
-	o_xAlarmPositionUpOrUnknow=> 
-);
+	o_xAlarmPositionUpOrUnknow=> );
 
 // Functionblock Schuif
 fbSchuif(
-	i_xHMIMoveIn := , 
-	i_xHMIMoveOut := , 
-	i_xHMIStopMoving := ,
 	i_eState:= , 
 	i_eMode:= , 
 	i_xMove:= xGoSchuif, 
@@ -114,6 +110,9 @@ fbSchuif(
 	i_xEndSwitchIn:= , 
 	i_xEndSwitchOut:= , 
 	i_xAlarmReset:= , 
+	i_xHMIMoveIn:= , 
+	i_xHMIMoveOut:= , 
+	i_xHMIStopMoving:= , 
 	o_xMotor=> , 
 	o_xMotorDirection=> , 
 	o_xErrorSlide=> , 
@@ -135,10 +134,8 @@ fbZuiger(
 	i_xAlarmResetAlarmHorizontalMovement:= , 
 	i_xAlarmResetPressure:= , 
 	i_xButtonManStopall:= , 
-	i_xButtonManCiliderUP:= , 
-	i_xButtonManCiliderDown:= , 
-	i_xButtonManHoriztalOUT:= , 
-	i_xButtonManHorizontalIN:= , 
+	eManCiliderPosition:= , 
+	eManHorizotalPosition:= , 
 	i_xButtonManVacumOn:= , 
 	o_xMotor=> , 
 	o_xMotorDirectionOut=> , 
@@ -150,15 +147,17 @@ fbZuiger(
 	o_xAlarmCilinder=> , 
 	o_xErrorPressure=> , 
 	o_xAlarmPressure=> , 
-	o_eCiliderPosition=> eZuigerSafe, 
+	o_eCiliderPosition=> eCheckZuigerSafe, 
 	o_eHorizotalPosition=> );
 
 // Functionblock Lift
 fbBand(
 	i_eState:= , 
-	i_xGoHold:= xHoldPallet, // Als volgende band vol is
-	i_xGoEmpty:= xReleasePallet, // aansturen als de lift klaar is
+	i_xGoHold:= xHoldPallet, 
+	i_xGoEmpty:= xReleasePallet, 
 	i_xAlarmReset:= , 
+	i_eModus:= , 
+	i_xManualMotor:= , 
 	o_xMotor=> xConveyorMoving, 
 	o_xErrorMotor=> , 
 	o_xAlarmMotor=> , 
@@ -190,7 +189,7 @@ fbLiftA(
 	i_aLayerHeights:= o_aLayerHeights, 
 	i_iLayerCount:= i_iNumberOfLayersHMI, 
 	i_xMoveUpSafe:= xMoveUpSafe, 
-	i_eZuigerDone:= eZuigerSafe,
+	i_eZuigerDone:= eCheckZuigerSafe,
 	o_xGoSchuif=> xGoSchuif, 
 	o_xGoZuiger=> xGoZuiger,
 	o_xLiftDone=> xLiftIsDone);]]></ST>
@@ -240,7 +239,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF eZuigerSafe = eZuigerCilinderPosition.Up AND eSchuifSafe = eSlidePosition.In THEN
+        <ST><![CDATA[IF eCheckZuigerSafe = eZuigerCilinderPosition.Up AND eSchuifSafe = eSlidePosition.In THEN
 	xMoveUpSafe := TRUE;
 ELSE
 	xMoveUpSafe := FALSE;

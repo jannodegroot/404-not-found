@@ -3,6 +3,8 @@
   <POU Name="FB_Lift" Id="{eb5995ad-c3ba-4ee2-a111-5aef13576138}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Lift
 VAR_INPUT
+	i_eState 			: eSingleState;
+	i_eMode				: eModus := eModus.Auto;
 	i_eLiftState		: eLiftStates;
 	
 	i_iServoEncoder 	: INT;
@@ -29,9 +31,10 @@ END_VAR
 VAR_OUTPUT
 	o_iTargetPos		: INT;
 	o_eLiftPosition		: ELIFTPOSITION;
-	o_xMotor: BOOL;
-	o_xMagnetValve: BOOL;
+	o_xMotor			: BOOL;
+	o_xMagnetValve		: BOOL;
 	o_ePinsPositions	: eLiftPins;
+	o_xLiftDone			: BOOL;
 END_VAR
 VAR
 	iConveyorHeight: INT;
@@ -44,7 +47,7 @@ END_VAR
       <ST><![CDATA[THIS^.CheckPins();
 THIS^.LiftPosition();
 THIS^.Simulation();
-THIS^.InitHome();
+THIS^.ErrorHandler();
 
 
 CASE i_eLiftState OF
@@ -81,6 +84,24 @@ ELSE
 END_IF]]></ST>
       </Implementation>
     </Method>
+    <Method Name="ErrorHandler" Id="{75a53550-f60f-49aa-b838-874135d6d169}">
+      <Declaration><![CDATA[METHOD ErrorHandler : BOOL
+VAR_INPUT
+END_VAR
+
+(*
+	When can an error occur?
+	- Pins are unknown for too long
+	- Pins are in or Unknown while pallet is lifted.
+*)]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// If pins are in or unknown while pallet is lifted, fatal error.
+IF i_iServoEncoder > iConveyorHeight AND
+	(o_ePinsPositions = eLiftPins.In OR o_ePinsPositions = eLiftPins.Unknown) THEN
+	// ERROR PINS
+END_IF;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Impale" Id="{14b0e947-b105-42b6-ab08-b4cf3a8c35bb}">
       <Declaration><![CDATA[METHOD Impale : BOOL
 VAR_INPUT
@@ -107,8 +128,6 @@ END_VAR]]></Declaration>
         <ST><![CDATA[CASE InitHomeStates OF
 	0 :	// Start Homing if the endswitch isnt active.
 		IF NOT i_xEndSwitch THEN
-        	o_iTargetPos := iConveyorHeight;     // go down to conveyor
-        	o_xMotor := TRUE;
         	InitHomeStates := 1;
 		ELSE 
 			// Already at home position
@@ -163,6 +182,8 @@ ELSIF i_iServoEncoder < o_iTargetPos THEN
 ELSIF i_iServoEncoder > o_iTargetPos THEN
 	// Going Down
 	o_eLiftPosition := eLiftPosition.GoingDown;
+ELSIF i_xEndSwitch THEN
+	o_eLiftPosition := eLiftPosition.Home;
 END_IF]]></ST>
       </Implementation>
     </Method>

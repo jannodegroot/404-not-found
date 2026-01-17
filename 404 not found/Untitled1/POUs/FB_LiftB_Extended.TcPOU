@@ -1,23 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="FB_LiftB_Extended" Id="{022bf68b-4ff6-4ee2-a1a9-2548f4459c37}" SpecialFunc="None">
+  <POU Name="FB_LiftB_Extended" Id="{aabc44d5-6caf-4bd2-b962-732c32c866ab}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_LiftB_Extended EXTENDS FB_Lift
 VAR_INPUT
 	i_iMoveToLayer : INT;
 END_VAR
+
 VAR_OUTPUT
-	o_xAskNewPallet : BOOL;
+	
 END_VAR
+
 VAR
-	iConveyorHeight : INT := iHomePosition + 1000;
 	iPalletizeHeight: INT := iHomePosition + 2000;
 	iHighestHeight	: INT := iHomePosition + 3000;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Janno geeft door naar welke laag hij moet. Laag 0 = home, laag 1 = band, laag 2 = pallet op pallet, laag 3 = pallets hoog
-SUPER^();
-//test
+
+SUPER^(); // Call parent Functionblock
+iConveyorHeight := iHomePosition + 1000;
 
 // CASE i_eMode OF
 // 	eModus.Auto :
@@ -29,16 +31,16 @@ SUPER^();
 					CASE i_iMoveToLayer OF
 						0 :
 							// Ga naar home
-							THIS^.MoveHome();
+							THIS^.MoveHome(); 													// Testen
 						1 :
 							// Ga naar band hoogte
-							THIS^.GoToConveyorHeight();
+							THIS^.GoToConveyorHeight(); 										// Testen
 						2 : 
 							// Ga naar stapelhoogte
-							THIS^.GoToHighestHeight();
+							THIS^.GoToHighestHeight(); 											// Testen
 						3 :
 							// Ga hoog
-							THIS^.GoToPalletizeHeight();
+							THIS^.GoToPalletizeHeight(); 										// Testen
 					END_CASE
 					
 				
@@ -54,7 +56,7 @@ SUPER^();
 // 		// Stop
 // END_CASE]]></ST>
     </Implementation>
-    <Method Name="GoToConveyorHeight" Id="{7cad701c-9196-42fa-8f7e-e699c93a2475}">
+    <Method Name="GoToConveyorHeight" Id="{48a1271e-d4a3-468f-ae20-827955ef491e}">
       <Declaration><![CDATA[METHOD GoToConveyorHeight : BOOL
 VAR_INPUT
 END_VAR
@@ -68,7 +70,7 @@ IF i_iServoEncoder = iConveyorHeight THEN
 END_IF;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="GoToHighestHeight" Id="{2f40e67c-8ede-47e5-be8a-cec585c7b8c6}">
+    <Method Name="GoToHighestHeight" Id="{f67c3f97-29de-459c-a99c-50017fc8a1fc}">
       <Declaration><![CDATA[METHOD GoToHighestHeight : BOOL
 VAR_INPUT
 END_VAR
@@ -82,7 +84,7 @@ IF i_iServoEncoder = iHighestHeight THEN
 END_IF;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="GoToPalletizeHeight" Id="{476f6baa-9624-49ef-b539-9d4df5151943}">
+    <Method Name="GoToPalletizeHeight" Id="{5a1e98d5-f506-44f4-a42b-9b724553f716}">
       <Declaration><![CDATA[METHOD GoToPalletizeHeight : BOOL
 VAR_INPUT
 END_VAR
@@ -96,16 +98,53 @@ IF i_iServoEncoder = iPalletizeHeight THEN
 END_IF;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="MoveHome" Id="{455127d8-e954-4b9b-b97b-e0b8c80f8deb}">
+    <Method Name="MoveHome" Id="{857cb76e-8c7e-479e-917a-f565bc562b8e}">
       <Declaration><![CDATA[METHOD MoveHome : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[CASE InitHomeStates OF
+	0 :	// Start Homing if the endswitch isnt active.
+		IF NOT i_xEndSwitch THEN
+        	InitHomeStates := 1;
+		ELSE 
+			// Already at home position
+			o_xMotor := FALSE;
+			InitHomeStates := 4;
+    	END_IF
+	
+	1 :	// Go to conveyorheight
+		o_xMotor := TRUE;
+		o_iTargetPos := iConveyorHeight;
+		
+		IF i_iServoEncoder = o_iTargetPos THEN
+			o_xMotor := FALSE;                  // stop motion
+			InitHomeStates := 2;
+		END_IF
+		
+	2 : // Release Pallet
+		o_xMagnetValve := FALSE;
+		
+		IF o_ePinsPositions = eLiftPins.In THEN
+        	InitHomeStates := 3;
+    	END_IF
+	
+	3 :	// Go down until the endswitch is reached.
+		o_xMotor := TRUE;
+		o_eLiftPosition := eLiftPosition.GoingDown;
+		
+		IF i_xEndSwitch THEN
+			o_xMotor := FALSE;
+			InitHomeStates := 4;
+		END_IF
+	
+	4 :
+		// Home Done
+END_CASE]]></ST>
       </Implementation>
     </Method>
-    <Method Name="WaitForPallet" Id="{9e1f5748-783f-41ae-a152-4ce137f7d7ea}">
+    <Method Name="WaitForPallet" Id="{f00b067c-2ebb-460e-a7aa-beefc0b3afb3}">
       <Declaration><![CDATA[METHOD WaitForPallet : BOOL
 VAR_INPUT
 END_VAR
