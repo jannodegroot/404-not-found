@@ -54,6 +54,9 @@
     <Compile Include="DUTs\eZuigerHorizontaal.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GVLs\FB_Lift_Extension\FB_LiftB_Extended.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
@@ -70,6 +73,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_Lift.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FB_LiftA_Extended.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_LiftJanno.TcPOU">
@@ -121,17 +127,11 @@
     <Compile Include="POUs\F_StateEnumToStringGeneralState.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Lift_Extensions\FB_LiftA_Extended.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Lift_Extensions\FB_LiftB_Extended.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
-    <Folder Include="POUs\Lift_Extensions" />
+    <Folder Include="GVLs\FB_Lift_Extension" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>

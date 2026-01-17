@@ -18,6 +18,7 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[SUPER^();
+// test
 
 IF i_xPalletInPosition THEN
 	THIS^.MoveUpToLayer();
