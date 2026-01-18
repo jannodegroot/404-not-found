@@ -8,14 +8,14 @@
 	- Timer for simulation
 *)
 VAR_INPUT
-	i_eState 				: eSingleState;
-	i_eMode					: eModus;
+	i_eState 				: eSingleState := eSingleState.Execute;
+	i_eMode					: eModus := eModus.Auto;
 	
 	i_xMove					: BOOL; // Start moving to push
 	i_xMovePossible			: BOOL; // Is there room on the conveyor? 
 	i_xMoveHome				: BOOL; // Move to Home Position
 	
-	i_xEndSwitchIn			: BOOL;
+	i_xEndSwitchIn			: BOOL := TRUE;
 	i_xEndSwitchOut			: BOOL;
 	
 	i_xAlarmReset			: BOOL;
@@ -25,24 +25,34 @@ VAR_INPUT
 END_VAR
 VAR_OUTPUT
 	o_xMotor 			: BOOL := FALSE;
-	o_xMotorDirection	: BOOL;			 // 0 = Going In, 1 = Going Out
+	o_xMotorDirection	: BOOL := 0;			 // 0 = Going In, 1 = Going Out
 	
 	o_xErrorSlide 		: BOOL := FALSE; 
 	o_xAlarmSlide		: BOOL := FALSE;
 	
-	o_xMoveDone			: BOOL;
+	o_xMoveDone			: BOOL;					// Wordt deze gebruikt?
 	o_eSlidePosition	: eSlideposition;
+	o_eSchuifState : eSchuifStates := eSchuifStates.Idle;
 END_VAR
 VAR
-	eSchuifState : eSchuifStates := eSchuifStates.Idle;
 	TimerUnknownPos : TON;
 	timTimerValue	: TIME := T#20S;
+	
 	fbBlikjesband: FB_BlikjesBand;
+	
+	rMove: R_TRIG;
+	
+	TimerSlideMovement: TON;
+	timSlideTimerValue: TIME := T#5S;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Yvo
 TimerUnknownPos(IN := (o_eSlidePosition = eSlideposition.Unknown), PT := timTimerValue);
+
+TimerSlideMovement(IN := o_xMotor, PT := timSlideTimerValue);
+
+rMove(CLK := i_xMove);
 
 THIS^.SlidePosition();
 THIS^.Simulation();
@@ -53,14 +63,14 @@ CASE i_eMode OF
 	CASE i_eState OF
 		eSingleState.Execute :
 		///////////////////////////////////////////////////////////////////////////
-			CASE eSchuifState OF
+			CASE o_eSchuifState OF
 				eSchuifStates.Idle : // Wait for command
 					IF i_xMoveHome THEN
-						eSchuifState := eSchuifStates.MovingHome;
+						o_eSchuifState := eSchuifStates.MovingHome;
 					END_IF
 					
-					IF i_xMove THEN
-						eSchuifState := eSchuifStates.MoveOut;
+					IF rMove.Q THEN
+						o_eSchuifState := eSchuifStates.MoveOut;
 					END_IF
 					
 				eSchuifStates.MovingHome : // Move Home
@@ -168,7 +178,7 @@ ELSIF i_xHMIMoveOut THEN
 	o_xMotorDirection := 1;
 	IF i_xEndSwitchOut THEN
 		o_xMotor := FALSE;
-		eSchuifState := eSchuifStates.Idle;
+		o_eSchuifState := eSchuifStates.Idle;
 	END_IF
 ELSIF i_xHMIStopMoving THEN
 	o_xMotor := FALSE;
@@ -185,8 +195,8 @@ END_VAR
 o_xMotorDirection := 0;
 IF i_xEndSwitchIn THEN
 	o_xMotor := FALSE;
-	o_xMoveDone := FALSE;
-	eSchuifState := eSchuifStates.Idle;
+	o_xMoveDone := TRUE;
+	o_eSchuifState := eSchuifStates.Idle;
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -200,11 +210,11 @@ END_VAR
 	o_xMotor := TRUE;
 	o_xMotorDirection := 1;
 	IF i_xEndSwitchOut THEN
-		o_xMoveDone := TRUE;
-		eSchuifState := eSchuifStates.MovingHome;
+		o_xMotor := FALSE;
+		o_eSchuifState := eSchuifStates.MovingHome;
 	END_IF
 ELSE
-	eSchuifState := eSchuifStates.WaitingForConveyor;
+	o_eSchuifState := eSchuifStates.WaitingForConveyor;
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -214,13 +224,10 @@ VAR_INPUT
 END_VAR
 
 VAR
-	TimerSlideMovement: TON;
-	timSlideTimerValue: TIME := T#5S;
+	
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//TimerSlideMovement(IN := o_xMotor, PT := timSlideTimerValue);
-
-//IF TimerSlideMovement.Q THEN
+        <ST><![CDATA[IF TimerSlideMovement.Q THEN
 	IF o_xMotorDirection = 0 AND o_xMotor THEN
 		i_xEndSwitchIn := TRUE;
 		i_xEndSwitchOut := FALSE;
@@ -228,7 +235,7 @@ END_VAR]]></Declaration>
 		i_xEndSwitchOut := TRUE;
 		i_xEndSwitchIn := FALSE;
 	END_IF
-//END_IF]]></ST>
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="SlidePosition" Id="{181314aa-723a-45d1-9306-af588052a5a2}">
@@ -256,7 +263,7 @@ END_VAR
       <Implementation>
         <ST><![CDATA[o_xMotor := FALSE;
 IF i_xMovePossible THEN
-	eSchuifState := eSchuifStates.MoveOut;
+	o_eSchuifState := eSchuifStates.MoveOut;
 END_IF]]></ST>
       </Implementation>
     </Method>

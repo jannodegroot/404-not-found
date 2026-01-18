@@ -3,9 +3,9 @@
   <POU Name="FB_Lift" Id="{eb5995ad-c3ba-4ee2-a111-5aef13576138}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Lift
 VAR_INPUT
-	i_eState 			: eSingleState;
+	i_eState 			: eSingleState := eSingleState.Execute;
 	i_eMode				: eModus := eModus.Auto;
-	i_eLiftState		: eLiftStates;
+	i_eLiftState		: eLiftStates;							// Is dit een input?
 	
 	i_iServoEncoder 	: INT;
 	
@@ -114,9 +114,9 @@ END_VAR
 
 THIS^.CheckPins();
 
-IF o_ePinsPositions = eLiftPins.In OR o_ePinsPositions = eLiftPins.Unknown THEN
-	iImpaleErrorCounter := iImpaleErrorCounter + 1;
-END_IF]]></ST>
+// IF o_ePinsPositions = eLiftPins.In OR o_ePinsPositions = eLiftPins.Unknown THEN
+// 	iImpaleErrorCounter := iImpaleErrorCounter + 1;
+// END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="InitHome" Id="{ebdade00-a45f-4a0e-b27e-a89bfba00530}">

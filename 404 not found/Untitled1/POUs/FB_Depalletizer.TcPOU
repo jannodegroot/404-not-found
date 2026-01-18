@@ -42,7 +42,7 @@ VAR
 	eMoveKlep		: eValvePosition;
 	
 	eCheckZuigerSafe		: eZuigerCilinderPosition;
-	eSchuifSafe		: eSlideposition;
+	eSchuifSafe		: eSchuifStates;
 	eConveyorSafe	: eValvePosition;
 	
 	xMoveUpSafe		: BOOL;
@@ -118,7 +118,8 @@ fbSchuif(
 	o_xErrorSlide=> , 
 	o_xAlarmSlide=> , 
 	o_xMoveDone=> , 
-	o_eSlidePosition=> );
+	o_eSlidePosition=> ,
+	o_eSchuifState=> eSchuifSafe);
 	
 // Functionblock Zuiger
 fbZuiger(
@@ -239,7 +240,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF eCheckZuigerSafe = eZuigerCilinderPosition.Up AND eSchuifSafe = eSlidePosition.In THEN
+        <ST><![CDATA[IF eCheckZuigerSafe = eZuigerCilinderPosition.Up AND eSchuifSafe = eSchuifStates.Idle THEN
 	xMoveUpSafe := TRUE;
 ELSE
 	xMoveUpSafe := FALSE;
