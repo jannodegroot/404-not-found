@@ -24,19 +24,20 @@ END_VAR]]></Declaration>
       <ST><![CDATA[// Van Emma :)
 
 CASE i_eModus OF
-	eModus.Off:
+	eModus.Off: 
 		o_xMotor := FALSE;
 		
 	eModus.Auto:
 		IF i_xGoHold = TRUE THEN
-			o_xMotor := FALSE; //
+			o_xMotor := FALSE; // go hold betekend dat de pallet moet blijven dus motor uit
 		ELSIF i_xGoEmpty = TRUE THEN
-			o_xMotor := TRUE; 
+			o_xMotor := TRUE; // go empty betekend dat de pallet weg moet dus motor aan
 			o_xGivingToNext := TRUE;
 		ELSE
 			o_xGivingToNext := FALSE;
 		END_IF
 		
+		// error logica dit genereert een fout als de motor aan staat terwijl die uit moet zijn
 		IF i_xGoEmpty = FALSE AND o_xMotor = TRUE THEN
 			xError := TRUE;	
 			o_xAlarmMotor := TRUE;
@@ -58,15 +59,15 @@ END_CASE
 
 
 
-
+// alarm reset
 IF i_xAlarmReset THEN
 	o_xAlarmMotor := FALSE;
 END_IF
 
-//sim
+//sim van janno
 //niks
 
-//blinking error
+//blinking error van tessa
 IF xError THEN
 	fbBlinking(io_xBlinking:= o_xErrorMotor);
 ELSIF NOT xError AND o_xAlarmMotor THEN

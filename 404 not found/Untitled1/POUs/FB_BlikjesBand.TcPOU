@@ -30,13 +30,16 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Van Emma
+
+// bijwerken van inner state door de methode aan te roepen
 StateChange();
 
+// check modus en doe wat je in de mode moet doen
 CASE i_eModus OF
 	eModus.Off:
 		o_xMotor := FALSE;
 		
-	eModus.Auto:
+	eModus.Auto: // als auto is moet ie aan, want hij blijft eigenlijk aan
 		o_xMotor := TRUE;
 		
 	eModus.Manual:
@@ -48,10 +51,12 @@ CASE i_eModus OF
 		
 END_CASE
 
+// als lichtsensor true is betekend het dat er te veel bliken op de band zijn
 IF i_xLightSensor THEN
 	TimerStartButton := TRUE;
 END_IF
 
+// timer voor de zekerheid dat er echt te veel zijn en niet eentje die net voor de sensor was
 Timer(IN:=TimerStartButton, PT := TimerValue);
 IF Timer.Q THEN
 	o_xAcceptingCans := FALSE;
@@ -60,14 +65,16 @@ ELSE
 	o_xAcceptingCans := TRUE;
 END_IF
 
+// arlam reset
 IF i_xAlarmReset = TRUE THEN
 	TimerStartButton := FALSE;
+	o_xWarningFull := FALSE;
 END_IF
 
 //state enum to string for HMI
 o_sStateString := F_StateEnumToStringSingleState(o_eState);
 
-//sim
+//sim van janno
 IF gvl.g_xSimulationActive THEN
 	IF SIMFUNCTIONING THEN
 		IF GVL.TimerShort.Q THEN
