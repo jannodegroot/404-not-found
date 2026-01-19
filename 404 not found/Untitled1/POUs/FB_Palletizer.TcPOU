@@ -272,7 +272,7 @@ CASE o_eState OF
 		END_IF
 		IF NOT i_xDoorOpenButton THEN
 			//xTimerEmtyingRunning:=1;
-			IF o_iStorageCount<8 THEN
+			IF o_iStorageCount<8 AND NOT o_xWarningFull THEN
 				istep := 0;
 				o_eState := eSingleState.Execute;
 				//xTimerEmtyingRunning:=0;
