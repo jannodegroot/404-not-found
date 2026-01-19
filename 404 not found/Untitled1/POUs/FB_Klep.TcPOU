@@ -33,6 +33,8 @@ VAR
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Van Emma
+
+// om zetten van enum naar interne bools voor makkelijkheid
 CASE i_eModus OF
 	eModus.Off:
 		modeAuto := FALSE;
@@ -45,7 +47,7 @@ CASE i_eModus OF
 		modeManual := TRUE;
 END_CASE 
 
-
+//stateeeeeee maaaaaacccccchhhhhhiiiiiiinnnnnneeeeee
 CASE i_eState OF
 	eSingleState.Idle:
 		// beneden positie
@@ -94,9 +96,9 @@ CASE i_eState OF
 		GoDown();
 	eSingleState.Aborted:
 		GoDown();
-		// 
 END_CASE
 
+// bepaal de huidige positie
 IF	i_xHallSensorIn AND i_xHallSensorOut THEN
 	o_eCurrentPosition := eValvePosition.Unkown;
 ELSIF i_xHallSensorIn	THEN
@@ -107,7 +109,7 @@ ELSE
 	o_eCurrentPosition := eValvePosition.Unkown;
 END_IF
 
-
+// controleer op de klep op de goede positie is 
 IF modeAuto AND o_eCurrentPosition = i_eAutoWantedPosition THEN
 	xError := FALSE;
 	TimerStartButton := FALSE;
@@ -118,16 +120,17 @@ ELSE
 	TimerStartButton := TRUE;
 END_IF
 
-
+// timer om te kijken of het lang genoeg fout gaat dat het een error is 
 Timer(IN:=TimerStartButton, PT := TimerValue);
 
 IF Timer.Q THEN
-	Errors();
+	Errors(); // method dat als er iets niet goed gaat dat we ook weten wat niet goed gaat
 END_IF
 
+// dit is een method om de alarmen te resetten
 Resets();
 
-//blinking error
+//blinking error van tessa
 IF xError THEN
 	fbBlinking(io_xBlinking:= o_xErrorPositionUpOrUnknow);
 ELSIF NOT xError AND o_xAlarmPositionUpOrUnknow THEN
@@ -136,7 +139,7 @@ ELSE
 	o_xErrorPositionUpOrUnknow := FALSE;
 END_IF;
 
-//sim
+//sim van janno
 IF gvl.g_xSimulationActive THEN
 	IF SIMFUNCTIONING THEN
 		IF GVL.TimerShort.Q THEN
@@ -156,7 +159,9 @@ END_IF]]></ST>
 VAR
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[CASE o_eCurrentPosition OF
+        <ST><![CDATA[// als er op de verwachte positie te lang niet iets is dan gaan we hiernaar toe om te kijken wat de error is 
+
+CASE o_eCurrentPosition OF
 	eValvePosition.Up :
 			xError := TRUE;
 			o_xAlarmPositionUpOrUnknow := TRUE;	
@@ -174,14 +179,15 @@ END_CASE
       <Implementation>
         <ST><![CDATA[o_xMagnetValve := FALSE;
 
-]]></ST>
+// bedenen is magnet valve false]]></ST>
       </Implementation>
     </Method>
     <Method Name="GoUp" Id="{31034355-e3ba-4c55-b09d-18e1e6f0f4ff}">
       <Declaration><![CDATA[METHOD GoUp]]></Declaration>
       <Implementation>
         <ST><![CDATA[o_xMagnetValve := TRUE;
-]]></ST>
+
+// boven is magner valve true]]></ST>
       </Implementation>
     </Method>
     <Method Name="Resets" Id="{abc28e97-cc6e-4383-9eed-944a9215df0b}">
@@ -195,7 +201,9 @@ END_IF
 IF i_xAlarmReset THEN
 	TimerStartButton := FALSE;
 	o_xAlarmPositionUpOrUnknow := FALSE;
-END_IF]]></ST>
+END_IF
+
+// dit is om de alarm en waarschuwing weg te doen ]]></ST>
       </Implementation>
     </Method>
   </POU>
