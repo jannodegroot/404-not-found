@@ -4,7 +4,7 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Lift
 VAR_INPUT
 	i_eState 			: eSingleState;
-	i_eMode				: eModus;
+	i_eMode				: eModus := eModus.Auto;
 	i_eLiftState 		: eLiftStates;
 	
 	i_xAllowedToMoveUp	: BOOL;

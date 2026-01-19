@@ -5,7 +5,7 @@
 VAR_INPUT
 	i_xAbort		 		: BOOL;
 	i_eStartStop 			: eStartStop;
-	i_eModus				: eModus; // 0= off 1= auto 2= manual
+	i_eModus				: eModus := eModus.Auto; // 0= off 1= auto 2= manual
 	i_xLightSensor 			: BOOL; // checking for cans after 10 sec alarm
 	i_xAlarmReset			: BOOL;
 	i_xManualMotor			: BOOL;
@@ -73,6 +73,8 @@ IF gvl.g_xSimulationActive THEN
 		IF GVL.TimerShort.Q THEN
 			i_xLightSensor :=FALSE;
 		END_IF
+	ELSE
+		i_xLightSensor :=TRUE;
 	END_IF
 END_IF]]></ST>
     </Implementation>

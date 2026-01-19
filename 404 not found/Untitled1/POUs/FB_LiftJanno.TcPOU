@@ -55,53 +55,71 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Janno geeft door naar welke laag hij moet. Laag 0 = home, laag 1 = band, laag 2 = pallet op pallet, laag 3 = pallets hoog
-CASE i_eMode OF
-	eModus.Auto :
-	CASE i_eState OF
-		eSingleState.Execute :
-			CASE i_eLiftState OF
-				eLiftStates.WaitForPallet :														// Niet af
-					// Wanneer in Normal Height positie, laat pallet door.
-					
-					
-					
-				eLiftStates.MoveUpToLayer :														// Testen
-				 	// Ga naar de positie van de volgende laag.
+
+
+
+//sim
+IF i_iServoEncoder > o_xTargetPos AND o_xMotor  AND GVL.TimerShort.Q THEN
+	i_iServoEncoder:=i_iServoEncoder-1;
+ELSIF i_iServoEncoder < o_xTargetPos AND o_xMotor  AND GVL.TimerShort.Q THEN
+	i_iServoEncoder:=i_iServoEncoder+1;
+END_IF
+
+IF i_iServoEncoder=0 THEN
+	i_xEndSwitch:= TRUE;
+ELSE 
+	i_xEndSwitch:= FALSE;
+END_IF
+IF o_xMagnetValve AND GVL.TimerShort.Q THEN
+	i_xPin1HallSensorIn:=FALSE;
+	i_xPin2HallSensorIn:=FALSE;
+	i_xPin3HallSensorIn:=FALSE;
+	i_xPin4HallSensorIn:=FALSE;
+	i_xPin1HallSensorOut:=TRUE;
+	i_xPin2HallSensorOut:=TRUE;
+	i_xPin3HallSensorOut:=TRUE;
+	i_xPin4HallSensorOut:=TRUE;
+ELSIF NOT o_xMagnetValve AND GVL.TimerShort.Q THEN
+	i_xPin1HallSensorOut:=FALSE;
+	i_xPin2HallSensorOut:=FALSE;
+	i_xPin3HallSensorOut:=FALSE;
+	i_xPin4HallSensorOut:=FALSE;
+	i_xPin1HallSensorIn:=TRUE;
+	i_xPin2HallSensorIn:=TRUE;
+	i_xPin3HallSensorIn:=TRUE;
+	i_xPin4HallSensorIn:=TRUE;
+
+END_IF
+//end sim
+IF i_eLiftState= eLiftStates.Impale THEN
+	o_xMagnetValve:=1;
+ELSIF i_eLiftState= eLiftStates.Deimpale THEN
+	o_xMagnetValve:=0;
+ELSE
+	o_xMagnetValve:=0;
+END_IF
+			IF i_eState=eSingleState.Aborted OR i_eState=eSingleState.Aborting THEN
+				o_xMotor:=FALSE;
+			ELSIF  i_iServoEncoder > o_xTargetPos OR i_iServoEncoder<o_xTargetPos  THEN
+				o_xMotor:=TRUE;
+			ELSIF i_iServoEncoder = o_xTargetPos THEN
+				o_xMotor:=FALSE;
+			END_IF
 					CASE i_iMoveToLayer OF
 						0 :
-							// Ga naar home
-							IF i_xPin1HallSensorIn AND
-								i_xPin1HallSensorIn AND
-								i_xPin1HallSensorIn AND
-								i_xPin1HallSensorIn THEN
-								// Ga naar HOME
-								i_eLiftState := eLiftStates.MoveToHome;
-							ELSE
-								// Error: Kan niet naar home, pins niet in
-							END_IF
+							o_xTargetPos:=0;
 						1 :
 							// Ga naar band hoogte
-							THIS^.GoToConveyorHeight();
+							o_xTargetPos:=4;
 						2 : 
 							// Ga naar stapelhoogte
-							THIS^.GoToHighestHeight();
+							o_xTargetPos:=12;
 						3 :
-							// Ga hoog
-							THIS^.GoToPalletizeHeight();
+							//hoogte om pallet neer te zetten
+							o_xTargetPos:=8;
+
 					END_CASE
-					
-				
-			END_CASE
-	END_CASE
-	
-	eModus.Manual :
-		// Doe effe zelf																			// TOEVOEGEN MET HMI
-		// Lift handmatig bedienen door INT invoer?
-		// Pins handmatig in en uit, met beveiliging zodat pallet niet naar beneden dondert
-	eModus.Off :
-		// Doe niks
-		// Stop
-END_CASE]]></ST>
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

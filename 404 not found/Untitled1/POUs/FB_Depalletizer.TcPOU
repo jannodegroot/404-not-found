@@ -119,7 +119,7 @@ fbZuiger(
 	i_xHallSensorOut:= , 
 	i_xEndSwitchIn:= , 
 	i_xEndSwitchOut:= , 
-	i_rPressureSensor:= , 
+	i_rPressureSensor:= 4000, 
 	i_xAlarmResetCilinder:= , 
 	i_xAlarmResetAlarmHorizontalMovement:= , 
 	i_xAlarmResetPressure:= , 

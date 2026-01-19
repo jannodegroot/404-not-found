@@ -7,7 +7,7 @@ VAR_INPUT
 	i_xGoHold 		: BOOL; //keep pallet on band wachten
 	i_xGoEmpty		: BOOL; //move pallet to other segment go
 	i_xAlarmReset	: BOOL;
-	i_eModus		: eModus;
+	i_eModus		: eModus := eModus.Auto;
 	i_xManualMotor  : BOOL;
 END_VAR
 VAR_OUTPUT
@@ -37,6 +37,16 @@ CASE i_eModus OF
 			o_xGivingToNext := FALSE;
 		END_IF
 		
+		IF i_xGoEmpty = FALSE AND o_xMotor = TRUE THEN
+			xError := TRUE;	
+			o_xAlarmMotor := TRUE;
+		ELSIF i_xGoHold = TRUE AND o_xMotor = TRUE THEN
+			xError := TRUE;	
+			o_xAlarmMotor := TRUE;
+		ELSE
+			xError := FALSE;	
+		END_IF 
+		
 	eModus.Manual:
 		IF i_xManualMotor THEN
 			o_xMotor := TRUE;
@@ -47,19 +57,7 @@ CASE i_eModus OF
 END_CASE
 
 
-IF i_xGoEmpty = FALSE AND o_xMotor = TRUE THEN
-	xError := TRUE;	
-	o_xAlarmMotor := TRUE;
-ELSE
-	xError := FALSE;	
-END_IF
 
-IF i_xGoHold = TRUE AND o_xMotor = TRUE THEN
-	xError := TRUE;	
-	o_xAlarmMotor := TRUE;
-ELSE
-	xError := FALSE;	
-END_IF 
 
 IF i_xAlarmReset THEN
 	o_xAlarmMotor := FALSE;

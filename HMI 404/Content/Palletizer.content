@@ -236,143 +236,11 @@
 
 
 </div>
-<div id="TcHmiButton_40" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="28" data-tchmi-height-unit="px" data-tchmi-left="143" data-tchmi-left-unit="px" data-tchmi-top="660" data-tchmi-top-unit="px" data-tchmi-width="72" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-zindex="4">
-<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
-[
-  {
-    "event": "%ctx%owner::Id|EventRegistrationMode=Resolve%/ctx%.onMouseDown",
-    "actions": [
-      {
-        "objectType": "WriteToSymbol",
-        "active": true,
-        "symbolExpression": "%s%ADS.PLC1.MAIN.fbPalletizer.i_xWarningReset%/s%",
-        "value": {
-          "objectType": "StaticValue",
-          "valueType": "tchmi:general#/definitions/BOOL",
-          "value": true
-        },
-        "asyncWait": true
-      },
-      {
-        "objectType": "WriteToSymbol",
-        "active": true,
-        "symbolExpression": "%ctx%owner::Text%/ctx%",
-        "value": {
-          "objectType": "StaticValue",
-          "valueType": "tchmi:general#/definitions/String",
-          "value": "Reset"
-        },
-        "asyncWait": true
-      }
-    ]
-  },
-  {
-    "event": "%f%%s%ADS.PLC1.MAIN.fbPalletizer.o_xWarningFull%/s%%/f%",
-    "actions": [
-      {
-        "objectType": "Condition",
-        "active": true,
-        "parts": [
-          {
-            "if": [
-              {
-                "compare1": {
-                  "objectType": "Symbol",
-                  "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbPalletizer.o_xWarningFull%/s%"
-                },
-                "compare2": {
-                  "objectType": "StaticValue",
-                  "valueType": "tchmi:general#/definitions/BOOL",
-                  "value": true
-                },
-                "compareOperator": "==",
-                "logic": null
-              },
-              {
-                "compare1": {
-                  "objectType": "Symbol",
-                  "valueType": "tchmi:general#/definitions/INT",
-                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbPalletizer.o_iStorageCount%/s%"
-                },
-                "compare2": {
-                  "objectType": "StaticValue",
-                  "valueType": "tchmi:general#/definitions/INT",
-                  "value": 8
-                },
-                "compareOperator": "<",
-                "logic": "AND"
-              }
-            ],
-            "then": [
-              {
-                "objectType": "WriteToSymbol",
-                "active": true,
-                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
-                "value": {
-                  "objectType": "StaticValue",
-                  "valueType": "tchmi:framework#/definitions/Visibility",
-                  "value": "Visible"
-                },
-                "asyncWait": true
-              }
-            ]
-          },
-          {
-            "else": [
-              {
-                "objectType": "WriteToSymbol",
-                "active": true,
-                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
-                "value": {
-                  "objectType": "StaticValue",
-                  "valueType": "tchmi:framework#/definitions/Visibility",
-                  "value": "Hidden"
-                },
-                "asyncWait": true
-              }
-            ]
-          }
-        ],
-        "asyncWait": true
-      }
-    ]
-  },
-  {
-    "event": "%ctx%owner::Id|EventRegistrationMode=Resolve%/ctx%.onMouseUp",
-    "actions": [
-      {
-        "objectType": "WriteToSymbol",
-        "active": true,
-        "symbolExpression": "%s%ADS.PLC1.MAIN.fbPalletizer.i_xWarningReset%/s%",
-        "value": {
-          "objectType": "StaticValue",
-          "valueType": "tchmi:general#/definitions/BOOL",
-          "value": false
-        },
-        "asyncWait": true
-      },
-      {
-        "objectType": "WriteToSymbol",
-        "active": true,
-        "symbolExpression": "%ctx%owner::Text%/ctx%",
-        "value": {
-          "objectType": "StaticValue",
-          "valueType": "tchmi:general#/definitions/String",
-          "value": null
-        },
-        "asyncWait": true
-      }
-    ]
-  }
-]
-</script>
-</div>
 <div id="text_state_76" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="28" data-tchmi-height-unit="px" data-tchmi-left="20" data-tchmi-left-unit="px" data-tchmi-text="Reset warning Full:" data-tchmi-top="660" data-tchmi-top-unit="px" data-tchmi-width="123" data-tchmi-width-unit="px" data-tchmi-word-wrap="&quot;Tru" data-tchmi-text-font-size="15" data-tchmi-text-horizontal-alignment="Left" data-tchmi-text-vertical-alignment="Center" data-tchmi-zindex="4">
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
-    "event": "%s%ADS.PLC1.MAIN.fbPalletizer.o_xWarningFull%/s%",
+    "event": "%s%ADS.PLC1.MAIN.fbPalletizer.i_eModus%/s%",
     "actions": [
       {
         "objectType": "Condition",
@@ -383,15 +251,15 @@
               {
                 "compare1": {
                   "objectType": "Symbol",
-                  "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbPalletizer.o_xWarningFull%/s%"
+                  "valueType": "tchmi:server#/definitions/ADS-PLC1.eModus",
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbPalletizer.i_eModus%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
-                  "valueType": "tchmi:general#/definitions/BOOL",
-                  "value": true
+                  "valueType": "tchmi:server#/definitions/ADS-PLC1.eModus",
+                  "value": 0
                 },
-                "compareOperator": "==",
+                "compareOperator": "!=",
                 "logic": null
               }
             ],
@@ -829,7 +697,7 @@
 </div>
 <div id="text_state_80" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="28" data-tchmi-height-unit="px" data-tchmi-left="276" data-tchmi-left-unit="px" data-tchmi-text="Band" data-tchmi-top="477" data-tchmi-top-unit="px" data-tchmi-width="123" data-tchmi-width-unit="px" data-tchmi-word-wrap="&quot;Tru" data-tchmi-text-font-size="15" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Center" data-tchmi-zindex="4">
 </div>
-<div id="Motor_13" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiImage" data-tchmi-height="19" data-tchmi-height-unit="px" data-tchmi-left="276" data-tchmi-left-unit="px" data-tchmi-top="365" data-tchmi-top-unit="px" data-tchmi-width="42" data-tchmi-width-unit="px" data-tchmi-zindex="4">
+<div id="Motor_13" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiImage" data-tchmi-height="19" data-tchmi-height-unit="px" data-tchmi-left="276" data-tchmi-left-unit="px" data-tchmi-top="364" data-tchmi-top-unit="px" data-tchmi-width="42" data-tchmi-width-unit="px" data-tchmi-zindex="4">
 <script data-tchmi-target-attribute="data-tchmi-border-color" type="application/json">
 {
   "color": "rgba(223, 223, 223, 1)"
@@ -2075,5 +1943,156 @@
 <div id="text_Mode_29" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="19" data-tchmi-height-unit="px" data-tchmi-left="26" data-tchmi-left-unit="px" data-tchmi-text="Deur open" data-tchmi-top="189" data-tchmi-top-unit="px" data-tchmi-width="83" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-text-font-size="12" data-tchmi-text-horizontal-alignment="Center" data-tchmi-text-vertical-alignment="Center">
 </div>
 <div id="TcHmiToggleButton_10" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="37" data-tchmi-height-unit="px" data-tchmi-left="938" data-tchmi-left-unit="px" data-tchmi-text="sim deuropenknop" data-tchmi-top="745" data-tchmi-top-unit="px" data-tchmi-width="98" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-state-symbol="%s%ADS.PLC1.MAIN.fbPalletizer.i_xDoorOpenButton%/s%">
+</div>
+<div id="TcHmiButton_76" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="28" data-tchmi-height-unit="px" data-tchmi-left="143" data-tchmi-left-unit="px" data-tchmi-top="660" data-tchmi-top-unit="px" data-tchmi-width="72" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-zindex="7" data-tchmi-state-symbol="%s%ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.i_xAlarmResetAlarmHorizontalMovement%/s%">
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "%ctx%owner::Id|EventRegistrationMode=Resolve%/ctx%.onMouseDown",
+    "actions": [
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%s%ADS.PLC1.MAIN.fbPalletizer.o_xWarningFull%/s%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/BOOL",
+          "value": true
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctx%owner::Text%/ctx%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/String",
+          "value": "Reset"
+        },
+        "asyncWait": true
+      }
+    ]
+  },
+  {
+    "event": "%s%ADS.PLC1.MAIN.fbPalletizer.i_eModus%/s%",
+    "actions": [
+      {
+        "objectType": "Condition",
+        "active": true,
+        "parts": [
+          {
+            "if": [
+              {
+                "compare1": {
+                  "objectType": "Symbol",
+                  "valueType": "tchmi:server#/definitions/ADS-PLC1.eModus",
+                  "symbolExpression": "%s%ADS.PLC1.MAIN.fbPalletizer.i_eModus%/s%"
+                },
+                "compare2": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:server#/definitions/ADS-PLC1.eModus",
+                  "value": null
+                },
+                "compareOperator": "!=",
+                "logic": null
+              }
+            ],
+            "then": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Visible"
+                },
+                "asyncWait": true
+              }
+            ]
+          },
+          {
+            "else": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctx%owner::Visibility%/ctx%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Visibility",
+                  "value": "Hidden"
+                },
+                "asyncWait": true
+              }
+            ]
+          }
+        ],
+        "asyncWait": true
+      }
+    ]
+  },
+  {
+    "event": "%ctx%owner::Id|EventRegistrationMode=Resolve%/ctx%.onMouseUp",
+    "actions": [
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%s%ADS.PLC1.MAIN.fbPalletizer.o_xWarningFull%/s%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/BOOL",
+          "value": false
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctx%owner::Text%/ctx%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/String",
+          "value": null
+        },
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+</div>
+<div id="TcHmiToggleButton_20" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="37" data-tchmi-height-unit="px" data-tchmi-left="830" data-tchmi-left-unit="px" data-tchmi-text="emptyed pallets" data-tchmi-top="745" data-tchmi-top-unit="px" data-tchmi-width="98" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-state-symbol="%s%ADS.PLC1.MAIN.fbPalletizer.i_xPalletsEmptyed%/s%">
+</div>
+<div id="TcHmiTextblock_20" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="190" data-tchmi-height-unit="px" data-tchmi-left="300" data-tchmi-left-unit="px" data-tchmi-top="173" data-tchmi-top-unit="px" data-tchmi-width="90" data-tchmi-width-unit="px" data-tchmi-word-wrap="&quot;Tru" data-tchmi-text-font-size="&quot;3" data-tchmi-text-horizontal-alignment="&quot;Cente" data-tchmi-zindex="6">
+<script data-tchmi-target-attribute="data-tchmi-border-color" type="application/json">
+{
+  "color": "rgba(128, 128, 128, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-border-width" type="application/json">
+{
+  "left": 2,
+  "right": 2,
+  "top": 2,
+  "bottom": 2,
+  "leftUnit": "px",
+  "rightUnit": "px",
+  "topUnit": "px",
+  "bottomUnit": "px"
+}
+</script>
+
+
+
+<script data-tchmi-target-attribute="data-tchmi-border-style" type="application/json">
+{
+  "left": "Solid",
+  "right": "Solid",
+  "top": "Solid",
+  "bottom": "Solid"
+}
+</script>
 </div>
 </div>

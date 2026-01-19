@@ -4,7 +4,7 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Zuiger
 VAR_INPUT
 	i_eState 			: eSingleState;
-	i_eModes			: eModus;
+	i_eModes			: eModus := eModus.Auto;
 	i_xMoveCiliderDown	: BOOL;
 	i_xHallSensorIn		: BOOL;
 	i_xHallSensorOut	: BOOL;
@@ -50,6 +50,10 @@ VAR
 	
 	SIMFUNCTIONING : BOOL := 1;
 	o_sStateString: STRING(30);
+	xErrorPressure: BOOL;
+	xErrorCilinder: BOOL;
+	xErrorHorizontalMovement : BOOL;
+	fbBlinking : FB_Blinking;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -132,11 +136,20 @@ ELSE
 END_IF
 
 IF TimerCilinder.Q THEN //error cilinder when timer gone
-	o_xErrorCilinder:=1;
+	xErrorCilinder:=1;
 	o_xAlarmCilinder:=1;
 ELSE
-	o_xErrorCilinder:=0;
+	xErrorCilinder:=0;
 END_IF
+
+IF xErrorCilinder THEN
+	fbBlinking(io_xBlinking:= o_xErrorCilinder);
+ELSIF NOT xErrorCilinder AND o_xAlarmCilinder THEN
+	o_xErrorCilinder := TRUE;
+ELSE
+	o_xErrorCilinder := FALSE;
+END_IF;
+
 
 IF  (NOT (eWistedHorizotalPosition = o_eHorizotalPosition)) AND o_xMotor THEN //error start timer horizonal
 	xTimerHorizontalRunning:=1;
@@ -145,29 +158,45 @@ ELSE
 END_IF
 
 IF TimerHorizontal.Q THEN
-	o_xErrorHorizontalMovement:=1;
+	xErrorHorizontalMovement:=1;
 	o_xAlarmHorizontalMovement:=1;
 ELSE
-	o_xErrorHorizontalMovement:=0;
+	xErrorHorizontalMovement:=0;
 END_IF
+
+IF xErrorHorizontalMovement THEN
+	fbBlinking(io_xBlinking:= o_xErrorHorizontalMovement);
+ELSIF NOT xErrorHorizontalMovement AND o_xAlarmHorizontalMovement THEN
+	o_xErrorHorizontalMovement := TRUE;
+ELSE
+	o_xErrorHorizontalMovement := FALSE;
+END_IF;
 
 //pressuresensor error
 rPressure_bar := (i_rPressureSensor / 4095.0) * rMaxbarsensor;// 4095 form analog and 6 from 6 bar max from the sensor
 IF rPressure_bar<rlowpressure THEN
-	o_xErrorPressure:=1;
+	xErrorPressure:=1;
 	o_xAlarmPressure:=1;
 ELSE
-	o_xErrorPressure:=0;
+	xErrorPressure:=0;
 END_IF
 
+IF xErrorPressure THEN
+	fbBlinking(io_xBlinking:= o_xErrorPressure);
+ELSIF NOT xErrorPressure AND o_xAlarmPressure THEN
+	o_xErrorPressure := TRUE;
+ELSE
+	o_xErrorPressure := FALSE;
+END_IF;
+
 //Alarm reset
-IF i_xAlarmResetCilinder AND NOT  o_xErrorCilinder THEN
+IF i_xAlarmResetCilinder AND NOT  xErrorCilinder THEN
 	o_xAlarmCilinder:=0;
 END_IF 
-IF NOT 	o_xErrorHorizontalMovement AND i_xAlarmResetAlarmHorizontalMovement THEN
+IF NOT 	xErrorHorizontalMovement AND i_xAlarmResetAlarmHorizontalMovement THEN
 	o_xAlarmHorizontalMovement:=0;
 END_IF
-IF NOT o_xErrorPressure AND  i_xAlarmResetPressure THEN
+IF NOT xErrorPressure AND  i_xAlarmResetPressure THEN
 	o_xAlarmPressure:=0;
 END_IF
 

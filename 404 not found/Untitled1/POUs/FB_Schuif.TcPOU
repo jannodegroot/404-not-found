@@ -4,7 +4,7 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Schuif
 VAR_INPUT
 	i_eState 				: eSingleState;
-	i_eMode					: eModus;
+	i_eMode					: eModus := eModus.Auto;
 	
 	i_xMove					: BOOL; // Start moving to push
 	i_xMovePossible			: BOOL; // Is there room on the conveyor? 
