@@ -195,13 +195,15 @@ fbDepalletizer( i_xAbort			:= xAbortGeneral,
 				i_eStartStop		:= eStartStopGeneral, 
 				i_PreviousEmptying	:= xBuffer5Emptying, 
 				i_NextEmpty			:= xBandDepalletizerPalletizerEmpty, 
+				i_HeightSensor		:= ,
 				i_eNextState		:= eStateBandDepalletizerPalletizer, 
 				i_iCanTypeHMI		:= (*Used in HMI*), 
 				i_iNumberOfLayersHMI:= (*Used in HMI*), 
 				o_eState			=> eStateDepalletizer, 
 				o_xEmpty			=> xDepalletizerEmpty, 
 				o_xWarningNoProduct	=> (*Used in HMI*), 
-				o_aLayerHeights		=> (*??*));
+				o_xGivingToNext		=> xDepalletizerEmptying, 
+				o_aLayerHeights		=> (*??*));		
 		
 //----band depalletizer/palletizer------------------------------------------------------------------------------------------------------------					
 fbBandDepalletizerPalletizer(	i_xAbort				:= xAbortGeneral, 

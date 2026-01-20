@@ -10,7 +10,7 @@ VAR_INPUT
 	i_xHallSensorOut	: BOOL;
 	i_xEndSwitchIn		: BOOL;
 	i_xEndSwitchOut		: BOOL;
-	i_rPressureSensor	: REAL; 
+	i_rPressureSensor	: REAL := 4000; 
 	i_xAlarmResetCilinder	: BOOL;
 	i_xAlarmResetAlarmHorizontalMovement	: BOOL;
 	i_xAlarmResetPressure : BOOL;
