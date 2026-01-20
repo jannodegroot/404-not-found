@@ -2836,6 +2836,40 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbDepalletizer.fbKlep.i_eState": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbKlep::i_eState",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:server#/definitions/ADS-PLC1.eSingleState"
+                    },
+                    {
+                        "propertyOrder": 1
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbDepalletizer.fbKlep.o_eCurrentPosition": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbKlep::o_eCurrentPosition",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:server#/definitions/ADS-PLC1.eValvePosition"
+                    },
+                    {
+                        "propertyOrder": 9
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.eManCiliderPosition": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -3171,6 +3205,42 @@
                     },
                     {
                         "propertyOrder": 6
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbDepalletizer.o_xEmpty": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbDepalletizer::o_xEmpty",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Depalletizer is empty",
+                        "propertyOrder": 10
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbDepalletizer.o_xGivingToNext": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbDepalletizer::o_xGivingToNext",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Let the next conveyor know it is getting a new pallet.",
+                        "propertyOrder": 12
                     }
                 ]
             },
@@ -6993,6 +7063,8 @@
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xErrorMotor": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xGivingToNext": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xMotor": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.fbKlep.i_eState": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.fbKlep.o_eCurrentPosition": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.eManCiliderPosition": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.eManHorizotalPosition": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.i_eModes": 3,
@@ -7013,6 +7085,8 @@
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_xMotor": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.rPressure_bar": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.o_eState": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.o_xEmpty": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.o_xGivingToNext": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.SIMFUNCTIONING": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_eManualWantedPosition": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_eModus": 3,
