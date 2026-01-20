@@ -62,6 +62,7 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Yvo
+THIS^.Simulation();
 
 // Check the type of can and give the height of each layer
 THIS^.CheckCanType();
@@ -159,10 +160,10 @@ fbBand(
 	i_xAlarmReset:= , 
 	i_eModus:= , 
 	i_xManualMotor:= , 
-	o_xMotor=> (xConveyorMoving OR i_PreviousEmptying), 
+	o_xMotor=> xConveyorMoving, 
 	o_xErrorMotor=> , 
 	o_xAlarmMotor=> , 
-	o_xGivingToNext=> (xLiftIsDone AND i_NextEmpty));
+	o_xGivingToNext=> );
 	
 // Functionblock Lift
 fbLiftA(
@@ -305,6 +306,18 @@ END_VAR
 	o_xEmpty := TRUE;
 ELSE 
 	o_xEmpty := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Simulation" Id="{810a897f-c836-484c-9d15-bf084da841ea}">
+      <Declaration><![CDATA[METHOD Simulation : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF i_PreviousEmptying THEN
+	xLightSensor1 := TRUE;
+	xLightSensor2 := TRUE;
 END_IF]]></ST>
       </Implementation>
     </Method>
