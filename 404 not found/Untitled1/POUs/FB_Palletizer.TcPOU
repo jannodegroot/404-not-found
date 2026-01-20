@@ -179,7 +179,7 @@ CASE o_eState OF
 									IF  NOT fbLiftB.o_xMotor THEN//and lift
 										fbLiftB.i_eLiftState:= eLiftStates.Impale;
 										o_xExpectingPallet:=0;
-										xPalletIn:=0;
+										
 										istep:=3;
 									END_IF
 								end_if
@@ -200,7 +200,11 @@ CASE o_eState OF
 							fbLiftB.i_iMoveToLayer:=2;
 							//move to holding
 							IF rMotorOff.Q AND fbLiftB.i_iMoveToLayer=2 THEN
+								
+								IF xPalletIn=0 THEN
 								o_iStorageCount:=o_iStorageCount+1;
+								END_IF
+								xPalletIn:=0;
 								istep:=1;
 							END_IF
 						END_IF
@@ -242,7 +246,7 @@ CASE o_eState OF
 		IF NOT ximpaled AND (fbLiftB.i_iMoveToLayer=1 OR fbLiftB.i_iMoveToLayer=0) THEN
 			fbLiftB.i_iMoveToLayer:=0;
 			IF  NOT fbLiftB.o_xMotor AND fbLiftB.i_iMoveToLayer=0 THEN//and lift
-				IF istep=3 THEN
+				IF o_iStorageCount>0 THEN
 					xPalletIn:=1;
 				END_IF
 				istep:=0;
@@ -304,6 +308,9 @@ CASE o_eState OF
 		IF NOT i_xDoorOpenButton THEN
 			//xTimerEmtyingRunning:=1;
 			IF o_iStorageCount<8 THEN
+				IF o_iStorageCount>0 THEN
+					xPalletIn:=1;
+				END_IF
 				istep := 0;
 				o_eState := eSingleState.Execute;
 				//xTimerEmtyingRunning:=0;
