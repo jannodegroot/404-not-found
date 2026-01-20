@@ -459,7 +459,7 @@
     "RECORDING_MESSAGE_MAX_LENGTH": 5120,
     "REMOTESERVERS": {},
     "REMOTESERVERS_CERTIFICATES": [],
-    "REQUIREAUTH": 1,
+    "REQUIREAUTH": 0,
     "REQUIRE_CLIENT_CERTIFICATE": false,
     "SAMESITE_ATTRIBUTE": 2,
     "SELFSIGNEDROOTCA": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURzVENDQXBtZ0F3SUJBZ0lKQUp6UFBOaG9KVFdtTUEwR0NTcUdTSWIzRFFFQkN3VUFNRWt4Q3pBSkJnTlYKQkFZVEFrUkZNUnN3R1FZRFZRUUtEQkpVZDJsdVEwRlVJRWhOU1NCVFpYSjJaWEl4SFRBYkJnTlZCQU1NRkVSRgpVMHRVVDFBdFJWSkxRVEEyVFY5eWIyOTBNQjRYRFRJMU1URXhNVEV6TXpBeU1Gb1hEVEk0TVRFeE1UQTNNekF5Ck1Gb3dTVEVMTUFrR0ExVUVCaE1DUkVVeEd6QVpCZ05WQkFvTUVsUjNhVzVEUVZRZ1NFMUpJRk5sY25abGNqRWQKTUJzR0ExVUVBd3dVUkVWVFMxUlBVQzFGVWt0Qk1EWk5YM0p2YjNRd2dnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQQpBNElCRHdBd2dnRUtBb0lCQVFDaHBCZmVDOWhqODdGT2dLR1NhazBUMWlpVEI3MTNmMGRLY1lKZk1rdmhUZGRKCkYzNUh0MHFFa1NZOGt5Y0pFdHJjSlp0aFNLbjN6MEljdnpmblVDWEdQRFVyRjB2YUJDSGllZWZoZ3cxYWdpd3QKUVI3bnhuVHBmemI0dlViUHpWcnJWWE82ZVlTWmgvMnhEUTUza2ppUzk0Y3N5d0g1MTV2WS9RclRtWFdVMGVnVAp2VmZDRnF1M1NBbWs4U25XZXJNSmg3TW54QUdkUEhNWWI0NUtkeWFhblZtbXlKdkRmcnVJcmdwTHJvQnNDMkpHCmhZSFpaV3F0OUlBS0lIZ1paZFRMRldCSjhpcWQ1RDNCY0xjQ0FqWTRjNUtNaStJL3I1djZya0Z6QU9LSVRNNlcKSWJUbkVFeEMwSVR6bGxyNmJ2ekVwc3ZNNmhoRDVOS1RCWWhFVW1RM0FnTUJBQUdqZ1pzd2daZ3daZ1lEVlIwUgpCRjh3WFlJSmJHOWpZV3hvYjNOMGh3Ui9BQUFCaHhBQUFBQUFBQUFBQUFBQUFBQUFBQUFCZ2c5RVJWTkxWRTlRCkxVVlNTMEV3TmsyQ0QwUkZVMHRVVDFBdFJWSkxRVEEyVFljRWtWbHJxNGNRL29BQUFBQUFBQUFUVzFBMkk2S0EKMnpBZEJnTlZIUTRFRmdRVXdRT3NaaFVqeDNFRk5aZjUreGEzMXNUTjUzY3dEd1lEVlIwVEFRSC9CQVV3QXdFQgovekFOQmdrcWhraUc5dzBCQVFzRkFBT0NBUUVBVUc5WDl3WGs2eWJ0ODNNMFpKbmgwdldGWjIzMHVKN0RwalEzClNCT01MYjlsWndBQ3lQaU5rbm1LNTcyNjd0aDRpR2ZQUGFBRTUyN2puQXdJekdYeGRFOENtOVI2ejR0aEU5ZHYKMEhOUXpkVTFOS0V1Y0lNY0JUUTZYYzQ1YUJHSVVvN0FnemdXTDc2Um10VEhBVk8ycG9PQWlDd3FpZHpLQlNpVQpJMzE4bFNOMlJxb2RmdVBlVm04YU51Z0hObEN2WWRvcDNCbXdSOTB2SkMrdnp5TU5Zd2tQR1lOSkFqNWpwdm96Cmc3YUtBN0NiUEs0V0VPbjVCRFFoUFJuZlcreXVMK0xKN2pwMC9qNHNVdDd6K1RYbFJEYnZNV2pXOWkyUVlqV00Kc1p3Nnc5dnpNaWUzRDZFUHRIa0dmQWZ0Tk9lNW43S2RNS3BIME5qakYxYlU3Nm5FNHc9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==",
@@ -2836,6 +2836,40 @@
             },
             "USEMAPPING": true
         },
+        "ADS.PLC1.MAIN.fbDepalletizer.fbKlep.i_eState": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbKlep::i_eState",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:server#/definitions/ADS-PLC1.eSingleState"
+                    },
+                    {
+                        "propertyOrder": 1
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbDepalletizer.fbKlep.o_eCurrentPosition": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbDepalletizer::fbKlep::o_eCurrentPosition",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:server#/definitions/ADS-PLC1.eValvePosition"
+                    },
+                    {
+                        "propertyOrder": 9
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.eManCiliderPosition": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -3171,6 +3205,42 @@
                     },
                     {
                         "propertyOrder": 6
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbDepalletizer.o_xEmpty": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbDepalletizer::o_xEmpty",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Depalletizer is empty",
+                        "propertyOrder": 10
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbDepalletizer.o_xGivingToNext": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbDepalletizer::o_xGivingToNext",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Let the next conveyor know it is getting a new pallet.",
+                        "propertyOrder": 12
                     }
                 ]
             },
@@ -3684,6 +3754,23 @@
                     },
                     {
                         "propertyOrder": 5
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "ADS.PLC1.MAIN.fbPalletizer.fbLiftB.i_iServoEncoder": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::MAIN::fbPalletizer::fbLiftB::i_iServoEncoder",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/INT"
+                    },
+                    {
+                        "propertyOrder": 4
                     }
                 ]
             },
@@ -6976,6 +7063,8 @@
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xErrorMotor": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xGivingToNext": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbBand.o_xMotor": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.fbKlep.i_eState": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.fbKlep.o_eCurrentPosition": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.eManCiliderPosition": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.eManHorizotalPosition": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.i_eModes": 3,
@@ -6996,6 +7085,8 @@
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.o_xMotor": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.fbZuiger.rPressure_bar": 3,
                 "ADS.PLC1.MAIN.fbDepalletizer.o_eState": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.o_xEmpty": 3,
+                "ADS.PLC1.MAIN.fbDepalletizer.o_xGivingToNext": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.SIMFUNCTIONING": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_eManualWantedPosition": 3,
                 "ADS.PLC1.MAIN.fbInvoerBuffer1.fbKlep.i_eModus": 3,
@@ -7026,6 +7117,7 @@
                 "ADS.PLC1.MAIN.fbPalletizer.fbBand.o_xAlarmMotor": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.fbBand.o_xErrorMotor": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.fbBand.o_xMotor": 3,
+                "ADS.PLC1.MAIN.fbPalletizer.fbLiftB.i_iServoEncoder": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.i_PreviousEmptying": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.i_eModus": 3,
                 "ADS.PLC1.MAIN.fbPalletizer.i_xDoorOpenButton": 3,

@@ -27,19 +27,23 @@ VAR
 	xGoEmptyBand : BOOL;
 	istep		: INT;
 	ximpaled : BOOL;
-	fbLiftB : FB_LiftJanno;
+	fbLiftB: FB_LiftB_Extended;
 	xAuto : BOOL;
 	TimerAcceptingPallet : ton;
 	xTimerEmtyingRunning: BOOL;
 	timTimerValueemtying: TIME;
 	o_sStateString: STRING(30);
 	xpreviuosEmtyed: BOOL;
-	xPalletIn: bool;
+	xPalletIn: BOOL;
+	
+	rMotorOff: F_TRIG;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//timer for error
 TimerAcceptingPallet(IN:=xpreviuosEmtyed, PT := timTimerValue);
+
+rMotorOff(CLK := fbLiftB.o_xMotor);
 
 
 //calling band and giving corect stuf
@@ -52,6 +56,33 @@ fbBand(
 	o_xErrorMotor=> , 
 	o_xAlarmMotor=> , 
 	o_xGivingToNext=> );
+
+fbLiftB(
+	i_eState:= o_eState, 
+	i_eMode:= , 
+	i_eLiftState:= , 
+	i_iServoEncoder:= , 
+	i_xEndSwitch:= , 
+	i_xPin1HallSensorIn:= , 
+	i_xPin2HallSensorIn:= , 
+	i_xPin3HallSensorIn:= , 
+	i_xPin4HallSensorIn:= , 
+	i_xPin1HallSensorOut:= , 
+	i_xPin2HallSensorOut:= , 
+	i_xPin3HallSensorOut:= , 
+	i_xPin4HallSensorOut:= , 
+	i_xLightSensor1:= , 
+	i_xLightSensor2:= , 
+	i_xMoveUpSafe:= , 
+	i_xMoveDownSafe:= , 
+	i_xPalletInPosition:= , 
+	o_iTargetPos=> , 
+	o_eLiftPosition=> , 
+	o_xMotor=> , 
+	o_xMagnetValve=> , 
+	o_ePinsPositions=> , 
+	o_xLiftDone=> , 
+	i_iMoveToLayer:= );
 	
 
 fbLiftB();
@@ -144,9 +175,7 @@ CASE o_eState OF
 									fbLiftB.i_iMoveToLayer:=1;
 
 	
-								end_if
-	
-								IF NOT ximpaled AND (fbLiftB.i_iMoveToLayer=1) THEN //if the impaler is not holding a pallet and ther is a nieuw pallet and its in position  to pik it up
+								ELSIF NOT ximpaled AND (fbLiftB.i_iMoveToLayer=1) THEN //if the impaler is not holding a pallet and ther is a nieuw pallet and its in position  to pik it up
 									IF  NOT fbLiftB.o_xMotor THEN//and lift
 										fbLiftB.i_eLiftState:= eLiftStates.Impale;
 										o_xExpectingPallet:=0;
@@ -157,7 +186,7 @@ CASE o_eState OF
 	
 								IF  ximpaled AND (fbLiftB.i_iMoveToLayer>1) THEN //if holding pallet and there is a nieuw pallet
 									fbLiftB.i_iMoveToLayer:=3;
-									IF  NOT fbLiftB.o_xMotor AND fbLiftB.i_iMoveToLayer=3 THEN//and lift
+									IF rMotorOff.Q AND fbLiftB.i_iMoveToLayer=3 THEN//and lift
 										fbLiftB.i_eLiftState:= eLiftStates.Deimpale;//moet deimpale zijn maar bestaat niet
 									END_IF
 								END_IF
@@ -170,7 +199,7 @@ CASE o_eState OF
 							xGoEmptyBand := FALSE;
 							fbLiftB.i_iMoveToLayer:=2;
 							//move to holding
-							IF NOT fbLiftB.o_xMotor AND fbLiftB.i_iMoveToLayer=2 THEN
+							IF rMotorOff.Q AND fbLiftB.i_iMoveToLayer=2 THEN
 								o_iStorageCount:=o_iStorageCount+1;
 								istep:=1;
 							END_IF
@@ -205,7 +234,7 @@ CASE o_eState OF
 		xGoEmptyBand := FALSE;
 		IF fbLiftB.i_iMoveToLayer>1 THEN
 			fbLiftB.i_iMoveToLayer:=1;
-			IF  NOT fbLiftB.o_xMotor AND fbLiftB.i_iMoveToLayer=1 THEN//and lift
+			IF  rMotorOff.Q AND fbLiftB.i_iMoveToLayer=1 THEN//and lift
 				fbLiftB.i_eLiftState:= eLiftStates.Deimpale;//has to be deinmpale but does not yet eqzist
 			END_IF
 		END_IF
@@ -242,11 +271,13 @@ CASE o_eState OF
 		// Stop band movement
 		xGoHoldBand := TRUE;
 		xGoEmptyBand := FALSE;
-		IF  ximpaled AND NOT (fbLiftB.i_iMoveToLayer=0) THEN
+		IF  ximpaled AND ( NOT (fbLiftB.i_iMoveToLayer=0) OR NOT (fbLiftB.i_iMoveToLayer=1)) THEN
 			fbLiftB.i_iMoveToLayer:=1;
-			IF  NOT fbLiftB.o_xMotor AND fbLiftB.i_iMoveToLayer=1 THEN//and lift
+			IF  rMotorOff.Q AND fbLiftB.i_iMoveToLayer=1 THEN//and lift
 				fbLiftB.i_eLiftState:= eLiftStates.Deimpale;//moet deimpale zijn maar bestaat niet
 			END_IF
+		ELSIF ximpaled AND  (fbLiftB.i_iMoveToLayer=1) THEN
+			fbLiftB.i_eLiftState:= eLiftStates.Deimpale;
 		END_IF
 		
 		IF NOT ximpaled THEN

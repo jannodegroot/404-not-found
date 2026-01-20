@@ -35,10 +35,16 @@ VAR_OUTPUT
 	o_xMagnetValve		: BOOL;
 	o_ePinsPositions	: eLiftPins;
 	o_xLiftDone			: BOOL;
+	
+	o_xErrorLift			: BOOL;
+	o_xAlarmLift			: BOOL;
+	
+	o_xErrorImpaler			: BOOL;
+	o_xAlarmImpaler			: BOOL;
 END_VAR
 VAR
 	iConveyorHeight: INT;
-	iHomePosition: INT;
+	iHomePosition: INT := 0;
 	iImpaleErrorCounter: INT;
 	InitHomeStates: INT;
 	
@@ -60,7 +66,10 @@ CASE i_eLiftState OF
 	eLiftStates.Impale :
 		// Impale op de manier van welke lift het is
 		THIS^.Impale();
-
+		
+	eLiftStates.Deimpale :
+		THIS^.DeImpale();
+		
 END_CASE]]></ST>
     </Implementation>
     <Method Name="CheckPins" Id="{6e5cd012-7ea2-457b-9034-0e741c55e71a}">
@@ -84,6 +93,15 @@ AND i_xPin4HallSensorOut THEN
 ELSE
 	o_ePinsPositions := eLiftPins.Unknown;
 END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="DeImpale" Id="{b3978ef3-32f4-441d-85f8-cc4a39b7161f}">
+      <Declaration><![CDATA[METHOD DeImpale : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[o_xMagnetValve := FALSE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="ErrorHandler" Id="{75a53550-f60f-49aa-b838-874135d6d169}">
@@ -111,8 +129,6 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[o_xMagnetValve := TRUE;
-
-THIS^.CheckPins();
 
 // IF o_ePinsPositions = eLiftPins.In OR o_ePinsPositions = eLiftPins.Unknown THEN
 // 	iImpaleErrorCounter := iImpaleErrorCounter + 1;
