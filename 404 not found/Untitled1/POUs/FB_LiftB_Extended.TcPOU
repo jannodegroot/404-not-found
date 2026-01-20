@@ -21,12 +21,13 @@ END_VAR
 SUPER^(); // Call parent Functionblock
 iConveyorHeight := iHomePosition + 1000;
 
-// CASE i_eMode OF
-// 	eModus.Auto :
-// 	CASE i_eState OF
-// 		eSingleState.Execute :
-			CASE i_eLiftState OF		
-				eLiftStates.MoveUpToLayer :														// Testen
+CASE i_eMode OF
+	eModus.Auto :
+	//CASE i_eState OF
+		IF NOT (i_eState = eSingleState.Aborting OR i_eState = eSingleState.Aborted) THEN
+		//eSingleState.Execute :
+			//CASE i_eLiftState OF		
+				//eLiftStates.MoveUpToLayer :														// Testen
 				 	// Ga naar de positie van de volgende laag.
 					CASE i_iMoveToLayer OF
 						0 :
@@ -42,10 +43,12 @@ iConveyorHeight := iHomePosition + 1000;
 							// Ga hoog
 							THIS^.GoToPalletizeHeight(); 										// Testen
 					END_CASE
-					
-				
-			END_CASE
-// 	END_CASE
+		ELSE
+			//stop		
+			o_xMotor := FALSE;	
+		END_IF
+	//END_CASE
+END_CASE
 	
 // 	eModus.Manual :
 // 		// Doe effe zelf																			// TOEVOEGEN MET HMI
@@ -102,9 +105,12 @@ END_IF;]]></ST>
       <Declaration><![CDATA[METHOD MoveHome : BOOL
 VAR_INPUT
 END_VAR
-]]></Declaration>
+
+VAR
+	HomeStates: INT := 0;
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[CASE InitHomeStates OF
+        <ST><![CDATA[CASE HomeStates OF
 	0 :	// Start Homing if the endswitch isnt active.
 		IF NOT i_xEndSwitch THEN
         	InitHomeStates := 1;
@@ -132,9 +138,9 @@ END_VAR
 	
 	3 :	// Go down until the endswitch is reached.
 		o_xMotor := TRUE;
-		o_eLiftPosition := eLiftPosition.GoingDown;
+		o_iTargetPos := iHomePosition;
 		
-		IF i_xEndSwitch THEN
+		IF i_iServoEncoder = o_iTargetPos THEN
 			o_xMotor := FALSE;
 			InitHomeStates := 4;
 		END_IF
