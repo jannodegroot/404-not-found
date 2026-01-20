@@ -16,8 +16,9 @@ END_VAR
 
 VAR
 	LayerState: INT;
-	LiftASteps:	INT;
+	LiftASteps:	INT := 1;
 	CurrentLayer: INT;
+	HomeStates: INT := 0;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -62,14 +63,14 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[CASE InitHomeStates OF
+        <ST><![CDATA[CASE HomeStates OF
 	0 :	// Start Homing if the endswitch isnt active.
 		IF NOT i_xEndSwitch THEN
-        	InitHomeStates := 1;
+        	HomeStates := 1;
 		ELSE 
 			// Already at home position
 			o_xMotor := FALSE;
-			InitHomeStates := 4;
+			HomeStates := 4;
     	END_IF
 	
 	1 :	// Go to conveyorheight
@@ -78,11 +79,17 @@ END_VAR
 		
 		IF i_iServoEncoder = o_iTargetPos THEN
 			o_xMotor := FALSE;                  // stop motion
-			InitHomeStates := 2;
+			HomeStates := 2;
 		END_IF
 		
 	2 : 
-		// Home
+		// Home, deImpale
+		THIS^.DeImpale();
+		IF o_ePinsPositions = eLiftPins.In THEN
+			HomeStates := 3;
+		END_IF
+	3 :
+		o_xLiftDone := TRUE;
 END_CASE]]></ST>
       </Implementation>
     </Method>
@@ -139,7 +146,6 @@ CASE LayerState OF
 	
 	
 	4: // Finished
-		o_xLiftDone := TRUE;
 		THIS^.MoveHome();
 		// wait here
 

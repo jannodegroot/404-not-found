@@ -16,7 +16,7 @@ VAR_INPUT
 	i_iNumberOfLayersHMI: INT;	// Number of layers on the pallet
 END_VAR
 VAR_OUTPUT
-	o_eState 			: eSingleState;
+	o_eState 			: eSingleState := eSingleState.Execute;
 	o_xEmpty			: BOOL;	// Depalletizer is empty
 	o_xWarningNoProduct	: BOOL; // Warning after ...  time no products detected.
 	o_xGivingToNext		: BOOL; // Let the next conveyor know it is getting a new pallet.
@@ -86,7 +86,7 @@ THIS^.ReleaseOrHoldPallet();
 
 // Functionblock Klep
 fbKlep(
-	i_eState:= , 
+	i_eState:= o_eState, 
 	i_eModus:= , 
 	i_eAutoWantedPosition:= eMoveKlep, 
 	i_eManualWantedPosition:= , 
@@ -102,7 +102,7 @@ fbKlep(
 
 // Functionblock Schuif
 fbSchuif(
-	i_eState:= , 
+	i_eState:= o_eState, 
 	i_eMode:= , 
 	i_xMove:= xGoSchuif, 
 	i_xMovePossible:= , 
@@ -123,7 +123,7 @@ fbSchuif(
 	
 // Functionblock Zuiger
 fbZuiger(
-	i_eState:= , 
+	i_eState:= o_eState, 
 	i_eModes:= , 
 	i_xMoveCiliderDown:= , 
 	i_xHallSensorIn:= , 
@@ -153,16 +153,16 @@ fbZuiger(
 
 // Functionblock Lift
 fbBand(
-	i_eState:= , 
+	i_eState:= o_eState, 
 	i_xGoHold:= xHoldPallet, 
 	i_xGoEmpty:= xReleasePallet, 
 	i_xAlarmReset:= , 
 	i_eModus:= , 
 	i_xManualMotor:= , 
-	o_xMotor=> xConveyorMoving, 
+	o_xMotor=> (xConveyorMoving OR i_PreviousEmptying), 
 	o_xErrorMotor=> , 
 	o_xAlarmMotor=> , 
-	o_xGivingToNext=> );
+	o_xGivingToNext=> (xLiftIsDone AND i_NextEmpty));
 	
 // Functionblock Lift
 fbLiftA(

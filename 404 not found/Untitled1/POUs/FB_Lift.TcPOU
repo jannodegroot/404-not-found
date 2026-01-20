@@ -46,7 +46,7 @@ VAR
 	iConveyorHeight: INT;
 	iHomePosition: INT := 0;
 	iImpaleErrorCounter: INT;
-	InitHomeStates: INT;
+	InitHomeStates: INT := 0;
 	
 	rMoveUpSafe : R_TRIG;
 END_VAR
