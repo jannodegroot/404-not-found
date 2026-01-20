@@ -155,14 +155,14 @@ fbZuiger(
 fbBand(
 	i_eState:= o_eState, 
 	i_xGoHold:= xHoldPallet, 
-	i_xGoEmpty:= xReleasePallet, 
+	i_xGoEmpty:= xReleasePallet OR xConveyorMoving OR i_PreviousEmptying, 
 	i_xAlarmReset:= , 
 	i_eModus:= , 
 	i_xManualMotor:= , 
-	o_xMotor=> (xConveyorMoving OR i_PreviousEmptying), 
+	o_xMotor=>, 
 	o_xErrorMotor=> , 
 	o_xAlarmMotor=> , 
-	o_xGivingToNext=> (xLiftIsDone AND i_NextEmpty));
+	o_xGivingToNext=>);
 	
 // Functionblock Lift
 fbLiftA(
