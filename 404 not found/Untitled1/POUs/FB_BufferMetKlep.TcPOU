@@ -139,7 +139,9 @@ IF o_eState = eSingleState.Execute AND i_xLightSensor AND NOT i_xNextEmpty THEN
 	o_xGivingToNext := FALSE;
 ELSIF o_eState = eSingleState.Execute AND i_xLightSensor AND i_xNextEmpty THEN
 	fbKlep(i_eAutoWantedPosition := eValvePosition.Down);
-	o_xGivingToNext := TRUE;
+	IF fbKlep.o_eCurrentPosition = eValvePosition.Down THEN
+		o_xGivingToNext := TRUE;
+	END_IF
 ELSIF NOT i_xLightSensor AND NOT i_xNextEmpty THEN //then placed on the next buffer
 	o_xGivingToNext := FALSE;
 END_IF
