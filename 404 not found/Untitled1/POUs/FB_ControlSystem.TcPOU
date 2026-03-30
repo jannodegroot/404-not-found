@@ -7,13 +7,13 @@ VAR_INPUT
 	i_xEmergencyButton 		: BOOL;
 	i_xSafetyMat 			: BOOL;
 	i_xSafetyDoor 			: BOOL;
-	i_xStartButton 			: BOOL;
+	i_xStartButton 			: BOOL :=1;
 	i_xStopButton 			: BOOL;
 	i_xWarningResetSafetyMat			: BOOL;
 	i_xWarningResetSafetyDoor			: BOOL;
 	i_xAlarmResetPressureGeneral			: BOOL;
 	i_xAlarmResetEmergencyButton			: BOOL;
-	i_iPressureSensorGeneral: INT;
+	i_iPressureSensorGeneral: INT := 4000;
 	
 END_VAR
 VAR_OUTPUT
@@ -36,10 +36,16 @@ VAR_OUTPUT
 	o_eMachineStateLamp2 	: eMachineStateLamp; // Lamp Depalletizer
 END_VAR
 VAR
+	xErrorEmergency			: BOOL := FALSE;
+	xErrorPressure			: BOOL := FALSE;
+	fbBlinking 				: FB_Blinking;
 	
 	rlowpressure			: REAL := 4;
-	rPressure_bar: REAL;
-	rMaxbarsensor: REAL :=6;
+	rPressure_bar			: REAL;
+	rMaxbarsensor			: REAL :=6;
+	
+	MachineStateLamp1Blink	: BOOL;
+	MachineStateLamp2Blink	: BOOL;
 END_VAR
 
 ]]></Declaration>
@@ -59,10 +65,19 @@ END_VAR
 		o_eMachineStateLamp2 := eMachineStateLamp.Red;
 END_CASE
 
+//blink the machinestatelamps
+IF o_eMachineStateLamp1 = eMachineStateLamp.Red_Blink THEN
+	fbBlinking(io_xBlinking:= MachineStateLamp1Blink);
+END_IF
+
+IF o_eMachineStateLamp2 = eMachineStateLamp.Red_Blink THEN
+	fbBlinking(io_xBlinking:= MachineStateLamp2Blink);
+END_IF
+
 //safty aborting of machine and parts
-IF i_xEmergencyButton OR o_xErrorPressureGeneral THEN 		 //if emergencybutten or no air pressure then complete machine go's into Aborted
+IF xErrorEmergency OR xErrorPressure THEN 		 //if emergencybutten or no air pressure then complete machine go's into Aborted
 	o_xAbortGeneral := 1;
-ELSIF NOT i_xEmergencyButton AND NOT o_xErrorPressureGeneral THEN
+ELSIF NOT xErrorEmergency AND NOT xErrorPressure THEN
 	o_xAbortGeneral := 0;
 END_IF
 o_xAbortInvoerBuffer1 := i_xSafetyMat; //only for InvoerBuffer 1 Aborted
@@ -71,30 +86,50 @@ o_xAbortPalletizer := i_xSafetyDoor; //only of palletizer aborted
 //Start Stop
 IF i_xStopButton OR  i_eGeneralState=eGeneralState.Aborted THEN //if stopbutton or the machine is aborted the startstop wil become Stop
 	o_eStartStopGeneral :=eStartStop.Stop;
-ELSIF i_xStartButton THEN
+	i_xStartButton := FALSE;
+END_IF
+IF i_xStartButton THEN
 	o_eStartStopGeneral :=eStartStop.Start;
+	i_xStopButton := FALSE;
 END_IF
 
 
 //pressuresensor error
 rPressure_bar := (i_iPressureSensorGeneral / 4095.0) * rMaxbarsensor;// 4095 form analog and 6 from 6 bar max from the sensor
 IF rPressure_bar<rlowpressure THEN
-	o_xErrorPressureGeneral:=1;
+	xErrorPressure := TRUE;
 ELSE
-	o_xErrorPressureGeneral:=0;
+	xErrorPressure := FALSE;
 END_IF
 
+IF xErrorPressure THEN
+	fbBlinking(io_xBlinking:= o_xErrorPressureGeneral);
+ELSIF NOT xErrorPressure AND o_xAlarmPressureGeneral THEN
+	o_xErrorPressureGeneral := TRUE;
+ELSE
+	o_xErrorPressureGeneral := FALSE;
+END_IF;
+
 //Errors
-o_xErrorEmergencyButton := i_xEmergencyButton;
+xErrorEmergency := i_xEmergencyButton;
 
 //ALARM
-IF o_xErrorPressureGeneral THEN
+IF xErrorPressure THEN
 	o_xAlarmPressureGeneral:=1;
 END_IF
 
-IF o_xErrorEmergencyButton THEN
+IF xErrorEmergency THEN
 	o_xAlarmEmergencyButton:=1;
 END_IF
+
+//blinking error
+IF xErrorEmergency THEN
+	fbBlinking(io_xBlinking:= o_xErrorEmergencyButton);
+ELSIF NOT xErrorEmergency AND o_xAlarmEmergencyButton THEN
+	o_xErrorEmergencyButton := TRUE;
+ELSE
+	o_xErrorEmergencyButton := FALSE;
+END_IF;
 
 //Warning
 IF o_xAbortInvoerBuffer1 THEN
@@ -110,10 +145,10 @@ ELSIF i_xWarningResetSafetyDoor THEN
 END_IF
 
 //ERROR reset
-IF NOT o_xErrorPressureGeneral AND i_xAlarmResetPressureGeneral THEN
+IF NOT xErrorPressure AND i_xAlarmResetPressureGeneral THEN
 	o_xAlarmPressureGeneral:=0;
 END_IF
-IF NOT o_xErrorEmergencyButton AND i_xAlarmResetEmergencyButton THEN
+IF NOT xErrorEmergency AND i_xAlarmResetEmergencyButton THEN
 	o_xAlarmEmergencyButton:=0;
 END_IF
 

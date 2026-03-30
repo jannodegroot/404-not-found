@@ -3,96 +3,250 @@
   <POU Name="MAIN" Id="{4cbed5b0-99f3-4471-834f-1b0e4c5ee42c}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-	fbInvoerBuffer1 : FB_Invoer;
-	fbBuffer2		: FB_BufferMetKlep;
-	fbBuffer5		: FB_BufferZonderKlep;
+	//instance of the functionblocks
+	fbStateManager					: FB_StateManager;
+	fbControlSystem					: FB_ControlSystem;
+	fbInvoerBuffer1 				: FB_Invoer;
+	fbBuffer2						: FB_BufferZonderKlep;
+	fbBuffer3						: FB_BufferZonderKlep;
+	fbBuffer4						: FB_BufferZonderKlep;
+	fbBuffer5						: FB_BufferMetKlep;
+	fbBandDepalletizerPalletizer	: FB_BufferMetKlep;
+	fbBlikjesBand					: FB_BlikjesBand;
+	fbsim							: FB_Simulation;
+	fbDepalletizer					: FB_Depalletizer;
+	fbPalletizer					: FB_Palletizer;
+	fbSimulation					: FB_Simulation;
 	
-	fbBlikband		: FB_BlikjesBand;
-	fbKlep			: FB_Klep;
-	fbBand			: FB_Band;
+	//safety
+	xAbortGeneral				: BOOL;
+	xAbortInvoerBuffer1			: BOOL;
+	xAbortPalletizer			: BOOL;
 	
-	Abort			: BOOL;
-	StartStop		: eStartStop;
-	PalletPlaced	: BOOL;
-	LightSensor		: BOOL;
-	PreviousEmptying: BOOL;
-	NextEmpty		: BOOL;
-	AlarmReset		: BOOL;
-	NextState		: eSingleState;	
-	CurrentState	: eSingleState;
-	Motor			: BOOL;
-	ErrorGeneral	: BOOL;
-	AlarmGeneral	: BOOL;
-	GivingToNext	: BOOL;
-	Empty			: BOOL;
-	StateString		: BOOL;
+	//start stop
+	eStartStopGeneral			: eStartStop;
 	
+	//empty buffers/banden
+	xBuffer2Empty						: BOOL;
+	xBuffer3Empty						: BOOL;
+	xBuffer4Empty						: BOOL;
+	xBuffer5Empty						: BOOL;
+	xDepalletizerEmpty					: BOOL;
+	xBandDepalletizerPalletizerEmpty	: BOOL;
+	xPalletizerEmpty					: BOOL;
 	
+	//buffer/band is emptying
+	xInvoerBuffer1Emptying				: BOOL;
+	xBuffer2Emptying					: BOOL;
+	xBuffer3Emptying					: BOOL;
+	xBuffer4Emptying					: BOOL;
+	xBuffer5Emptying					: BOOL;
+	xDepalletizerEmptying				: BOOL;
+	xBandDepalletizerPalletizerEmptying	: BOOL;
+	xBlikjesBandAccepting				: BOOL;
 	
+	// current and next state
+	eStateInvoerBuffer1					: eSingleState;
+	eStateBuffer2						: eSingleState;
+	eStateBuffer3						: eSingleState;
+	eStateBuffer4						: eSingleState;
+	eStateBuffer5						: eSingleState;
+	eStateDepalletizer					: eSingleState;
+	eStateBandDepalletizerPalletizer	: eSingleState;
+	eStatePalletizer					: eSingleState;
+	eStateBlikjesBand					: eSingleState;
+	
+	//genaral state
+	eGeneralState						: eGeneralState;
+
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[fbBlikband();
+      <ST><![CDATA[//----StateManager------------------------------------------------------------------------------------------------------------					
+fbStateManager(	i_eStateInvoerBuffer1				:= eStateInvoerBuffer1, 
+				i_eStateBuffer2						:= eStateBuffer2, 
+				i_eStateBuffer3						:= eStateBuffer3, 
+				i_eStateBuffer4						:= eStateBuffer4, 
+				i_eStateBuffer5						:= eStateBuffer5, 
+				i_eStateDepalletizer				:= eStateDepalletizer, 
+				i_eStateBandDepalletizerPalletizer	:= eStateBandDepalletizerPalletizer, 
+				i_eStatePalletizer					:= eStatePalletizer, 
+				i_eStateBlikjesBand					:= eStateBlikjesBand, 
+				o_eGeneralState						=> eGeneralState,
+				o_sGeneralStateString				=> );
 
-fbKlep();
+//----ControlSystem------------------------------------------------------------------------------------------------------------					
+fbControlSystem(i_eGeneralState					:= eGeneralState, 
+				i_xEmergencyButton				:= (*Used in HMI*), 
+				i_xSafetyMat					:= (*Used in HMI*), 
+				i_xSafetyDoor					:= (*Used in HMI*), 
+				i_xStartButton					:= (*Used in HMI*), 
+				i_xStopButton					:= (*Used in HMI*), 
+				i_xWarningResetSafetyMat		:= (*Used in HMI*), 
+				i_xWarningResetSafetyDoor		:= (*Used in HMI*), 
+				i_xAlarmResetPressureGeneral	:= (*Used in HMI*), 
+				i_xAlarmResetEmergencyButton	:= (*Used in HMI*), 
+				i_iPressureSensorGeneral		:= (*Used in HMI*), 
+				o_eStartStopGeneral				=> eStartStopGeneral, 
+				o_xWarningSafetyMat				=> (*Used in HMI*), 
+				o_xWarningSafetyDoor			=> (*Used in HMI*), 
+				o_xAlarmPressureGeneral			=> (*Used in HMI*), 
+				o_xAlarmEmergencyButton			=> (*Used in HMI*), 
+				o_xErrorPressureGeneral			=> (*Used in HMI*), 
+				o_xErrorEmergencyButton			=> (*Used in HMI*), 
+				o_xAbortGeneral					=> xAbortGeneral, 
+				o_xAbortInvoerBuffer1			=> xAbortInvoerBuffer1, 
+				o_xAbortPalletizer				=> xAbortPalletizer, 
+				o_eMachineStateLamp1			=> (*Used in HMI*), 
+				o_eMachineStateLamp2			=> (*Used in HMI*));
+					
+//----invoer/buffer 1------------------------------------------------------------------------------------------------------------					
+fbInvoerBuffer1(i_xAbort			:= xAbortGeneral OR xAbortInvoerBuffer1, 
+				i_eStartStop		:= eStartStopGeneral, 
+				i_xPalletPlaced		:= (*Used in HMI*), 
+				i_xLightSensor		:= , 
+				i_xNextEmpty		:= xBuffer2Empty, 
+				i_xAlarmReset		:= (*Used in HMI*), 
+				i_eNextState		:= eStateBuffer2,
+				i_eModus			:= (*Used in HMI*),
+				i_xManualCmdMotor 	:= (*Used in HMI*),	 
+				o_eState			=> eStateInvoerBuffer1, 
+				o_xMotor			=> (*Used in HMI*), 
+				o_xErrorGeneral		=> (*Used in HMI*), 
+				o_xAlarmGeneral		=> (*Used in HMI*), 
+				o_xGivingToNext		=> xInvoerBuffer1Emptying,
+				o_xEmpty			=> (*Used in HMI*),
+				o_sStateString		=> (*Used in HMI*));	
+				
+//----buffer 2------------------------------------------------------------------------------------------------------------							
+ fbBuffer2( i_xAbort				:= xAbortGeneral, 
+			i_eStartStop			:= eStartStopGeneral,  
+			i_xLightSensor			:= ,
+			i_xPreviousEmptying	 	:= xInvoerBuffer1Emptying, 
+			i_xNextEmpty			:= xBuffer3Empty, 
+			i_xAlarmReset			:= (*Used in HMI*), 
+			i_eNextState			:= eStateBuffer3, 
+			i_eModus				:= (*Used in HMI*),
+			i_xManualCmdMotor 		:= (*Used in HMI*),
+			o_eState				=> eStateBuffer2, 
+			o_xMotor				=> (*Used in HMI*), 
+			o_xErrorGeneral			=> (*Used in HMI*), 
+			o_xAlarmGeneral			=> (*Used in HMI*), 
+			o_xGivingToNext			=> xBuffer2Emptying,
+			o_xEmpty 				=> xBuffer2Empty,
+			o_sStateString			=> (*Used in HMI*));
 
-fbBand();
+//----buffer 3------------------------------------------------------------------------------------------------------------							 
+fbBuffer3(  i_xAbort				:= xAbortGeneral, 
+			i_eStartStop			:= eStartStopGeneral,  
+			i_xLightSensor			:= ,
+			i_xPreviousEmptying 	:= xBuffer2Emptying, 
+			i_xNextEmpty			:= xBuffer4Empty, 
+			i_xAlarmReset			:= (*Used in HMI*), 
+			i_eNextState			:= eStateBuffer4, 
+			i_eModus				:= (*Used in HMI*),
+			i_xManualCmdMotor 		:= (*Used in HMI*),
+			o_eState				=> eStateBuffer3, 
+			o_xMotor				=> (*Used in HMI*), 
+			o_xErrorGeneral			=> (*Used in HMI*), 
+			o_xAlarmGeneral			=> (*Used in HMI*), 
+			o_xGivingToNext			=> xBuffer3Emptying,
+			o_xEmpty 				=> xBuffer3Empty,
+			o_sStateString			=> (*Used in HMI*));
+			
+//----buffer 4------------------------------------------------------------------------------------------------------------							
+ fbBuffer4(  i_xAbort				:= xAbortGeneral, 
+			i_eStartStop			:= eStartStopGeneral,  
+			i_xLightSensor			:= ,
+			i_xPreviousEmptying 	:= xBuffer3Emptying, 
+			i_xNextEmpty			:= xBuffer5Empty, 
+			i_xAlarmReset			:= (*Used in HMI*), 
+			i_eNextState			:= eStateBuffer5, 
+			i_eModus				:= (*Used in HMI*),
+			i_xManualCmdMotor 		:= (*Used in HMI*),
+			o_eState				=> eStateBuffer4, 
+			o_xMotor				=> (*Used in HMI*), 
+			o_xErrorGeneral			=> (*Used in HMI*),
+			o_xAlarmGeneral			=> (*Used in HMI*), 
+			o_xGivingToNext			=> xBuffer4Emptying,
+			o_xEmpty 				=> xBuffer4Empty,
+			o_sStateString			=> (*Used in HMI*));
 
+//----buffer 5------------------------------------------------------------------------------------------------------------					
+fbBuffer5(	i_xAbort				:= xAbortGeneral, 
+			i_eStartStop			:= eStartStopGeneral,  
+			i_xLightSensor			:= , 
+			i_xPreviousEmptying 	:= xBuffer4Emptying,
+			i_xNextEmpty			:= xDepalletizerEmpty, 
+			i_xAlarmReset			:= (*Used in HMI*), 
+			i_eNextState			:= eStateDepalletizer,
+			i_eModus				:= (*Used in HMI*),
+			i_xManualCmdMotor 		:= (*Used in HMI*), 
+			o_eState				=> eStateBuffer5, 
+			o_xMotor				=> (*Used in HMI*), 
+			o_xErrorGeneral			=> (*Used in HMI*),
+			o_xAlarmGeneral			=> (*Used in HMI*), 
+			o_xGivingToNext			=> xBuffer5Emptying,
+			o_xEmpty 				=> xBuffer5Empty,
+			o_sStateString			=> (*Used in HMI*));
+			
+//----depalletizer------------------------------------------------------------------------------------------------------------						
+fbDepalletizer( i_xAbort			:= xAbortGeneral, 
+				i_eStartStop		:= eStartStopGeneral, 
+				i_PreviousEmptying	:= xBuffer5Emptying, 
+				i_NextEmpty			:= xBandDepalletizerPalletizerEmpty, 
+				i_eNextState		:= eStateBandDepalletizerPalletizer, 
+				i_iCanType			:= (*Used in HMI*), 
+				i_iNumberOfLayersHMI:= (*Used in HMI*), 
+				o_eState			=> eStateDepalletizer, 
+				o_xEmpty			=> xDepalletizerEmpty, 
+				o_xWarningNoProduct	=> (*Used in HMI*), 
+				o_aLayerHeights		=> (*??*));
+		
+//----band depalletizer/palletizer------------------------------------------------------------------------------------------------------------					
+fbBandDepalletizerPalletizer(	i_xAbort				:= xAbortGeneral, 
+								i_eStartStop			:= eStartStopGeneral,  
+								i_xLightSensor			:= , 
+								i_xPreviousEmptying 	:= xDepalletizerEmptying,
+								i_xNextEmpty			:= xPalletizerEmpty, 
+								i_xAlarmReset			:= (*Used in HMI*), 
+								i_eNextState			:= eStatePalletizer,
+								i_eModus				:= (*Used in HMI*),
+								i_xManualCmdMotor 		:= (*Used in HMI*), 
+								o_eState				=> eStateBandDepalletizerPalletizer, 
+								o_xMotor				=> (*Used in HMI*), 
+								o_xErrorGeneral			=> (*Used in HMI*),
+								o_xAlarmGeneral			=> (*Used in HMI*), 
+								o_xGivingToNext			=> xBandDepalletizerPalletizerEmptying,
+								o_xEmpty 				=> xBandDepalletizerPalletizerEmpty,
+								o_sStateString			=> (*Used in HMI*));
 
+//----palletizer------------------------------------------------------------------------------------------------------------						
+fbPalletizer(	i_xAbort			:= xAbortGeneral, 
+				i_eStartStop		:= eStartStopGeneral, 
+				i_PreviousEmptying	:= xBandDepalletizerPalletizerEmptying, 
+				i_xDoorOpenButton	:= (*Used in HMI*), 
+				i_xWarningReset		:= (*Used in HMI*), 
+				i_eModus			:= (*Used in HMI*),  
+				o_eState			=> eStatePalletizer, 
+				o_iStorageCount		=> (*Used in HMI*), 
+				o_xWarningFull		=> (*Used in HMI*), 
+				o_xExpectingPallet	=> xPalletizerEmpty);
 
-(*fbInvoerBuffer1(	i_xAbort			:= Abort, 
-					i_eStartStop		:= StartStop, 
-					i_xPalletPlaced		:= PalletPlaced, 
-					i_xLightSensor		:= LightSensor, 
-					i_xNextEmpty		:= NextEmpty, 
-					i_xAlarmReset		:= AlarmReset, 
-					i_eNextState		:= NextState,
-					i_eModus			:= ,
-					i_xManualCmdMotor 	:= ,	 
-					o_eState			=> CurrentState, 
-					o_xMotor			=> Motor, 
-					o_xErrorGeneral		=> ErrorGeneral, 
-					o_xAlarmGeneral		=> AlarmGeneral, 
-					o_xGivingToNext		=> GivingToNext,
-					o_sStateString		=> );			
-					*)
-(* 
-fbBuffer2( i_xAbort			:= Abort, 
-			i_eStartStop		:= StartStop,  
-			i_xLightSensor		:= LightSensor,
-			i_xPreviousEmptying := PreviousEmptying, 
-			i_xNextEmpty		:= NextEmpty, 
-			i_xAlarmReset		:= AlarmReset, 
-			i_eNextState		:= NextState, 
-			i_eModus			:= ,
-			i_xManualCmdMotor 	:= ManualCmdMotor,
-			o_eState			=> CurrentState, 
-			o_xMotor			=> Motor, 
-			o_xErrorGeneral		=> ErrorGeneral, 
-			o_xAlarmGeneral		=> AlarmGeneral, 
-			o_xGivingToNext		=> GivingToNext,
-			o_xEmpty 			=> Empty);
-*)
-(*		
-fbBuffer5(	i_xAbort			:= Abort, 
-			i_eStartStop		:= StartStop,  
-			i_xLightSensor		:= LightSensor, 
-			i_xPreviousEmptying := PreviousEmptying,
-			i_xNextEmpty		:= NextEmpty, 
-			i_xAlarmReset		:= AlarmReset, 
-			i_eNextState		:= NextState,
-			i_eModus			:= ,
-			i_xManualCmdMotor 	:= ManualCmdMotor, 
-			o_eState			=> CurrentState, 
-			o_xMotor			=> Motor, 
-			o_xErrorGeneral		=> ErrorGeneral, 
-			o_xAlarmGeneral		=> AlarmGeneral, 
-			o_xGivingToNext		=> GivingToNext,
-			o_xEmpty 			=> Empty);
-*)
-
-
-]]></ST>
+//----blikjesband------------------------------------------------------------------------------------------------------------						
+fbBlikjesBand( 	i_xAbort		 		:= xAbortGeneral,
+				i_eStartStop 			:= eStartStopGeneral,
+				i_eModus				:= (*Used in HMI*), 
+				i_xLightSensor 			:= , 
+				i_xAlarmReset			:= (*Used in HMI*), 
+				i_xManualMotor			:= (*Used in HMI*), 
+				o_eState 				=> eStateBlikjesBand,
+				o_xMotor 				=> (*Used in HMI*), 
+				o_xWarningFull			=> (*Used in HMI*), 
+				o_xAcceptingCans		=> xBlikjesBandAccepting);
+				
+//----simulation------------------------------------------------------------------------------------------------------------						
+fbSimulation();]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

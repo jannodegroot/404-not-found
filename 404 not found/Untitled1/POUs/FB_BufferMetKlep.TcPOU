@@ -10,7 +10,7 @@ VAR_INPUT
 	i_xPreviousEmptying	: BOOL;
 	i_xAlarmReset		: BOOL;
 	i_eNextState		: eSingleState;
-	i_eModus			: eModus;
+	i_eModus			: eModus := eModus.Auto;
 	i_xManualCmdMotor	: BOOL;
 END_VAR
 VAR_OUTPUT
@@ -19,25 +19,40 @@ VAR_OUTPUT
 	o_xErrorGeneral 	: BOOL := FALSE;
 	o_xAlarmGeneral		: BOOL;
 	o_xGivingToNext		: BOOL;
-	o_xEmpty			: BOOL;
+	o_xEmpty			: BOOL	:= TRUE;
+	o_sStateString 		: STRING(30);
 END_VAR
 VAR
+	xError					: BOOL;
+	tonError	 			: TON;
+	fbBlinking 				: FB_Blinking;
+	
 	fbKlep 					: FB_Klep;
 	eValveCurrentPosition	: eValvePosition;
-	
-	tonErrorMotor 			: TON;
+	SIMFUNCTIONING: BOOL :=1;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//-------------------------------------------------------------------------------------------------------------------------
-//Change the state
-//idle
-IF NOT (i_eModus = eModus.Off) AND NOT (i_eStartStop = eStartStop.Start) AND NOT (i_eStartStop = eStartStop.Stop) AND NOT i_xAbort AND NOT o_xErrorGeneral THEN
-	o_eState := eSingleState.Idle;
-END_IF
+//init objects
+fbKlep(	i_eState 						:= o_eState,
+		i_eModus						:= i_eModus,
+		i_eAutoWantedPosition 			:= (*Set in this FB*),
+		i_eManualWantedPosition 		:= (*Used in HMI*),
+		i_xHallSensorIn 				:= ,
+		i_xHallSensorOut 				:= ,
+		i_xWarningReset 				:= (*Used in HMI*),
+		i_xAlarmReset 					:= (*Used in HMI*),
+		o_eCurrentPosition 				=> eValveCurrentPosition,	
+		o_xMagnetValve					=> ,
+		o_xWarningPositionDown 			=> (*Used in HMI*),
+		o_xErrorPositionUpOrUnknow		=> (*Used in HMI*),
+		o_xAlarmPositionUpOrUnknow		=> (*Used in HMI*));
 
+//-------------------------------------------------------------------------------------------------------------------------
+//Change the state
 //execute
-IF NOT (i_eModus = eModus.Off) AND (i_eStartStop = eStartStop.Start) AND NOT i_xAbort AND NOT o_xErrorGeneral THEN
+IF NOT (i_eModus = eModus.Off) AND (i_eStartStop = eStartStop.Start) AND NOT i_xAbort AND NOT xError THEN
 	o_eState := eSingleState.Execute;
 END_IF
 
@@ -75,14 +90,23 @@ END_IF
 
 //-----------------------------------------------------------------------------------------------------------------------------------------
 //Check error and set error, alarm and state = aboarting
-tonErrorMotor(IN := NOT i_xLightSensor AND o_xMotor, PT := T#20S);
-IF  o_xMotor AND tonErrorMotor.Q THEN
+tonError(IN := NOT i_xLightSensor AND o_xMotor, PT := T#20S);
+IF  o_xMotor AND tonError.Q THEN
     o_eState := eSingleState.Aborting;
 	
-	IF tonErrorMotor.Q THEN
-		o_xErrorGeneral := TRUE;
+	IF tonError.Q THEN
+		xError := TRUE;
 		o_xAlarmGeneral := TRUE;
 	END_IF
+END_IF;
+
+//blinking error
+IF xError THEN
+	fbBlinking(io_xBlinking:= o_xErrorGeneral);
+ELSIF NOT xError AND o_xAlarmGeneral THEN
+	o_xErrorGeneral := TRUE;
+ELSE
+	o_xErrorGeneral := FALSE;
 END_IF;
 
 //----------------------------------------------------------------------------------------------------------------------------------------
@@ -101,45 +125,26 @@ IF (i_eModus = eModus.Auto) AND
 	o_eState = eSingleState.Stopping OR
 	o_eState = eSingleState.Suspending OR
 	o_eState = eSingleState.Aborting) OR
-	(i_eModus = eModus.Manual AND NOT i_xManualCmdMotor) THEN
+	(i_eModus = eModus.Manual AND NOT i_xManualCmdMotor) OR 
+	(o_xEmpty AND NOT i_xPreviousEmptying AND NOT (i_eModus = eModus.Manual)) OR
+	NOT(eValveCurrentPosition = eValvePosition.Down) THEN
 
 	o_xMotor := FALSE;		
 END_IF
 
+//----------------------------------------------------------------------------------------------------------------------------------------
 //klep position and write o_xGivingToNext
 IF o_eState = eSingleState.Execute AND i_xLightSensor AND NOT i_xNextEmpty THEN
-	fbKlep(	i_eState 					:= o_eState,
-			i_eModus					:= i_eModus,
-			i_eAutoWantedPosition 		:= eValvePosition.Up,
-			i_eManualWantedPosition 	:= (*from HMI??*),
-			i_xHallSensorIn 			:= (*from simulation*),
-			i_xHallSensorOut 			:= (*from simulation*),
-			i_xWarningReset 			:= (*from simulation*),
-			i_xAlarmReset 				:= (*from simulation*),
-			o_eCurrentPosition 			:= (*from simulation*),	
-			o_xMagnetValve				:= (*from simulation*),
-			o_xWarningPositionDown 		:= (*from simulation*),
-			o_xErrorPositionUpOrUnknow	:= (*from simulation*),
-			o_xAlarmPositionUpOrUnknow	:= (*from simulation*));
+	fbKlep(i_eAutoWantedPosition 		:= eValvePosition.Up);
 	o_xGivingToNext := FALSE;
-	
 ELSIF o_eState = eSingleState.Execute AND i_xLightSensor AND i_xNextEmpty THEN
-	fbKlep(	i_eState 					:= o_eState,
-			i_eModus					:= i_eModus,
-			i_eAutoWantedPosition 		:= eValvePosition.Down,
-			i_eManualWantedPosition 	:= (*from HMI??*),
-			i_xHallSensorIn 			:= (*from simulation*),
-			i_xHallSensorOut 			:= (*from simulation*),
-			i_xWarningReset 			:= (*from simulation*),
-			i_xAlarmReset 				:= (*from simulation*),
-			o_eCurrentPosition 			:= (*from simulation*),	
-			o_xMagnetValve				:= (*from simulation*),
-			o_xWarningPositionDown 		:= (*from simulation*),
-			o_xErrorPositionUpOrUnknow	:= (*from simulation*),
-			o_xAlarmPositionUpOrUnknow	:= (*from simulation*));
+	fbKlep(i_eAutoWantedPosition := eValvePosition.Down);
 	o_xGivingToNext := TRUE;
+ELSIF NOT i_xLightSensor AND NOT i_xNextEmpty THEN //then placed on the next buffer
+	o_xGivingToNext := FALSE;
 END_IF
 
+//----------------------------------------------------------------------------------------------------------------------------------------
 //check if buffer is empty
 IF NOT i_xLightSensor THEN
 	o_xEmpty := TRUE;
@@ -150,12 +155,26 @@ END_IF
 //-------------------------------------------------------------------------------------------------------------------
 //reset alarm and error
 IF NOT (o_eState = eSingleState.Aborting) AND i_xLightSensor THEN
-	o_xErrorGeneral := FALSE;
+	xError := FALSE;
 END_IF
 
 //reset alarm
-IF i_xAlarmReset AND NOT (o_eState = eSingleState.Aborting) THEN
+IF i_xAlarmReset AND NOT xError AND NOT (o_eState = eSingleState.Aborting) THEN
 	o_xAlarmGeneral := FALSE;
+END_IF
+
+//state enum to string for HMI
+o_sStateString := F_StateEnumToStringSingleState(o_eState);
+
+//sim
+IF gvl.g_xSimulationActive THEN
+	IF SIMFUNCTIONING THEN 
+		IF i_xPreviousEmptying AND o_xMotor AND gvl.Timerlong.Q AND NOT i_xLightSensor THEN
+			i_xLightSensor:=1;
+		ELSIF o_xGivingToNext AND o_xMotor AND gvl.Timerlong.Q AND i_xLightSensor THEN
+			i_xLightSensor:=0;
+		END_IF
+	END_IF
 END_IF]]></ST>
     </Implementation>
   </POU>

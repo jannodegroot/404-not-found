@@ -5,12 +5,12 @@
 VAR_INPUT
 	i_xAbort		 	: BOOL;
 	i_eStartStop 		: eStartStop;
-	i_xPalletPlaced		: BOOL;			//opperator confirmed that he has placed a pallet
+	i_xPalletPlaced		: BOOL := FALSE;			//opperator confirmed that he has placed a pallet
 	i_xLightSensor 		: BOOL;
 	i_xNextEmpty		: BOOL;
 	i_xAlarmReset		: BOOL;
 	i_eNextState		: eSingleState;
-	i_eModus			: eModus;
+	i_eModus			: eModus := eModus.Auto;
 	i_xManualCmdMotor	: BOOL;
 END_VAR
 VAR_OUTPUT
@@ -19,11 +19,14 @@ VAR_OUTPUT
 	o_xErrorGeneral	 	: BOOL := FALSE;
 	o_xAlarmGeneral		: BOOL;
 	o_xGivingToNext		: BOOL;
-	o_xEmpty			: BOOL;
+	o_xEmpty			: BOOL	:= TRUE;
 	o_sStateString 		: STRING(30);
 END_VAR
 VAR
-	xError							: BOOL;
+	xError						 	: BOOL := FALSE;
+	tonError						: TON;
+	fbBlinking 						: FB_Blinking;
+	
 	rTrigPallet						: R_TRIG;
 	xPalletPresent 					: BOOL;
 	tonPalletDetected				: TON;
@@ -32,9 +35,7 @@ VAR
 	fbKlep 							: FB_Klep;
 	eValveCurrentPosition			: eValvePosition;
 	
-	tonError						: TON;
-	
-	fbBlinking						: FB_Blinking;
+	SIMFUNCTIONING: BOOL :=1;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -42,17 +43,17 @@ END_VAR
 //init objects
 fbKlep(	i_eState 						:= o_eState,
 		i_eModus						:= i_eModus,
-		i_eAutoWantedPosition 			:= ,
-		i_eManualWantedPosition 		:= (*from HMI??*),
-		i_xHallSensorIn 				:= (*from simulation*),
-		i_xHallSensorOut 				:= (*from simulation*),
-		i_xWarningReset 				:= (*from simulation*),
-		i_xAlarmReset 					:= (*from simulation*),
-		o_eCurrentPosition 				:= (*from simulation*),	
-		o_xMagnetValve					:= (*from simulation*),
-		o_xWarningPositionDown 			:= (*from simulation*),
-		o_xErrorPositionUpOrUnknow		:= (*from simulation*),
-		o_xAlarmPositionUpOrUnknow		:= (*from simulation*));
+		i_eAutoWantedPosition 			:= (*Set in this FB*),
+		i_eManualWantedPosition 		:= (*Used in HMI*),
+		i_xHallSensorIn 				:= ,
+		i_xHallSensorOut 				:= ,
+		i_xWarningReset 				:= (*Used in HMI*),
+		i_xAlarmReset 					:= (*Used in HMI*),
+		o_eCurrentPosition 				=> eValveCurrentPosition,	
+		o_xMagnetValve					=> ,
+		o_xWarningPositionDown 			=> (*Used in HMI*),
+		o_xErrorPositionUpOrUnknow		=> (*Used in HMI*),
+		o_xAlarmPositionUpOrUnknow		=> (*Used in HMI*));
 
 //-------------------------------------------------------------------------------------------------------------------------
 //Change the state
@@ -117,10 +118,11 @@ END_IF;
 //----------------------------------------------------------------------------------------------------------------------------------------
 //Trigger the palletplaced value and save in local var
 rTrigPallet(CLK := i_xPalletPlaced);
-IF rTrigPallet.Q THEN
+IF rTrigPallet.Q AND NOT xPalletPresent THEN
     xPalletPresent := TRUE;
+ELSIF xPalletPresent AND i_xLightSensor AND NOT o_xGivingToNext THEN
 	o_xEmpty 		:= FALSE;
-ELSIF xTimerPalletDetectedCompleted AND NOT i_xLightSensor THEN
+ELSIF (xTimerPalletDetectedCompleted AND NOT i_xLightSensor)THEN
 	xPalletPresent := FALSE;
 	o_xEmpty 	   := TRUE;
 	xTimerPalletDetectedCompleted := FALSE; 
@@ -149,7 +151,8 @@ IF  (i_eModus = eModus.Auto) AND
 	o_eState = eSingleState.Stopping OR
 	o_eState = eSingleState.Suspending OR
 	o_eState = eSingleState.Aborting) OR
-	(i_eModus = eModus.Manual AND NOT i_xManualCmdMotor) THEN
+	(i_eModus = eModus.Manual AND NOT i_xManualCmdMotor) OR
+	(NOT xPalletPresent) THEN
 
 	o_xMotor := FALSE;		
 END_IF
@@ -162,7 +165,12 @@ IF o_eState = eSingleState.Execute AND i_xLightSensor AND NOT i_xNextEmpty THEN
 	
 ELSIF o_eState = eSingleState.Execute AND i_xLightSensor AND i_xNextEmpty THEN
 	fbKlep(i_eAutoWantedPosition := eValvePosition.Down);
-	o_xGivingToNext := TRUE;
+	IF eValveCurrentPosition = eValvePosition.Down THEN
+		 o_xGivingToNext := TRUE;
+	END_IF
+	
+ELSIF NOT i_xLightSensor AND NOT i_xNextEmpty THEN //then placed on the next buffer
+	o_xGivingToNext := FALSE;
 END_IF
 
 //-------------------------------------------------------------------------------------------------------------------
@@ -172,12 +180,25 @@ IF NOT (o_eState = eSingleState.Aborting) AND i_xLightSensor THEN
 END_IF
 
 //reset alarm
-IF i_xAlarmReset AND NOT (o_eState = eSingleState.Aborting) THEN
+IF i_xAlarmReset AND NOT xError AND NOT (o_eState = eSingleState.Aborting) THEN
 	o_xAlarmGeneral := FALSE;
 END_IF
 
 //state enum to string for HMI
-o_sStateString := F_StateEnumToString(o_eState);]]></ST>
+o_sStateString := F_StateEnumToStringSingleState(o_eState);
+
+
+//sim
+IF gvl.g_xSimulationActive THEN
+	IF SIMFUNCTIONING THEN  
+		//
+		IF xPalletPresent AND o_xMotor AND gvl.Timerlong.Q AND NOT i_xLightSensor THEN
+			i_xLightSensor:=1;
+		ELSIF i_xNextEmpty AND o_xMotor AND gvl.Timerlong.Q AND i_xLightSensor THEN
+			i_xLightSensor:=0;
+		END_IF
+	END_IF
+END_IF]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
